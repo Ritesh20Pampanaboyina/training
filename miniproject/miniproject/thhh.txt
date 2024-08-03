@@ -1,0 +1,42 @@
+-- Create Database
+CREATE DATABASE RailwayReservationDB;
+GO
+
+USE RailwayReservationDB;
+GO
+
+-- Create Train Table
+CREATE TABLE Train (
+    TrainID INT IDENTITY(1,1) PRIMARY KEY,
+    TrainNo NVARCHAR(20),
+    TrainName NVARCHAR(50),
+    FromStation NVARCHAR(50),
+    ToStation NVARCHAR(50),
+    Date DATE,
+    Price DECIMAL(10, 2),
+    Status NVARCHAR(20),
+    NoOfSeats INT,
+    Classes NVARCHAR(50)
+);
+
+-- Create User Table
+CREATE TABLE [User] (
+    UserID INT IDENTITY(1,1) PRIMARY KEY,
+    UserName NVARCHAR(100) UNIQUE,
+    Password NVARCHAR(100),
+    FullName NVARCHAR(100),
+    Email NVARCHAR(100),
+    PhoneNumber NVARCHAR(15),
+    UserRole NVARCHAR(50)
+);
+
+-- Create Booking Table
+CREATE TABLE Booking (
+    BookingID INT IDENTITY(1,1) PRIMARY KEY,
+    TrainID INT,
+    UserID INT,
+    NumberOfSeats INT,
+    Status NVARCHAR(20),
+    FOREIGN KEY (TrainID) REFERENCES Train(TrainID),
+    FOREIGN KEY (UserID) REFERENCES [User](UserID)
+);
