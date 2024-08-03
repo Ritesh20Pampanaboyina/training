@@ -1,0 +1,136 @@
+using System;
+using System.Data.SqlClient;
+
+public static class Users
+{
+    public static void BookTickets()
+    {
+        Console.Write("Enter your username: ");
+        string username = Console.ReadLine();
+
+        Console.Write("Enter your password: ");
+        string password = Console.ReadLine();
+
+        int userID = Trains.GetUserID(username, password);
+        if (userID == 0)
+        {
+            Console.WriteLine("User not found. Please provide additional details to register:");
+
+            Console.Write("Enter your full name: ");
+            string fullName = Console.ReadLine();
+
+            Console.Write("Enter your email: ");
+            string email = Console.ReadLine();
+
+            Console.Write("Enter your phone number: ");
+            string phoneNumber = Console.ReadLine();
+
+            Trains.AddUser(username, password, fullName, email, phoneNumber, "User");
+            userID = Trains.GetUserID(username, password);
+
+            Console.WriteLine("User registered successfully.");
+        }
+
+        Trains.ListTrains();
+
+        Console.Write("Enter TrainID to book tickets: ");
+        int trainID = int.Parse(Console.ReadLine());
+
+        Console.Write("Enter number of seats to book (max 5): ");
+        int seats = int.Parse(Console.ReadLine());
+
+        if (seats > 5)
+        {
+            Console.WriteLine("Cannot book more than 5 tickets at a time.");
+            return;
+        }
+
+        int availableSeats = Trains.GetAvailableSeats(trainID);
+
+        if (availableSeats < seats)
+        {
+            Console.WriteLine("Not enough seats available.");
+            return;
+        }
+
+        // Get train details
+        var trainDetails = Trains.GetTrainDetails(trainID);
+
+        // Confirm booking
+        Trains.ConfirmBooking(trainID, userID, seats, username, Trains.GetUserFullName(userID), Trains.GetUserEmail(userID), Trains.GetUserPhoneNumber(userID), trainDetails.TrainNo, trainDetails.TrainName, trainDetails.FromStation, trainDetails.ToStation, trainDetails.Date, trainDetails.Price, seats);
+
+        // Update seat availability
+        Trains.UpdateSeatAvailability(trainID, -seats); // Note: subtracting booked seats
+
+        PrintTicket(trainID, userID, seats);
+
+        Console.WriteLine("Booking confirmed!");
+    }
+
+    public static void CancelTickets()
+    {
+        Console.Write("Enter your username: ");
+        string username = Console.ReadLine();
+
+        Console.Write("Enter your password: ");
+        string password = Console.ReadLine();
+
+        int userID = Trains.GetUserID(username, password);
+
+        if (userID == 0)
+        {
+            Console.WriteLine("User not found.");
+            return;
+        }
+
+        Console.Write("Enter BookingID to cancel: ");
+        int bookingID = int.Parse(Console.ReadLine());
+
+        using (SqlConnection conn = Trains.GetConnection())
+        {
+            conn.Open();
+
+            SqlCommand getBookingCmd = new SqlCommand("SELECT TrainID, NumberOfSeats FROM Booking WHERE BookingID = @BookingID AND Status = 'Confirmed' AND UserID = @UserID", conn);
+            getBookingCmd.Parameters.AddWithValue("@BookingID", bookingID);
+            getBookingCmd.Parameters.AddWithValue("@UserID", userID);
+            SqlDataReader reader = getBookingCmd.ExecuteReader();
+
+            if (!reader.Read())
+            {
+                Console.WriteLine("Booking not found or already cancelled.");
+                return;
+            }
+
+            int trainID = (int)reader["TrainID"];
+            int numberOfSeats = (int)reader["NumberOfSeats"];
+            reader.Close();
+
+            // Cancel booking
+            Trains.CancelBooking(bookingID, trainID, numberOfSeats);
+
+            // Update seat availability
+            Trains.UpdateSeatAvailability(trainID, numberOfSeats);
+
+            Console.WriteLine("Booking cancelled successfully.");
+        }
+    }
+
+    private static void PrintTicket(int trainID, int userID, int numberOfSeats)
+    {
+        var userDetails = Trains.GetUserDetails(userID);
+        var trainDetails = Trains.GetTrainDetails(trainID);
+
+        Console.WriteLine("\nTicket Details:");
+        Console.WriteLine($"User: {userDetails.FullName}");
+        Console.WriteLine($"Email: {userDetails.Email}");
+        Console.WriteLine($"Phone: {userDetails.PhoneNumber}");
+        Console.WriteLine($"Train No: {trainDetails.TrainNo}");
+        Console.WriteLine($"Train Name: {trainDetails.TrainName}");
+        Console.WriteLine($"From: {trainDetails.FromStation}");
+        Console.WriteLine($"To: {trainDetails.ToStation}");
+        Console.WriteLine($"Date: {trainDetails.Date.ToShortDateString()}");
+        Console.WriteLine($"Price per seat: {trainDetails.Price:C}");
+        Console.WriteLine($"Number of Seats: {numberOfSeats}");
+        Console.WriteLine($"Total Price: {trainDetails.Price * numberOfSeats:C}");
+    }
+}
