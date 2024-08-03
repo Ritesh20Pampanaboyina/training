@@ -1,0 +1,18 @@
+CREATE TABLE Booking (
+    BookingID INT IDENTITY(1,1) PRIMARY KEY,
+    TrainID INT,
+    UserID INT,
+    NumberOfSeats INT,
+    Status NVARCHAR(50),
+    UserName NVARCHAR(100),
+    UserFullName NVARCHAR(100),
+    UserEmail NVARCHAR(100),
+    UserPhoneNumber NVARCHAR(15),
+    TrainNo NVARCHAR(50),
+    TrainName NVARCHAR(100),
+    FromStation NVARCHAR(100),
+    ToStation NVARCHAR(100),
+    Date DATETIME,
+    Price DECIMAL(18, 2),
+    TotalPrice DECIMAL(18, 2)
+);
