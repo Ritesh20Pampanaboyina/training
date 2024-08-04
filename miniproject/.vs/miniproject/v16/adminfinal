@@ -1,0 +1,117 @@
+using System;
+using System.Data.SqlClient;
+
+public static class Admin
+{
+    public static void AddNewTrain()
+    {
+        Console.Write("Enter Train Number: ");
+        string trainNo = Console.ReadLine();
+
+        Console.Write("Enter Train Name: ");
+        string trainName = Console.ReadLine();
+
+        Console.Write("Enter From Station: ");
+        string fromStation = Console.ReadLine();
+
+        Console.Write("Enter To Station: ");
+        string toStation = Console.ReadLine();
+
+        Console.Write("Enter Date (YYYY-MM-DD): ");
+        DateTime date = DateTime.Parse(Console.ReadLine());
+
+        Console.Write("Enter Price per Seat: ");
+        decimal price = decimal.Parse(Console.ReadLine());
+
+        Console.Write("Enter Number of Seats: ");
+        int noOfSeats = int.Parse(Console.ReadLine());
+
+        Console.Write("Enter Classes (e.g., First Class, Second Class): ");
+        string classes = Console.ReadLine();
+
+        using (SqlConnection conn = Trains.GetConnection())
+        {
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("INSERT INTO Trains (TrainNo, TrainName, FromStation, ToStation, Date, Price, Status, NoOfSeats, Classes) VALUES (@TrainNo, @TrainName, @FromStation, @ToStation, @Date, @Price, 'Available', @NoOfSeats, @Classes)", conn);
+            cmd.Parameters.AddWithValue("@TrainNo", trainNo);
+            cmd.Parameters.AddWithValue("@TrainName", trainName);
+            cmd.Parameters.AddWithValue("@FromStation", fromStation);
+            cmd.Parameters.AddWithValue("@ToStation", toStation);
+            cmd.Parameters.AddWithValue("@Date", date);
+            cmd.Parameters.AddWithValue("@Price", price);
+            cmd.Parameters.AddWithValue("@NoOfSeats", noOfSeats);
+            cmd.Parameters.AddWithValue("@Classes", classes);
+            cmd.ExecuteNonQuery();
+        }
+
+        Console.WriteLine("Train added successfully.");
+    }
+
+    public static void UpdateTrain()
+    {
+        Console.Write("Enter TrainID to update: ");
+        int trainID = int.Parse(Console.ReadLine());
+
+        using (SqlConnection conn = Trains.GetConnection())
+        {
+            conn.Open();
+
+            // Get current train details
+            SqlCommand getTrainCmd = new SqlCommand("SELECT TrainNo, TrainName, FromStation, ToStation, Date, Price, NoOfSeats, Classes FROM Trains WHERE TrainID = @TrainID", conn);
+            getTrainCmd.Parameters.AddWithValue("@TrainID", trainID);
+            SqlDataReader reader = getTrainCmd.ExecuteReader();
+
+            if (!reader.Read())
+            {
+                Console.WriteLine("Train not found.");
+                return;
+            }
+
+            string trainNo = (string)reader["TrainNo"];
+            string trainName = (string)reader["TrainName"];
+            string fromStation = (string)reader["FromStation"];
+            string toStation = (string)reader["ToStation"];
+            DateTime date = (DateTime)reader["Date"];
+            decimal price = (decimal)reader["Price"];
+            int noOfSeats = (int)reader["NoOfSeats"];
+            string classes = (string)reader["Classes"];
+            reader.Close();
+
+            // Update train details
+            Console.Write("Enter new Train Number (leave blank to keep current): ");
+            string newTrainNo = Console.ReadLine();
+            Console.Write("Enter new Train Name (leave blank to keep current): ");
+            string newTrainName = Console.ReadLine();
+            Console.Write("Enter new From Station (leave blank to keep current): ");
+            string newFromStation = Console.ReadLine();
+            Console.Write("Enter new To Station (leave blank to keep current): ");
+            string newToStation = Console.ReadLine();
+            Console.Write("Enter new Date (YYYY-MM-DD, leave blank to keep current): ");
+            string newDateStr = Console.ReadLine();
+            Console.Write("Enter new Price per Seat (leave blank to keep current): ");
+            string newPriceStr = Console.ReadLine();
+            Console.Write("Enter new Number of Seats (leave blank to keep current): ");
+            string newNoOfSeatsStr = Console.ReadLine();
+            Console.Write("Enter new Classes (leave blank to keep current): ");
+            string newClasses = Console.ReadLine();
+
+            DateTime newDate = string.IsNullOrWhiteSpace(newDateStr) ? date : DateTime.Parse(newDateStr);
+            decimal newPrice = string.IsNullOrWhiteSpace(newPriceStr) ? price : decimal.Parse(newPriceStr);
+            int newNoOfSeats = string.IsNullOrWhiteSpace(newNoOfSeatsStr) ? noOfSeats : int.Parse(newNoOfSeatsStr);
+
+            SqlCommand updateCmd = new SqlCommand("UPDATE Trains SET TrainNo = @TrainNo, TrainName = @TrainName, FromStation = @FromStation, ToStation = @ToStation, Date = @Date, Price = @Price, NoOfSeats = @NoOfSeats, Classes = @Classes WHERE TrainID = @TrainID", conn);
+            updateCmd.Parameters.AddWithValue("@TrainID", trainID);
+            updateCmd.Parameters.AddWithValue("@TrainNo", string.IsNullOrWhiteSpace(newTrainNo) ? trainNo : newTrainNo);
+            updateCmd.Parameters.AddWithValue("@TrainName", string.IsNullOrWhiteSpace(newTrainName) ? trainName : newTrainName);
+            updateCmd.Parameters.AddWithValue("@FromStation", string.IsNullOrWhiteSpace(newFromStation) ? fromStation : newFromStation);
+            updateCmd.Parameters.AddWithValue("@ToStation", string.IsNullOrWhiteSpace(newToStation) ? toStation : newToStation);
+            updateCmd.Parameters.AddWithValue("@Date", newDate);
+            updateCmd.Parameters.AddWithValue("@Price", newPrice);
+            updateCmd.Parameters.AddWithValue("@NoOfSeats", newNoOfSeats);
+            updateCmd.Parameters.AddWithValue("@Classes", string.IsNullOrWhiteSpace(newClasses) ? classes : newClasses);
+            updateCmd.ExecuteNonQuery();
+        }
+
+        Console.WriteLine("Train updated successfully.");
+    }
+}
