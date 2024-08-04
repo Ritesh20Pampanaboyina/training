@@ -1,0 +1,1702 @@
+Sure! Feel free to provide the four codes, and I'll break them down line by line, explaining each part and its connections.
+
+using System;
+
+public static class Admin
+{
+    public static void AddTrains()
+    {
+        Console.Write("Enter Train No: ");
+        string trainNo = Console.ReadLine();
+
+        Console.Write("Enter Train Name: ");
+        string trainName = Console.ReadLine();
+
+        Console.Write("Enter From Station: ");
+        string fromStation = Console.ReadLine();
+
+        Console.Write("Enter To Station: ");
+        string toStation = Console.ReadLine();
+
+        Console.Write("Enter Date (yyyy-mm-dd): ");
+        DateTime date = DateTime.Parse(Console.ReadLine());
+
+        Console.Write("Enter Price per Seat: ");
+        decimal price = decimal.Parse(Console.ReadLine());
+
+        Console.Write("Enter Status: ");
+        string status = Console.ReadLine();
+
+        Console.Write("Enter Number of Seats: ");
+        int noOfSeats = Convert.ToInt32(Console.ReadLine());
+
+        Console.Write("Enter Classes: ");
+        string classes = Console.ReadLine();
+
+        Trains.AddTrains(trainNo, trainName, fromStation, toStation, date, price, status, noOfSeats, classes);
+    }
+
+    public static void UpdateTrains()
+    {
+        Console.Write("Enter Train ID to update: ");
+        int trainID = Convert.ToInt32(Console.ReadLine());
+
+        Console.Write("Enter Train No: ");
+        string trainNo = Console.ReadLine();
+
+        Console.Write("Enter Train Name: ");
+        string trainName = Console.ReadLine();
+
+        Console.Write("Enter From Station: ");
+        string fromStation = Console.ReadLine();
+
+        Console.Write("Enter To Station: ");
+        string toStation = Console.ReadLine();
+
+        Console.Write("Enter Date (yyyy-mm-dd): ");
+        DateTime date = DateTime.Parse(Console.ReadLine());
+
+        Console.Write("Enter Price per Seat: ");
+        decimal price = decimal.Parse(Console.ReadLine());
+
+        Console.Write("Enter Status: ");
+        string status = Console.ReadLine();
+
+        Console.Write("Enter Number of Seats: ");
+        int noOfSeats = Convert.ToInt32(Console.ReadLine());
+
+        Console.Write("Enter Classes: ");
+        string classes = Console.ReadLine();
+
+        Trains.UpdateTrains(trainID, trainNo, trainName, fromStation, toStation, date, price, status, noOfSeats, classes);
+    }
+}
+ChatGPT
+Certainly! Let’s break down this C# code line by line.
+
+Overview
+The code defines a static class Admin with two static methods: AddTrains and UpdateTrains. These methods are responsible for collecting train information from the user and then calling methods on another class, Trains, to add or update train records.
+
+Line-by-Line Explanation
+using System;
+This line includes the System namespace, which provides fundamental classes and types. It is necessary for using common types like Console, DateTime, and decimal.
+
+public static class Admin
+This line defines a public static class named Admin. A static class cannot be instantiated and all its members must also be static. This class serves as a container for related static methods.
+
+public static void AddTrains()
+This line defines a static method named AddTrains that doesn’t return any value (void). This method is intended to gather information from the user to add a new train.
+
+Console.Write("Enter Train No: ");
+This line outputs a prompt to the console asking the user to enter the train number. Console.Write is used here to display the text without a newline at the end.
+
+string trainNo = Console.ReadLine();
+This line reads the user input from the console and stores it in a string variable named trainNo. Console.ReadLine captures the entire line of text entered by the user.
+
+Console.Write("Enter Train Name: ");
+This line outputs a prompt asking for the train name.
+
+string trainName = Console.ReadLine();
+This line reads the train name input from the user and stores it in the trainName variable.
+
+Console.Write("Enter From Station: ");
+This line prompts the user to enter the departure station.
+
+string fromStation = Console.ReadLine();
+This line stores the departure station input from the user in the fromStation variable.
+
+Console.Write("Enter To Station: ");
+This line prompts the user for the destination station.
+
+string toStation = Console.ReadLine();
+This line stores the destination station input in the toStation variable.
+
+Console.Write("Enter Date (yyyy-mm-dd): ");
+This line asks the user to enter the date in the specified format.
+
+DateTime date = DateTime.Parse(Console.ReadLine());
+This line reads the date input, parses it into a DateTime object, and stores it in the date variable. DateTime.Parse converts the string input into a DateTime object.
+
+Console.Write("Enter Price per Seat: ");
+This line prompts the user for the price per seat.
+
+decimal price = decimal.Parse(Console.ReadLine());
+This line reads the price input, parses it into a decimal object, and stores it in the price variable. decimal.Parse is used for monetary values due to its precision.
+
+Console.Write("Enter Status: ");
+This line asks the user to enter the status of the train.
+
+string status = Console.ReadLine();
+This line stores the train status input in the status variable.
+
+Console.Write("Enter Number of Seats: ");
+This line prompts the user for the number of seats.
+
+int noOfSeats = Convert.ToInt32(Console.ReadLine());
+This line reads the number of seats input, converts it to an int, and stores it in the noOfSeats variable. Convert.ToInt32 handles the conversion from string to integer.
+
+Console.Write("Enter Classes: ");
+This line asks the user for the classes available on the train.
+
+string classes = Console.ReadLine();
+This line stores the classes input in the classes variable.
+
+Trains.AddTrains(trainNo, trainName, fromStation, toStation, date, price, status, noOfSeats, classes);
+This line calls a static method AddTrains from another class Trains, passing all the collected data as arguments. This is where the actual logic for adding the train record would be handled.
+
+public static void UpdateTrains()
+This line defines a static method named UpdateTrains, which is used to update an existing train record.
+
+Console.Write("Enter Train ID to update: ");
+This line prompts the user to enter the ID of the train they want to update.
+
+int trainID = Convert.ToInt32(Console.ReadLine());
+This line reads the train ID input, converts it to an int, and stores it in the trainID variable.
+
+Console.Write("Enter Train No: ");
+This line asks the user to enter the new train number.
+
+string trainNo = Console.ReadLine();
+This line stores the new train number input in the trainNo variable.
+
+Console.Write("Enter Train Name: ");
+This line prompts the user for the new train name.
+
+string trainName = Console.ReadLine();
+This line stores the new train name input in the trainName variable.
+
+Console.Write("Enter From Station: ");
+This line asks for the new departure station.
+
+string fromStation = Console.ReadLine();
+This line stores the new departure station input in the fromStation variable.
+
+Console.Write("Enter To Station: ");
+This line prompts the user for the new destination station.
+
+string toStation = Console.ReadLine();
+This line stores the new destination station input in the toStation variable.
+
+Console.Write("Enter Date (yyyy-mm-dd): ");
+This line asks for the new date in the specified format.
+
+DateTime date = DateTime.Parse(Console.ReadLine());
+This line reads and parses the new date input into a DateTime object.
+
+Console.Write("Enter Price per Seat: ");
+This line prompts the user to enter the new price per seat.
+
+decimal price = decimal.Parse(Console.ReadLine());
+This line reads and parses the new price per seat into a decimal object.
+
+Console.Write("Enter Status: ");
+This line asks for the new train status.
+
+string status = Console.ReadLine();
+This line stores the new status input in the status variable.
+
+Console.Write("Enter Number of Seats: ");
+This line prompts the user for the new number of seats.
+
+int noOfSeats = Convert.ToInt32(Console.ReadLine());
+This line reads and converts the new number of seats input into an int.
+
+Console.Write("Enter Classes: ");
+This line asks for the new classes available on the train.
+
+string classes = Console.ReadLine();
+This line stores the new classes input in the classes variable.
+
+Trains.UpdateTrains(trainID, trainNo, trainName, fromStation, toStation, date, price, status, noOfSeats, classes);
+This line calls a static method UpdateTrains from the Trains class, passing all the updated data along with the trainID to update the train record.
+
+Summary
+The Admin class provides methods for adding and updating train records. The AddTrains method collects new train data from the user and then calls Trains.AddTrains to add the record. The UpdateTrains method collects updated train data and calls Trains.UpdateTrains to modify an existing record. Each method uses Console for user input and basic data types for storing the input values.
+
+using System;
+using System.Data.SqlClient;
+
+public static class Users
+{
+    public static void BookTickets()
+    {
+        Console.Write("Enter your username: ");
+        string username = Console.ReadLine();
+
+        Console.Write("Enter your password: ");
+        string password = Console.ReadLine();
+
+        int userID = Trains.GetUserID(username, password);
+        if (userID == 0)
+        {
+            Console.WriteLine("User not found. Please provide additional details to register:");
+
+            Console.Write("Enter your full name: ");
+            string fullName = Console.ReadLine();
+
+            Console.Write("Enter your email: ");
+            string email = Console.ReadLine();
+
+            Console.Write("Enter your phone number: ");
+            string phoneNumber = Console.ReadLine();
+
+            Trains.AddUser(username, password, fullName, email, phoneNumber, "User");
+            userID = Trains.GetUserID(username, password);
+
+            Console.WriteLine("User registered successfully.");
+        }
+        Trains.ListTrains();
+
+        Console.Write("Enter TrainID to book tickets: ");
+        int trainID = Convert.ToInt32(Console.ReadLine());
+
+        var trainDetails = Trains.GetTrainDetails(trainID);
+        if (trainDetails.Status == "Inactive")
+        {
+            Console.WriteLine("Cannot book tickets for Inactive trains");
+            return;
+        }
+
+        Console.Write("Enter number of seats to book (max 5): ");
+        int seats = Convert.ToInt32(Console.ReadLine());
+
+        if (seats > 5)
+        {
+            Console.WriteLine("Cannot book more than 5 tickets at a time.");
+            return;
+        }
+
+        int availableSeats = Trains.GetAvailableSeats(trainID);
+
+        if (availableSeats < seats)
+        {
+            Console.WriteLine("Not enough seats available.");
+            return;
+        }
+
+        Trains.ConfirmBooking(trainID, userID, seats);
+        Trains.UpdateSeatAvailability(trainID, seats);
+
+        int bookingID = Trains.GetLatestBookingID(userID, trainID);
+        var userDetails = Trains.GetUserDetails(userID);
+        var bookingDetails = Trains.GetBookingDetails(bookingID);
+
+        PrintTicket(bookingID, userDetails, trainDetails, bookingDetails);
+
+        Console.WriteLine("Booking confirmed!");
+    }
+
+    public static void CancelTickets()
+    {
+        Console.Write("Enter your username: ");
+        string username = Console.ReadLine();
+
+        Console.Write("Enter your password: ");
+        string password = Console.ReadLine();
+
+        int userID = Trains.GetUserID(username, password);
+
+        if (userID == 0)
+        {
+            Console.WriteLine("User not found.");
+            return;
+        }
+
+        Console.Write("Enter BookingID to cancel: ");
+        int bookingID = Convert.ToInt32(Console.ReadLine());
+
+        using (var conn = Trains.GetConnection())
+        {
+            conn.Open();
+
+            using (var cmd = new SqlCommand("SELECT TrainID, NumberOfSeats FROM Booking WHERE BookingID = @BookingID AND Status = 'Confirmed' AND UserID = @UserID", conn))
+            {
+                cmd.Parameters.AddWithValue("@BookingID", bookingID);
+                cmd.Parameters.AddWithValue("@UserID", userID);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (!reader.Read())
+                    {
+                        Console.WriteLine("Booking not found or already cancelled.");
+                        return;
+                    }
+
+                    int trainID = (int)reader["TrainID"];
+                    int bookedSeats = (int)reader["NumberOfSeats"];
+                    reader.Close();
+
+                    Console.Write("Enter number of seats to cancel: ");
+                    int seatsToCancel = Convert.ToInt32(Console.ReadLine());
+
+                    if (seatsToCancel <= 0 || seatsToCancel > bookedSeats)
+                    {
+                        Console.WriteLine("Invalid number of seats.");
+                        return;
+                    }
+
+                    using (var transaction = conn.BeginTransaction())
+                    {
+                        try
+                        {
+                            using (var updateBookingCmd = new SqlCommand("UPDATE Booking SET NumberOfSeats = NumberOfSeats - @SeatsToCancel WHERE BookingID = @BookingID AND UserID = @UserID", conn, transaction))
+                            {
+                                updateBookingCmd.Parameters.AddWithValue("@SeatsToCancel", seatsToCancel);
+                                updateBookingCmd.Parameters.AddWithValue("@BookingID", bookingID);
+                                updateBookingCmd.Parameters.AddWithValue("@UserID", userID);
+                                int rowsAffected = updateBookingCmd.ExecuteNonQuery();
+
+                                if (rowsAffected == 0)
+                                {
+                                    throw new Exception("Failed to update booking.");
+                                }
+
+                                using (var updateSeatsCmd = new SqlCommand("UPDATE Trains SET NoOfSeats = NoOfSeats + @SeatsToCancel WHERE TrainID = @TrainID", conn, transaction))
+                                {
+                                    updateSeatsCmd.Parameters.AddWithValue("@SeatsToCancel", seatsToCancel);
+                                    updateSeatsCmd.Parameters.AddWithValue("@TrainID", trainID);
+                                    updateSeatsCmd.ExecuteNonQuery();
+                                }
+
+                                transaction.Commit();
+                                Console.WriteLine("Partial cancellation successful.");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+                            Console.WriteLine($"Error: {ex.Message}");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private static void PrintTicket(int bookingID, (string FullName, string Email, string PhoneNumber) userDetails, (string TrainNo, string TrainName, string FromStation, string ToStation, DateTime Date, decimal Price, string Status) trainDetails, (int TrainID, int NumberOfSeats, string Status) bookingDetails)
+    {
+        Console.WriteLine("\n--- Ticket ---");
+        Console.WriteLine($"BookingID: {bookingID}");
+        Console.WriteLine($"Name: {userDetails.FullName}");
+        Console.WriteLine($"Email: {userDetails.Email}");
+        Console.WriteLine($"Phone: {userDetails.PhoneNumber}");
+        Console.WriteLine($"Train No: {trainDetails.TrainNo}");
+        Console.WriteLine($"Train Name: {trainDetails.TrainName}");
+        Console.WriteLine($"From: {trainDetails.FromStation}");
+        Console.WriteLine($"To: {trainDetails.ToStation}");
+        Console.WriteLine($"Date: {trainDetails.Date}");
+        Console.WriteLine($"Price per Seat: {trainDetails.Price:C}");
+        Console.WriteLine($"Number of Seats: {bookingDetails.NumberOfSeats}");
+        Console.WriteLine($"Total Price: {trainDetails.Price * bookingDetails.NumberOfSeats:C}");
+        Console.WriteLine($"Status: {bookingDetails.Status}");
+        Console.WriteLine("---------------");
+    }
+}
+ChatGPT
+Sure! Let's go through the Users class and its methods line by line to understand how it works.
+
+Overview
+The Users class has two main methods: BookTickets and CancelTickets. The BookTickets method allows a user to book train tickets, and the CancelTickets method allows a user to cancel their existing bookings. The class interacts with a Trains class and a SQL database to perform these operations.
+
+Line-by-Line Explanation
+using System;
+using System.Data.SqlClient;
+These lines import the necessary namespaces:
+
+System for general types and functionalities (like Console).
+System.Data.SqlClient for SQL Server database operations.
+public static class Users
+This line defines a public static class named Users. Being static means it cannot be instantiated and all methods must be static.
+
+BookTickets Method
+public static void BookTickets()
+This line defines the BookTickets method. It doesn't return a value (void) and is used for the ticket booking process.
+
+Console.Write("Enter your username: ");
+This line prompts the user to enter their username.
+
+string username = Console.ReadLine();
+This line reads the username input from the console and stores it in the username variable.
+
+Console.Write("Enter your password: ");
+This line prompts the user to enter their password.
+
+string password = Console.ReadLine();
+This line reads the password input and stores it in the password variable.
+
+int userID = Trains.GetUserID(username, password);
+This line calls a method GetUserID from the Trains class to get the user ID based on the provided username and password. If the user doesn't exist, userID will be 0.
+
+if (userID == 0)
+This line checks if the userID is 0, indicating that the user was not found.
+
+Console.WriteLine("User not found. Please provide additional details to register:");
+This line informs the user that they need to provide additional information to register.
+
+Console.Write("Enter your full name: ");
+This line prompts the user to enter their full name.
+
+string fullName = Console.ReadLine();
+This line reads the full name input and stores it in the fullName variable.
+
+Console.Write("Enter your email: ");
+This line prompts the user to enter their email address.
+
+string email = Console.ReadLine();
+This line reads the email input and stores it in the email variable.
+
+Console.Write("Enter your phone number: ");
+This line prompts the user to enter their phone number.
+
+string phoneNumber = Console.ReadLine();
+This line reads the phone number input and stores it in the phoneNumber variable.
+
+Trains.AddUser(username, password, fullName, email, phoneNumber, "User");
+This line calls the AddUser method from the Trains class to add a new user to the system with the provided details.
+
+userID = Trains.GetUserID(username, password);
+After registering the user, this line retrieves the userID again using the provided credentials.
+
+Console.WriteLine("User registered successfully.");
+This line informs the user that their registration was successful.
+
+Trains.ListTrains();
+This line calls the ListTrains method from the Trains class to display available trains.
+
+Console.Write("Enter TrainID to book tickets: ");
+This line prompts the user to enter the TrainID for which they want to book tickets.
+
+int trainID = Convert.ToInt32(Console.ReadLine());
+This line reads the TrainID input, converts it to an int, and stores it in the trainID variable.
+
+var trainDetails = Trains.GetTrainDetails(trainID);
+This line calls the GetTrainDetails method from the Trains class to get the details of the specified train.
+
+if (trainDetails.Status == "Inactive")
+This line checks if the train is inactive.
+
+Console.WriteLine("Cannot book tickets for Inactive trains");
+If the train is inactive, this line informs the user that booking is not possible.
+
+Console.Write("Enter number of seats to book (max 5): ");
+This line prompts the user to enter the number of seats they want to book, with a maximum limit of 5.
+
+int seats = Convert.ToInt32(Console.ReadLine());
+This line reads the number of seats input, converts it to an int, and stores it in the seats variable.
+
+if (seats > 5)
+This line checks if the number of seats requested exceeds the maximum allowed.
+
+Console.WriteLine("Cannot book more than 5 tickets at a time.");
+If the requested number of seats is too high, this line informs the user and exits the method.
+
+int availableSeats = Trains.GetAvailableSeats(trainID);
+This line calls the GetAvailableSeats method from the Trains class to get the number of seats available for the specified train.
+
+if (availableSeats < seats)
+This line checks if there are enough available seats.
+
+Console.WriteLine("Not enough seats available.");
+If there aren’t enough seats available, this line informs the user and exits the method.
+
+Trains.ConfirmBooking(trainID, userID, seats);
+This line calls the ConfirmBooking method from the Trains class to confirm the booking.
+
+Trains.UpdateSeatAvailability(trainID, seats);
+This line calls the UpdateSeatAvailability method from the Trains class to update the number of available seats after booking.
+
+int bookingID = Trains.GetLatestBookingID(userID, trainID);
+This line retrieves the latest booking ID using the GetLatestBookingID method from the Trains class.
+
+var userDetails = Trains.GetUserDetails(userID);
+This line calls GetUserDetails from the Trains class to get details about the user.
+
+var bookingDetails = Trains.GetBookingDetails(bookingID);
+This line retrieves the details of the booking using GetBookingDetails from the Trains class.
+
+PrintTicket(bookingID, userDetails, trainDetails, bookingDetails);
+This line calls the PrintTicket method to print the booking details.
+
+Console.WriteLine("Booking confirmed!");
+This line informs the user that their booking has been confirmed.
+
+CancelTickets Method
+public static void CancelTickets()
+This line defines the CancelTickets method for canceling existing bookings.
+
+Console.Write("Enter your username: ");
+This line prompts the user to enter their username.
+
+string username = Console.ReadLine();
+This line reads the username input and stores it in the username variable.
+
+Console.Write("Enter your password: ");
+This line prompts the user to enter their password.
+
+string password = Console.ReadLine();
+This line reads the password input and stores it in the password variable.
+
+int userID = Trains.GetUserID(username, password);
+This line retrieves the user ID based on the provided username and password.
+
+if (userID == 0)
+This line checks if the user was found.
+
+Console.WriteLine("User not found.");
+If the user ID is 0, this line informs the user that they were not found.
+
+Console.Write("Enter BookingID to cancel: ");
+This line prompts the user to enter the booking ID they want to cancel.
+
+int bookingID = Convert.ToInt32(Console.ReadLine());
+This line reads and converts the booking ID to an int.
+
+using (var conn = Trains.GetConnection())
+This line creates a new SqlConnection object using the GetConnection method from the Trains class. using ensures that the connection is properly disposed of when done.
+
+conn.Open();
+This line opens the SQL connection.
+
+using (var cmd = new SqlCommand("SELECT TrainID, NumberOfSeats FROM Booking WHERE BookingID = @BookingID AND Status = 'Confirmed' AND UserID = @UserID", conn))
+This line creates a new SqlCommand to select the train ID and number of seats from the Booking table where the booking is confirmed and belongs to the user.
+
+cmd.Parameters.AddWithValue("@BookingID", bookingID);
+This line adds a parameter for the booking ID to the SQL command.
+
+cmd.Parameters.AddWithValue("@UserID", userID);
+This line adds a parameter for the user ID to the SQL command.
+
+using (var reader = cmd.ExecuteReader())
+This line executes the SQL command and returns a SqlDataReader to read the results.
+
+if (!reader.Read())
+This line checks if no records were found.
+
+Console.WriteLine("Booking not found or already cancelled.");
+If the booking was not found or was already canceled, this line informs the user and exits the method.
+
+int trainID = (int)reader["TrainID"];
+This line retrieves the train ID from the reader.
+
+int bookedSeats = (int)reader["NumberOfSeats"];
+This line retrieves the number of seats booked from the reader.
+
+reader.Close();
+This line closes the reader.
+
+Console.Write("Enter number of seats to cancel: ");
+This line prompts the user to enter the number of seats they want to cancel.
+
+int seatsToCancel = Convert.ToInt32(Console.ReadLine());
+This line reads and converts the number of seats to cancel into an int.
+
+if (seatsToCancel <= 0 || seatsToCancel > bookedSeats)
+This line checks if the number of seats to cancel is invalid (either less than or equal to 0 or more than the number of booked seats).
+
+Console.WriteLine("Invalid number of seats.");
+If the number of seats to cancel is invalid, this line informs the user and exits the method.
+
+using (var transaction = conn.BeginTransaction())
+This line begins a SQL transaction, ensuring that all changes can be committed or rolled back as a unit.
+
+try
+This block handles any exceptions that might occur during the transaction.
+
+using (var updateBookingCmd = new SqlCommand("UPDATE Booking SET NumberOfSeats = NumberOfSeats - @SeatsToCancel WHERE BookingID = @BookingID AND UserID = @UserID", conn, transaction))
+This line creates a command to update the booking record, decreasing the number of seats.
+
+updateBookingCmd.Parameters.AddWithValue("@SeatsToCancel", seatsToCancel);
+This line adds a parameter for the number of seats to cancel.
+
+updateBookingCmd.Parameters.AddWithValue("@BookingID", bookingID);
+This line adds a parameter for the booking ID.
+
+updateBookingCmd.Parameters.AddWithValue("@UserID", userID);
+This line adds a parameter for the user ID.
+
+int rowsAffected = updateBookingCmd.ExecuteNonQuery();
+This line executes the command and gets the number of rows affected.
+
+if (rowsAffected == 0)
+This line checks if no rows were updated.
+
+throw new Exception("Failed to update booking.");
+If no rows were updated, this line throws an exception.
+
+using (var updateSeatsCmd = new SqlCommand("UPDATE Trains SET NoOfSeats = NoOfSeats + @SeatsToCancel WHERE TrainID = @TrainID", conn, transaction))
+This line creates a command to update the train record, increasing the number of available seats.
+
+updateSeatsCmd.Parameters.AddWithValue("@SeatsToCancel", seatsToCancel);
+This line adds a parameter for the number of seats to cancel.
+
+updateSeatsCmd.Parameters.AddWithValue("@TrainID", trainID);
+This line adds a parameter for the train ID.
+
+updateSeatsCmd.ExecuteNonQuery();
+This line executes the command to update the train's seat availability.
+
+transaction.Commit();
+This line commits the transaction, making all changes permanent.
+
+Console.WriteLine("Partial cancellation successful.");
+This line informs the user that the partial cancellation was successful.
+
+catch (Exception ex)
+This block catches any exceptions thrown during the transaction.
+
+transaction.Rollback();
+If an error occurs, this line rolls back the transaction, undoing all changes made during the transaction.
+
+Console.WriteLine($"Error: {ex.Message}");
+This line prints the exception message to the console.
+
+PrintTicket Method
+private static void PrintTicket(int bookingID, (string FullName, string Email, string PhoneNumber) userDetails, (string TrainNo, string TrainName, string FromStation, string ToStation, DateTime Date, decimal Price, string Status) trainDetails, (int TrainID, int NumberOfSeats, string Status) bookingDetails)
+This line defines a private static method PrintTicket that prints the ticket details. It takes several parameters with detailed information.
+
+Console.WriteLine("\n--- Ticket ---");
+This line outputs the start of the ticket information.
+
+Console.WriteLine($"BookingID: {bookingID}");
+This line prints the booking ID.
+
+Console.WriteLine($"Name: {userDetails.FullName}");
+This line prints the user's full name.
+
+Console.WriteLine($"Email: {userDetails.Email}");
+This line prints the user's email address.
+
+Console.WriteLine($"Phone: {userDetails.PhoneNumber}");
+This line prints the user's phone number.
+
+Console.WriteLine($"Train No: {trainDetails.TrainNo}");
+This line prints the train number.
+
+Console.WriteLine($"Train Name: {trainDetails.TrainName}");
+This line prints the train name.
+
+Console.WriteLine($"From: {trainDetails.FromStation}");
+This line prints the departure station.
+
+Console.WriteLine($"To: {trainDetails.ToStation}");
+This line prints the destination station.
+
+Console.WriteLine($"Date: {trainDetails.Date}");
+This line prints the date of travel.
+
+Console.WriteLine($"Price per Seat: {trainDetails.Price:C}");
+This line prints the price per seat, formatted as currency.
+
+Console.WriteLine($"Number of Seats: {bookingDetails.NumberOfSeats}");
+This line prints the number of seats booked.
+
+Console.WriteLine($"Total Price: {trainDetails.Price * bookingDetails.NumberOfSeats:C}");
+This line prints the total price, calculated by multiplying the price per seat by the number of seats booked.
+
+Console.WriteLine($"Status: {bookingDetails.Status}");
+This line prints the status of the booking.
+
+Console.WriteLine("---------------");
+This line prints a separator for the end of the ticket information.
+
+Summary
+The Users class provides functionality for users to book and cancel train tickets. The BookTickets method involves user authentication, registration, and booking operations. It interacts with the Trains class for train and user data and handles various booking validations. The CancelTickets method allows users to cancel their bookings, with error handling and transaction management to ensure data integrity. The PrintTicket method formats and displays the booking details.
+
+using System;
+using System.Data.SqlClient;
+
+public static class Trains
+{
+    private static string connectionString = "data source=ICS-LT-7L8L103\\SQLEXPRESS; initial catalog=miniproject; User ID=sa; Password=@Rrrp2078";
+
+    public static SqlConnection GetConnection()
+    {
+        return new SqlConnection(connectionString);
+    }
+
+    public static void ListTrains()
+    {
+        using (SqlConnection conn = GetConnection())
+        {
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT * FROM Trains", conn);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            Console.WriteLine("Train List:");
+            while (reader.Read())
+            {
+                Console.WriteLine($"TrainID: {reader["TrainID"]}, TrainNo: {reader["TrainNo"]}, TrainName: {reader["TrainName"]}, From: {reader["FromStation"]}, To: {reader["ToStation"]}, Date: {reader["Date"]}, Price: {reader["Price"]}, Seats Available: {reader["NoOfSeats"]}, Status: {reader["Status"]}");
+            }
+        }
+    }
+
+    public static void AddTrains(string trainNo, string trainName, string fromStation, string toStation, DateTime date, decimal price, string status, int noOfSeats, string classes)
+    {
+        using (SqlConnection conn = GetConnection())
+        {
+            try
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("INSERT INTO Trains (TrainNo, TrainName, FromStation, ToStation, Date, Price, Status, NoOfSeats, Classes) VALUES (@TrainNo, @TrainName, @FromStation, @ToStation, @Date, @Price, @Status, @NoOfSeats, @Classes)", conn);
+                cmd.Parameters.AddWithValue("@TrainNo", trainNo);
+                cmd.Parameters.AddWithValue("@TrainName", trainName);
+                cmd.Parameters.AddWithValue("@FromStation", fromStation);
+                cmd.Parameters.AddWithValue("@ToStation", toStation);
+                cmd.Parameters.AddWithValue("@Date", date);
+                cmd.Parameters.AddWithValue("@Price", price);
+                cmd.Parameters.AddWithValue("@Status", status);
+                cmd.Parameters.AddWithValue("@NoOfSeats", noOfSeats);
+                cmd.Parameters.AddWithValue("@Classes", classes);
+                cmd.ExecuteNonQuery();
+                Console.WriteLine("Train added successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+    }
+
+    public static void UpdateTrains(int trainID, string trainNo, string trainName, string fromStation, string toStation, DateTime date, decimal price, string status, int noOfSeats, string classes)
+    {
+        using (SqlConnection conn = GetConnection())
+        {
+            try
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("UPDATE Trains SET TrainNo = @TrainNo, TrainName = @TrainName, FromStation = @FromStation, ToStation = @ToStation, Date = @Date, Price = @Price, Status = @Status, NoOfSeats = @NoOfSeats, Classes = @Classes WHERE TrainID = @TrainID", conn);
+                cmd.Parameters.AddWithValue("@TrainID", trainID);
+                cmd.Parameters.AddWithValue("@TrainNo", trainNo);
+                cmd.Parameters.AddWithValue("@TrainName", trainName);
+                cmd.Parameters.AddWithValue("@FromStation", fromStation);
+                cmd.Parameters.AddWithValue("@ToStation", toStation);
+                cmd.Parameters.AddWithValue("@Date", date);
+                cmd.Parameters.AddWithValue("@Price", price);
+                cmd.Parameters.AddWithValue("@Status", status);
+                cmd.Parameters.AddWithValue("@NoOfSeats", noOfSeats);
+                cmd.Parameters.AddWithValue("@Classes", classes);
+                cmd.ExecuteNonQuery();
+                Console.WriteLine("Train updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+    }
+
+    public static int GetAvailableSeats(int trainID)
+    {
+        using (SqlConnection conn = GetConnection())
+        {
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT NoOfSeats FROM Trains WHERE TrainID = @TrainID", conn);
+            cmd.Parameters.AddWithValue("@TrainID", trainID);
+            object result = cmd.ExecuteScalar();
+            return result != null ? Convert.ToInt32(result) : 0;
+        }
+    }
+
+    public static void ConfirmBooking(int trainID, int userID, int numberOfSeats)
+    {
+        using (SqlConnection conn = GetConnection())
+        {
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("INSERT INTO Booking (TrainID, UserID, NumberOfSeats, Status) VALUES (@TrainID, @UserID, @NumberOfSeats, 'Confirmed')", conn);
+            cmd.Parameters.AddWithValue("@TrainID", trainID);
+            cmd.Parameters.AddWithValue("@UserID", userID);
+            cmd.Parameters.AddWithValue("@NumberOfSeats", numberOfSeats);
+            cmd.ExecuteNonQuery();
+        }
+    }
+
+    public static void UpdateSeatAvailability(int trainID, int bookedSeats)
+    {
+        using (SqlConnection conn = GetConnection())
+        {
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("UPDATE Trains SET NoOfSeats = NoOfSeats - @BookedSeats WHERE TrainID = @TrainID", conn);
+            cmd.Parameters.AddWithValue("@BookedSeats", bookedSeats);
+            cmd.Parameters.AddWithValue("@TrainID", trainID);
+            cmd.ExecuteNonQuery();
+        }
+    }
+
+    public static void CancelBooking(int bookingID, int trainID, int numberOfSeats)
+    {
+        using (SqlConnection conn = GetConnection())
+        {
+            conn.Open();
+            using (SqlTransaction transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    SqlCommand updateBookingCmd = new SqlCommand("UPDATE Booking SET Status = 'Cancelled' WHERE BookingID = @BookingID", conn, transaction);
+                    updateBookingCmd.Parameters.AddWithValue("@BookingID", bookingID);
+                    int rowsAffected = updateBookingCmd.ExecuteNonQuery();
+
+                    if (rowsAffected == 0)
+                    {
+                        throw new Exception("Failed to update booking status.");
+                    }
+
+                    SqlCommand updateSeatsCmd = new SqlCommand("UPDATE Trains SET NoOfSeats = NoOfSeats + @NumberOfSeats WHERE TrainID = @TrainID", conn, transaction);
+                    updateSeatsCmd.Parameters.AddWithValue("@NumberOfSeats", numberOfSeats);
+                    updateSeatsCmd.Parameters.AddWithValue("@TrainID", trainID);
+                    updateSeatsCmd.ExecuteNonQuery();
+
+                    transaction.Commit();
+                    Console.WriteLine("Cancellation successful.");
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+            }
+        }
+    }
+
+    public static void AddUser(string username, string password, string fullName, string email, string phoneNumber, string userRole)
+    {
+        using (SqlConnection conn = GetConnection())
+        {
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("INSERT INTO Users (UserName, Password, FullName, Email, PhoneNumber, UserRole) VALUES (@UserName, @Password, @FullName, @Email, @PhoneNumber, @UserRole)", conn);
+            cmd.Parameters.AddWithValue("@UserName", username);
+            cmd.Parameters.AddWithValue("@Password", password);
+            cmd.Parameters.AddWithValue("@FullName", fullName);
+            cmd.Parameters.AddWithValue("@Email", email);
+            cmd.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+            cmd.Parameters.AddWithValue("@UserRole", userRole);
+            cmd.ExecuteNonQuery();
+        }
+    }
+
+    public static int GetUserID(string username, string password)
+    {
+        using (SqlConnection conn = GetConnection())
+        {
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT UserID FROM Users WHERE UserName = @UserName AND Password = @Password", conn);
+            cmd.Parameters.AddWithValue("@UserName", username);
+            cmd.Parameters.AddWithValue("@Password", password);
+            object result = cmd.ExecuteScalar();
+            return result != null ? Convert.ToInt32(result) : 0;
+        }
+    }
+
+    public static (string FullName, string Email, string PhoneNumber) GetUserDetails(int userID)
+    {
+        using (SqlConnection conn = GetConnection())
+        {
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT FullName, Email, PhoneNumber FROM Users WHERE UserID = @UserID", conn);
+            cmd.Parameters.AddWithValue("@UserID", userID);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                return ((string)reader["FullName"], (string)reader["Email"], (string)reader["PhoneNumber"]);
+            }
+            return (null, null, null);
+        }
+    }
+
+    public static (string TrainNo, string TrainName, string FromStation, string ToStation, DateTime Date, decimal Price, string Status) GetTrainDetails(int trainID)
+    {
+        using (SqlConnection conn = GetConnection())
+        {
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT TrainNo, TrainName, FromStation, ToStation, Date, Price, Status FROM Trains WHERE TrainID = @TrainID", conn);
+            cmd.Parameters.AddWithValue("@TrainID", trainID);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                return ((string)reader["TrainNo"], (string)reader["TrainName"], (string)reader["FromStation"], (string)reader["ToStation"], (DateTime)reader["Date"], (decimal)reader["Price"], (string)reader["Status"]);
+            }
+            return (null, null, null, null, DateTime.MinValue, 0, null);
+        }
+    }
+
+    public static (int TrainID, int NumberOfSeats, string Status) GetBookingDetails(int bookingID)
+    {
+        using (SqlConnection conn = GetConnection())
+        {
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT TrainID, NumberOfSeats, Status FROM Booking WHERE BookingID = @BookingID", conn);
+            cmd.Parameters.AddWithValue("@BookingID", bookingID);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                return ((int)reader["TrainID"], (int)reader["NumberOfSeats"], (string)reader["Status"]);
+            }
+            return (0, 0, null);
+        }
+    }
+
+    public static int GetLatestBookingID(int userID, int trainID)
+    {
+        using (SqlConnection conn = GetConnection())
+        {
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT MAX(BookingID) FROM Booking WHERE UserID = @UserID AND TrainID = @TrainID", conn);
+            cmd.Parameters.AddWithValue("@UserID", userID);
+            cmd.Parameters.AddWithValue("@TrainID", trainID);
+            object result = cmd.ExecuteScalar();
+            return result != null ? Convert.ToInt32(result) : 0;
+        }
+    }
+}
+ChatGPT
+Here's a line-by-line explanation of the Trains class, which manages various aspects of train bookings, including listing, adding, updating trains, and handling bookings and users.
+
+Overview
+The Trains class interacts with a SQL Server database to perform operations related to train schedules, bookings, and user management. It contains methods for listing trains, adding and updating train details, booking and canceling seats, and managing users.
+
+Detailed Explanation
+using System;
+using System.Data.SqlClient;
+These namespaces provide necessary classes for general operations (System) and SQL Server database interactions (System.Data.SqlClient).
+
+public static class Trains
+Defines a static class Trains containing static methods that interact with the database. Being static means the class cannot be instantiated.
+
+private static string connectionString = "data source=ICS-LT-7L8L103\\SQLEXPRESS; initial catalog=miniproject; User ID=sa; Password=@Rrrp2078";
+This line defines a private static string connectionString used to connect to the SQL Server database.
+
+GetConnection Method
+public static SqlConnection GetConnection()
+Returns a new instance of SqlConnection using the connection string.
+
+ListTrains Method
+public static void ListTrains()
+Lists all trains in the Trains table.
+
+using (SqlConnection conn = GetConnection())
+Creates a new SqlConnection object and ensures it is properly disposed of after use.
+
+conn.Open();
+Opens the database connection.
+
+SqlCommand cmd = new SqlCommand("SELECT * FROM Trains", conn);
+Creates a SQL command to select all records from the Trains table.
+
+SqlDataReader reader = cmd.ExecuteReader();
+Executes the command and retrieves the result set as a SqlDataReader.
+
+Console.WriteLine("Train List:");
+Prints a header for the train list.
+
+while (reader.Read())
+Loops through each record returned by the query.
+
+Console.WriteLine($"TrainID: {reader["TrainID"]}, TrainNo: {reader["TrainNo"]}, TrainName: {reader["TrainName"]}, From: {reader["FromStation"]}, To: {reader["ToStation"]}, Date: {reader["Date"]}, Price: {reader["Price"]}, Seats Available: {reader["NoOfSeats"]}, Status: {reader["Status"]}");
+Prints each train's details.
+
+AddTrains Method
+public static void AddTrains(string trainNo, string trainName, string fromStation, string toStation, DateTime date, decimal price, string status, int noOfSeats, string classes)
+Adds a new train to the Trains table.
+
+using (SqlConnection conn = GetConnection())
+Creates a new SqlConnection object.
+
+try
+Starts a try block for exception handling.
+
+conn.Open();
+Opens the database connection.
+
+SqlCommand cmd = new SqlCommand("INSERT INTO Trains (TrainNo, TrainName, FromStation, ToStation, Date, Price, Status, NoOfSeats, Classes) VALUES (@TrainNo, @TrainName, @FromStation, @ToStation, @Date, @Price, @Status, @NoOfSeats, @Classes)", conn);
+Creates a SQL command to insert a new train record.
+
+cmd.Parameters.AddWithValue("@TrainNo", trainNo);
+Adds parameters for the SQL command to prevent SQL injection.
+
+cmd.Parameters.AddWithValue("@TrainName", trainName);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@FromStation", fromStation);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@ToStation", toStation);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@Date", date);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@Price", price);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@Status", status);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@NoOfSeats", noOfSeats);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@Classes", classes);
+Adds parameters for the SQL command.
+
+cmd.ExecuteNonQuery();
+Executes the command without returning any results.
+
+Console.WriteLine("Train added successfully.");
+Prints a success message.
+
+catch (Exception ex)
+Catches any exceptions thrown during the try block.
+
+Console.WriteLine($"Error: {ex.Message}");
+Prints the exception message.
+
+UpdateTrains Method
+public static void UpdateTrains(int trainID, string trainNo, string trainName, string fromStation, string toStation, DateTime date, decimal price, string status, int noOfSeats, string classes)
+Updates details of an existing train.
+
+using (SqlConnection conn = GetConnection())
+Creates a new SqlConnection object.
+
+try
+Starts a try block for exception handling.
+
+conn.Open();
+Opens the database connection.
+
+SqlCommand cmd = new SqlCommand("UPDATE Trains SET TrainNo = @TrainNo, TrainName = @TrainName, FromStation = @FromStation, ToStation = @ToStation, Date = @Date, Price = @Price, Status = @Status, NoOfSeats = @NoOfSeats, Classes = @Classes WHERE TrainID = @TrainID", conn);
+Creates a SQL command to update an existing train record.
+
+cmd.Parameters.AddWithValue("@TrainID", trainID);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@TrainNo", trainNo);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@TrainName", trainName);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@FromStation", fromStation);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@ToStation", toStation);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@Date", date);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@Price", price);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@Status", status);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@NoOfSeats", noOfSeats);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@Classes", classes);
+Adds parameters for the SQL command.
+
+cmd.ExecuteNonQuery();
+Executes the command without returning any results.
+
+Console.WriteLine("Train updated successfully.");
+Prints a success message.
+
+catch (Exception ex)
+Catches any exceptions thrown during the try block.
+
+Console.WriteLine($"Error: {ex.Message}");
+Prints the exception message.
+
+GetAvailableSeats Method
+public static int GetAvailableSeats(int trainID)
+Returns the number of available seats for a specific train.
+
+using (SqlConnection conn = GetConnection())
+Creates a new SqlConnection object.
+
+conn.Open();
+Opens the database connection.
+
+SqlCommand cmd = new SqlCommand("SELECT NoOfSeats FROM Trains WHERE TrainID = @TrainID", conn);
+Creates a SQL command to select the number of available seats for a train.
+
+cmd.Parameters.AddWithValue("@TrainID", trainID);
+Adds parameters for the SQL command.
+
+object result = cmd.ExecuteScalar();
+Executes the command and retrieves a single value.
+
+return result != null ? Convert.ToInt32(result) : 0;
+Converts the result to an integer or returns 0 if no result is found.
+
+ConfirmBooking Method
+public static void ConfirmBooking(int trainID, int userID, int numberOfSeats)
+Confirms a booking by inserting a record into the Booking table.
+
+using (SqlConnection conn = GetConnection())
+Creates a new SqlConnection object.
+
+conn.Open();
+Opens the database connection.
+
+SqlCommand cmd = new SqlCommand("INSERT INTO Booking (TrainID, UserID, NumberOfSeats, Status) VALUES (@TrainID, @UserID, @NumberOfSeats, 'Confirmed')", conn);
+Creates a SQL command to insert a new booking record.
+
+cmd.Parameters.AddWithValue("@TrainID", trainID);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@UserID", userID);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@NumberOfSeats", numberOfSeats);
+Adds parameters for the SQL command.
+
+cmd.ExecuteNonQuery();
+Executes the command without returning any results.
+
+UpdateSeatAvailability Method
+public static void UpdateSeatAvailability(int trainID, int bookedSeats)
+Updates the number of available seats after a booking.
+
+using (SqlConnection conn = GetConnection())
+Creates a new SqlConnection object.
+
+conn.Open();
+Opens the database connection.
+
+SqlCommand cmd = new SqlCommand("UPDATE Trains SET NoOfSeats = NoOfSeats - @BookedSeats WHERE TrainID = @TrainID", conn);
+Creates a SQL command to update the number of available seats.
+
+cmd.Parameters.AddWithValue("@BookedSeats", bookedSeats);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@TrainID", trainID);
+Adds parameters for the SQL command.
+
+cmd.ExecuteNonQuery();
+Executes the command without returning any results.
+
+CancelBooking Method
+public static void CancelBooking(int bookingID, int trainID, int numberOfSeats)
+Cancels a booking and updates seat availability.
+
+using (SqlConnection conn = GetConnection())
+Creates a new SqlConnection object.
+
+conn.Open();
+Opens the database connection.
+
+using (SqlTransaction transaction = conn.BeginTransaction())
+Begins a SQL transaction to ensure atomicity.
+
+try
+Starts a try block for exception handling.
+
+SqlCommand updateBookingCmd = new SqlCommand("UPDATE Booking SET Status = 'Cancelled' WHERE BookingID = @BookingID", conn, transaction);
+Creates a SQL command to update the booking status to 'Cancelled'.
+
+updateBookingCmd.Parameters.AddWithValue("@BookingID", bookingID);
+Adds parameters for the SQL command.
+
+int rowsAffected = updateBookingCmd.ExecuteNonQuery();
+Executes the command and retrieves the number of affected rows.
+
+if (rowsAffected == 0)
+Checks if no rows were updated.
+
+throw new Exception("Failed to update booking status.");
+Throws an exception if no rows were updated.
+
+SqlCommand updateSeatsCmd = new SqlCommand("UPDATE Trains SET NoOfSeats = NoOfSeats + @NumberOfSeats WHERE TrainID = @TrainID", conn, transaction);
+Creates a SQL command to update the number of available seats after cancellation.
+
+updateSeatsCmd.Parameters.AddWithValue("@NumberOfSeats", numberOfSeats);
+Adds parameters for the SQL command.
+
+updateSeatsCmd.Parameters.AddWithValue("@TrainID", trainID);
+Adds parameters for the SQL command.
+
+updateSeatsCmd.ExecuteNonQuery();
+Executes the command without returning any results.
+
+transaction.Commit();
+Commits the transaction, making changes permanent.
+
+Console.WriteLine("Cancellation successful.");
+Prints a success message.
+
+catch (Exception ex)
+Catches any exceptions thrown during the transaction.
+
+transaction.Rollback();
+Rolls back the transaction if an error occurs.
+
+Console.WriteLine($"Error: {ex.Message}");
+Prints the exception message.
+
+AddUser Method
+public static void AddUser(string username, string password, string fullName, string email, string phoneNumber, string userRole)
+Adds a new user to the Users table.
+
+using (SqlConnection conn = GetConnection())
+Creates a new SqlConnection object.
+
+conn.Open();
+Opens the database connection.
+
+SqlCommand cmd = new SqlCommand("INSERT INTO Users (UserName, Password, FullName, Email, PhoneNumber, UserRole) VALUES (@UserName, @Password, @FullName, @Email, @PhoneNumber, @UserRole)", conn);
+Creates a SQL command to insert a new user record.
+
+cmd.Parameters.AddWithValue("@UserName", username);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@Password", password);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@FullName", fullName);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@Email", email);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@UserRole", userRole);
+Adds parameters for the SQL command.
+
+cmd.ExecuteNonQuery();
+Executes the command without returning any results.
+
+GetUserID Method
+public static int GetUserID(string username, string password)
+Retrieves the user ID based on username and password.
+
+using (SqlConnection conn = GetConnection())
+Creates a new SqlConnection object.
+
+conn.Open();
+Opens the database connection.
+
+SqlCommand cmd = new SqlCommand("SELECT UserID FROM Users WHERE UserName = @UserName AND Password = @Password", conn);
+Creates a SQL command to retrieve the user ID.
+
+cmd.Parameters.AddWithValue("@UserName", username);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@Password", password);
+Adds parameters for the SQL command.
+
+object result = cmd.ExecuteScalar();
+Executes the command and retrieves a single value.
+
+return result != null ? Convert.ToInt32(result) : 0;
+Converts the result to an integer or returns 0 if no result is found.
+
+GetUserDetails Method
+public static (string FullName, string Email, string PhoneNumber) GetUserDetails(int userID)
+Retrieves user details based on user ID.
+
+using (SqlConnection conn = GetConnection())
+Creates a new SqlConnection object.
+
+conn.Open();
+Opens the database connection.
+
+SqlCommand cmd = new SqlCommand("SELECT FullName, Email, PhoneNumber FROM Users WHERE UserID = @UserID", conn);
+Creates a SQL command to retrieve user details.
+
+cmd.Parameters.AddWithValue("@UserID", userID);
+Adds parameters for the SQL command.
+
+SqlDataReader reader = cmd.ExecuteReader();
+Executes the command and retrieves the result set.
+
+if (reader.Read())
+Checks if any record was found.
+
+return ((string)reader["FullName"], (string)reader["Email"], (string)reader["PhoneNumber"]);
+Returns the user details.
+
+return (null, null, null);
+Returns default values if no record is found.
+
+GetTrainDetails Method
+public static (string TrainNo, string TrainName, string FromStation, string ToStation, DateTime Date, decimal Price, string Status) GetTrainDetails(int trainID)
+Retrieves train details based on train ID.
+
+using (SqlConnection conn = GetConnection())
+Creates a new SqlConnection object.
+
+conn.Open();
+Opens the database connection.
+
+SqlCommand cmd = new SqlCommand("SELECT TrainNo, TrainName, FromStation, ToStation, Date, Price, Status FROM Trains WHERE TrainID = @TrainID", conn);
+Creates a SQL command to retrieve train details.
+
+cmd.Parameters.AddWithValue("@TrainID", trainID);
+Adds parameters for the SQL command.
+
+SqlDataReader reader = cmd.ExecuteReader();
+Executes the command and retrieves the result set.
+
+if (reader.Read())
+Checks if any record was found.
+
+return ((string)reader["TrainNo"], (string)reader["TrainName"], (string)reader["FromStation"], (string)reader["ToStation"], (DateTime)reader["Date"], (decimal)reader["Price"], (string)reader["Status"]);
+Returns the train details.
+
+return (null, null, null, null, DateTime.MinValue, 0, null);
+Returns default values if no record is found.
+
+GetBookingDetails Method
+public static (int TrainID, int NumberOfSeats, string Status) GetBookingDetails(int bookingID)
+Retrieves booking details based on booking ID.
+
+using (SqlConnection conn = GetConnection())
+Creates a new SqlConnection object.
+
+conn.Open();
+Opens the database connection.
+
+SqlCommand cmd = new SqlCommand("SELECT TrainID, NumberOfSeats, Status FROM Booking WHERE BookingID = @BookingID", conn);
+Creates a SQL command to retrieve booking details.
+
+cmd.Parameters.AddWithValue("@BookingID", bookingID);
+Adds parameters for the SQL command.
+
+SqlDataReader reader = cmd.ExecuteReader();
+Executes the command and retrieves the result set.
+
+if (reader.Read())
+Checks if any record was found.
+
+return ((int)reader["TrainID"], (int)reader["NumberOfSeats"], (string)reader["Status"]);
+Returns the booking details.
+
+return (0, 0, null);
+Returns default values if no record is found.
+
+GetLatestBookingID Method
+public static int GetLatestBookingID(int userID, int trainID)
+Retrieves the latest booking ID for a given user and train.
+
+using (SqlConnection conn = GetConnection())
+Creates a new SqlConnection object.
+
+conn.Open();
+Opens the database connection.
+
+SqlCommand cmd = new SqlCommand("SELECT MAX(BookingID) FROM Booking WHERE UserID = @UserID AND TrainID = @TrainID", conn);
+Creates a SQL command to retrieve the latest booking ID.
+
+cmd.Parameters.AddWithValue("@UserID", userID);
+Adds parameters for the SQL command.
+
+cmd.Parameters.AddWithValue("@TrainID", trainID);
+Adds parameters for the SQL command.
+
+object result = cmd.ExecuteScalar();
+Executes the command and retrieves a single value.
+
+return result != null ? Convert.ToInt32(result) : 0;
+Converts the result to an integer or returns 0 if no result is found.
+
+using System;
+using System.Data.SqlClient;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Welcome to Railway Reservation System");
+
+        Console.Write("Enter username: ");
+        string username = Console.ReadLine();
+
+        Console.Write("Enter password: ");
+        string password = Console.ReadLine();
+
+        int userID = Trains.GetUserID(username, password);
+        string userRole = userID == 0 ? "Guest" : GetUserRole(userID);
+
+        if (userRole == "Guest")
+        {
+            Console.WriteLine("Invalid credentials.");
+            return;
+        }
+
+        Console.WriteLine($"Logged in as {userRole}");
+
+        while (true)
+        {
+            Console.WriteLine("\nMenu:");
+            Console.WriteLine("1. List All Trains");
+            Console.WriteLine("2. Add Train");
+            Console.WriteLine("3. Update Train");
+            Console.WriteLine("4. Book Tickets");
+            Console.WriteLine("5. Cancel Tickets");
+            Console.WriteLine("6. Exit");
+
+            Console.Write("Choose an option: ");
+            int option = Convert.ToInt32(Console.ReadLine());
+
+            switch (option)
+            {
+                case 1:
+                    Trains.ListTrains();
+                    break;
+
+                case 2:
+                    if (userRole == "Admin")
+                    {
+                        Admin.AddTrains();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Access denied. Admins only.");
+                    }
+                    break;
+
+                case 3:
+                    if (userRole == "Admin")
+                    {
+                        Admin.UpdateTrains();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Access denied. Admins only.");
+                    }
+                    break;
+
+                case 4:
+                    if (userRole == "User")
+                    {
+                        Users.BookTickets();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Access denied. Users only.");
+                    }
+                    break;
+
+                case 5:
+                    if (userRole == "User")
+                    {
+                        Users.CancelTickets();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Access denied. Users only.");
+                    }
+                    break;
+
+                case 6:
+                    Console.WriteLine("Exiting...");
+                    return;
+
+                default:
+                    Console.WriteLine("Invalid option. Please try again.");
+                    break;
+            }
+        }
+    }
+
+    private static string GetUserRole(int userID)
+    {
+        using (var conn = Trains.GetConnection())
+        {
+            conn.Open();
+            using (var cmd = new SqlCommand("SELECT UserRole FROM Users WHERE UserID = @UserID", conn))
+            {
+                cmd.Parameters.AddWithValue("@UserID", userID);
+                return cmd.ExecuteScalar()?.ToString() ?? "Guest";
+            }
+        }
+    }
+}
+ChatGPT
+Your Program class looks well-organized and functional for the Railway Reservation System. Here’s a quick overview of what it does and a few suggestions for improvements:
+
+Overview
+User Authentication:
+
+Prompts the user to enter their username and password.
+Retrieves the user ID and role from the database.
+If the credentials are invalid, it notifies the user and exits.
+Menu Options:
+
+Displays a menu with options for listing trains, adding or updating trains, booking or canceling tickets, and exiting.
+Depending on the user role (Admin or User), the menu options available to the user are filtered.
+Role-Based Access Control:
+
+Admins can add or update trains.
+Users can book or cancel tickets.
+Suggestions for Improvement
+Error Handling:
+
+Add error handling for database operations to handle scenarios where the connection might fail or queries might return unexpected results.
+Consider wrapping the Convert.ToInt32 method call in a try-catch block to handle invalid input more gracefully.
+Input Validation:
+
+Validate user input for menu options to ensure that only valid integers are processed.
+For password input, consider masking the input for security purposes.
+Method Calls:
+
+Ensure that Admin.AddTrains, Admin.UpdateTrains, Users.BookTickets, and Users.CancelTickets methods are defined and correctly implemented elsewhere in your code.
+Role Constants:
+
+Define constants or enums for user roles to avoid hardcoding strings. This can help prevent typos and make the code more maintainable.
+Logging:
+
+Consider adding logging to keep track of user actions and system errors. This is helpful for debugging and auditing.
+UI Enhancements:
+
+Enhance the user experience by adding more descriptive messages and confirmations for actions like booking or canceling tickets.
+Here's a slightly improved version of your Program class with some of these suggestions implemented:
+
+csharp
+Copy code
+using System;
+using System.Data.SqlClient;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Welcome to Railway Reservation System");
+
+        Console.Write("Enter username: ");
+        string username = Console.ReadLine();
+
+        Console.Write("Enter password: ");
+        string password = ReadPassword();
+
+        int userID = Trains.GetUserID(username, password);
+        string userRole = userID == 0 ? "Guest" : GetUserRole(userID);
+
+        if (userRole == "Guest")
+        {
+            Console.WriteLine("Invalid credentials.");
+            return;
+        }
+
+        Console.WriteLine($"Logged in as {userRole}");
+
+        while (true)
+        {
+            Console.WriteLine("\nMenu:");
+            Console.WriteLine("1. List All Trains");
+            Console.WriteLine("2. Add Train");
+            Console.WriteLine("3. Update Train");
+            Console.WriteLine("4. Book Tickets");
+            Console.WriteLine("5. Cancel Tickets");
+            Console.WriteLine("6. Exit");
+
+            Console.Write("Choose an option: ");
+            if (!int.TryParse(Console.ReadLine(), out int option))
+            {
+                Console.WriteLine("Invalid option. Please enter a number.");
+                continue;
+            }
+
+            switch (option)
+            {
+                case 1:
+                    Trains.ListTrains();
+                    break;
+
+                case 2:
+                    if (userRole == "Admin")
+                    {
+                        Admin.AddTrains();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Access denied. Admins only.");
+                    }
+                    break;
+
+                case 3:
+                    if (userRole == "Admin")
+                    {
+                        Admin.UpdateTrains();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Access denied. Admins only.");
+                    }
+                    break;
+
+                case 4:
+                    if (userRole == "User")
+                    {
+                        Users.BookTickets();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Access denied. Users only.");
+                    }
+                    break;
+
+                case 5:
+                    if (userRole == "User")
+                    {
+                        Users.CancelTickets();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Access denied. Users only.");
+                    }
+                    break;
+
+                case 6:
+                    Console.WriteLine("Exiting...");
+                    return;
+
+                default:
+                    Console.WriteLine("Invalid option. Please try again.");
+                    break;
+            }
+        }
+    }
+
+    private static string GetUserRole(int userID)
+    {
+        using (var conn = Trains.GetConnection())
+        {
+            conn.Open();
+            using (var cmd = new SqlCommand("SELECT UserRole FROM Users WHERE UserID = @UserID", conn))
+            {
+                cmd.Parameters.AddWithValue("@UserID", userID);
+                return cmd.ExecuteScalar()?.ToString() ?? "Guest";
+            }
+        }
+    }
+
+    private static string ReadPassword()
+    {
+        string password = "";
+        ConsoleKeyInfo keyInfo;
+        do
+        {
+            keyInfo = Console.ReadKey(intercept: true);
+            if (keyInfo.Key != ConsoleKey.Backspace && keyInfo.Key != ConsoleKey.Enter)
+            {
+                password += keyInfo.KeyChar;
+                Console.Write("*");
+            }
+            else if (keyInfo.Key == ConsoleKey.Backspace && password.Length > 0)
+            {
+                password = password[0..^1];
+                Console.Write("\b \b");
+            }
+        } while (keyInfo.Key != ConsoleKey.Enter);
+
+        Console.WriteLine();
+        return password;
+    }
+}
+Notes
+Password Input: Implemented ReadPassword method to mask password input for better security.
+Input Validation: Added validation for menu option input.
+Error Handling: Provided a basic example of handling invalid input gracefully.
+Feel free to adjust and expand upon these suggestions based on your project's specific requirements and constraints.
