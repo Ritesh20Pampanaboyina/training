@@ -1,0 +1,26 @@
+create table Booking (
+    BookingID int primary key identity,
+    TrainID int,
+    UserID int,
+    NumberOfSeats int,
+    Status varchar(50),
+    UserName varchar(100),
+    UserFullName varchar(100),
+    UserEmail varchar(100),
+    UserPhoneNumber varchar(15),
+    TrainNo varchar(50),
+    TrainName varchar(100),
+    FromStation varchar(100),
+    ToStation varchar(100),
+    Date datetime,
+    Price decimal(18, 2),
+    TotalPrice decimal(18, 2)
+);
+create table CancelBooking (
+    CancelBookingID int identity(1,1) primary key,
+    BookingID int,
+    UserID int,
+    NumberOfSeats int,
+    CancellationDate datetime default getdate(),
+    Status varchar(50) 
+); 
