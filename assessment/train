@@ -1,0 +1,39 @@
+public static void ConfirmBooking(int trainID, int userID, int numberOfSeats)
+    {
+        using (var conn = GetConnection())
+        {
+            conn.Open();
+
+            var trainDetails = GetTrainDetails(trainID);
+            var userDetails = GetUserDetails(userID);
+            decimal totalPrice = trainDetails.Price * numberOfSeats;
+
+            string sql = @"INSERT INTO Booking 
+                       (TrainID, UserID, NumberOfSeats, Status, UserName, UserFullName, UserEmail, UserPhoneNumber, 
+                        TrainNo, TrainName, FromStation, ToStation, Date, Price, TotalPrice) 
+                       VALUES 
+                       (@TrainID, @UserID, @NumberOfSeats, @Status, @UserName, @UserFullName, @UserEmail, @UserPhoneNumber, 
+                        @TrainNo, @TrainName, @FromStation, @ToStation, @Date, @Price, @TotalPrice)";
+
+            using (var cmd = new SqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@TrainID", trainID);
+                cmd.Parameters.AddWithValue("@UserID", userID);
+                cmd.Parameters.AddWithValue("@NumberOfSeats", numberOfSeats);
+                cmd.Parameters.AddWithValue("@Status", "Confirmed");
+                cmd.Parameters.AddWithValue("@UserName", userDetails.Name);
+                cmd.Parameters.AddWithValue("@UserFullName", userDetails.FullName);
+                cmd.Parameters.AddWithValue("@UserEmail", userDetails.Email);
+                cmd.Parameters.AddWithValue("@UserPhoneNumber", userDetails.PhoneNumber);
+                cmd.Parameters.AddWithValue("@TrainNo", trainDetails.TrainNo);
+                cmd.Parameters.AddWithValue("@TrainName", trainDetails.TrainName);
+                cmd.Parameters.AddWithValue("@FromStation", trainDetails.FromStation);
+                cmd.Parameters.AddWithValue("@ToStation", trainDetails.ToStation);
+                cmd.Parameters.AddWithValue("@Date", trainDetails.Date);
+                cmd.Parameters.AddWithValue("@Price", trainDetails.Price);
+                cmd.Parameters.AddWithValue("@TotalPrice", totalPrice);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
