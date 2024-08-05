@@ -1,0 +1,27 @@
+public static void ConfirmBooking(int trainID, int userID, int numberOfSeats)
+{
+    using (var conn = GetConnection())
+    {
+        conn.Open();
+
+        var trainDetails = GetTrainDetails(trainID);
+        var userDetails = GetUserDetails(userID);
+        decimal totalPrice = trainDetails.Price * numberOfSeats;
+
+        string sql = @"INSERT INTO Booking 
+                       (TrainID, UserID, NumberOfSeats, Status) 
+                       VALUES 
+                       (@TrainID, @UserID, @NumberOfSeats, @Status)";
+
+        using (var cmd = new SqlCommand(sql, conn))
+        {
+            cmd.Parameters.AddWithValue("@TrainID", trainID);
+            cmd.Parameters.AddWithValue("@UserID", userID);
+            cmd.Parameters.AddWithValue("@NumberOfSeats", numberOfSeats);
+            cmd.Parameters.AddWithValue("@Status", "Confirmed");
+
+            cmd.ExecuteNonQuery();
+        }
+    }
+}
+
