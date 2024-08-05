@@ -1,0 +1,15 @@
+CREATE TABLE Booking (
+    BookingID INT PRIMARY KEY IDENTITY,
+    TrainID INT,
+    UserID INT,
+    NumberOfSeats INT,
+    Status VARCHAR(50)
+);
+CREATE TABLE CancelBooking (
+    CancelBookingID INT PRIMARY KEY IDENTITY(1,1),
+    BookingID INT,
+    UserID INT,
+    NumberOfSeats INT,
+    CancellationDate DATETIME DEFAULT GETDATE(),
+    Status VARCHAR(50)
+);
