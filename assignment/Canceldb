@@ -1,0 +1,8 @@
+CREATE TABLE CancelBooking (
+    CancelBookingID INT IDENTITY(1,1) PRIMARY KEY,
+    BookingID INT NOT NULL,
+    UserID INT NOT NULL,
+    NumberOfSeats INT NOT NULL,
+    CancellationDate DATETIME DEFAULT GETDATE(),
+    Status VARCHAR(50) DEFAULT 'Pending'
+);
