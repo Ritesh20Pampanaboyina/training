@@ -11,7 +11,12 @@
     <script>
         var str = '';
         for (var i = 0; i <= 15; i++) {
-            var result = i % 2 === 0 ? "Even" : "Odd";
+            var result;
+            if (i % 2 === 0) {
+                result = "Even";
+            } else {
+                result = "Odd";
+            }
             str += "Number " + i + " is " + result + "<br/>";
         }
         document.getElementById("results").innerHTML = str;
