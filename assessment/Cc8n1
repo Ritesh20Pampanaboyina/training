@@ -6,7 +6,7 @@
     <!-- Using external JavaScript file as a part of the jQuery library -->
     <script src="jquery-3.4.1.min.js"></script>
     <script>
-        function calculate() {
+        function multiply() {
             var num1 = document.getElementById('num1').value;
             var num2 = document.getElementById('num2').value;
 
@@ -15,9 +15,21 @@
                 num2 = Number(num2);
 
                 var multiplication = num1 * num2;
-                var division = num2 !== 0 ? (num1 / num2).toFixed(2) : 'Cannot divide by zero';
 
                 document.getElementById('multiplicationResult').innerText = 'Multiplication: ' + multiplication;
+            }
+        }
+
+        function divide() {
+            var num1 = document.getElementById('num1').value;
+            var num2 = document.getElementById('num2').value;
+
+            if (isNumeric(num1, "Please enter a valid first number") && isNumeric(num2, "Please enter a valid second number")) {
+                num1 = Number(num1);
+                num2 = Number(num2);
+
+                var division = num2 !== 0 ? (num1 / num2).toFixed(2) : 'Cannot divide by zero';
+
                 document.getElementById('divisionResult').innerText = 'Division: ' + division;
             }
         }
@@ -43,7 +55,8 @@
         <label for="num2">Enter second number:</label>
         <input type="text" id="num2" required /><br /><br />
     </div>
-    <button onclick="calculate()">Calculate</button>
+    <button onclick="multiply()">Multiply</button>
+    <button onclick="divide()">Divide</button>
     <h3>Results:</h3>
     <p id="multiplicationResult"></p>
     <p id="divisionResult"></p>
