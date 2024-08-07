@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Button Click Example</title>
+</head>
+<body>
+    <!-- Create a button and add click event listener -->
+    <script>
+        // Create a button element
+        var button = document.createElement("button");
+        button.innerText = "Click Me";
+
+        // Add a click event listener to the button
+        button.addEventListener("click", function() {
+            console.log("Button was clicked!");
+        });
+
+        // Append the button to the body
+        document.body.appendChild(button);
+    </script>
+</body>
+</html>
