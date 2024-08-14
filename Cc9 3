@@ -1,19 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
+using System.Data.Entity;
 using MVC_CodeFirst.Models;
 
 namespace MVC_CodeFirst.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly MoviesDbContext _db;
+        private readonly MoviesContext _db;
         private readonly DbSet<T> _dbSet;
 
-        public Repository(MoviesDbContext context)
+        public Repository()
         {
-            _db = context ?? throw new ArgumentNullException(nameof(context));
+            _db = new MoviesContext();
             _dbSet = _db.Set<T>();
         }
 
