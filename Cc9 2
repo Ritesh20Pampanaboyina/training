@@ -1,90 +1,108 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using MVC_CodeFirst.Models;
-using MVC_CodeFirst.Repository;
+using YourNamespace.Models;
+using YourNamespace.Repository;
 
-namespace MVC_CodeFirst.Controllers
+namespace YourNamespace.Controllers
 {
-    public class ProductsController : Controller
+    public class MoviesController : Controller
     {
-        IProductRepository<Products> _prdrepo = null;
+        private readonly IRepository<Movie> _movieRepository;
 
-        public ProductsController()
+        public MoviesController()
         {
-            _prdrepo = new ProductRepository<Products>();
+            var context = new MoviesDbContext();
+            _movieRepository = new Repository<Movie>(context);
         }
-        // GET: Products
+
+        // GET: Movies
         public ActionResult Index()
         {
-            var prod = _prdrepo.GetAll();
-            return View(prod);
+            var movies = _movieRepository.GetAll();
+            return View(movies);
         }
 
-        //2. create
+        // GET: Movies/Create
         public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Create(Products p)
+        public ActionResult Create(Movie movie)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                _prdrepo.Insert(p);
-                _prdrepo.Save();
+                _movieRepository.Insert(movie);
+                _movieRepository.Save();
                 return RedirectToAction("Index");
             }
-            return View(p);
+            return View(movie);
         }
 
-        //3. Edit a product
-        public ActionResult Edit(int Id)
+        // GET: Movies/Edit/5
+        public ActionResult Edit(int id)
         {
-            var product = _prdrepo.GetById(Id);
-            return View(product);
+            var movie = _movieRepository.GetById(id);
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+            return View(movie);
         }
 
         [HttpPost]
-        public ActionResult Edit(Products p)
+        public ActionResult Edit(Movie movie)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                _prdrepo.Update(p);
-                _prdrepo.Save();
+                _movieRepository.Update(movie);
+                _movieRepository.Save();
                 return RedirectToAction("Index");
             }
-            else
+            return View(movie);
+        }
+
+        // GET: Movies/Details/5
+        public ActionResult Details(int id)
+        {
+            var movie = _movieRepository.GetById(id);
+            if (movie == null)
             {
-                return View(p);
+                return HttpNotFound();
             }
+            return View(movie);
         }
 
-        //4. details of a given product
-        public ActionResult Details(int Id)
+        // GET: Movies/Delete/5
+        public ActionResult Delete(int id)
         {
-            var product = _prdrepo.GetById(Id);
-            return View(product);
+            var movie = _movieRepository.GetById(id);
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+            return View(movie);
         }
 
-        //5. deleteing a given product
-        public ActionResult Delete(int Id)
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
         {
-            var product = _prdrepo.GetById(Id);
-            return View(product);
-        }
-
-        [HttpPost]
-        [ActionName("Delete")]
-        public ActionResult DeletePost(int Id)
-        {
-            var product = _prdrepo.GetById(Id);
-            _prdrepo.Delete(Id);
-            _prdrepo.Save();
+            var movie = _movieRepository.GetById(id);
+            if (movie != null)
+            {
+                _movieRepository.Delete(id);
+                _movieRepository.Save();
+            }
             return RedirectToAction("Index");
+        }
+
+        // GET: Movies/ByYear/2010
+        public ActionResult ByYear(int year)
+        {
+            var movies = _movieRepository.GetAll().Where(m => m.DateofRelease.Year == year);
+            return View(movies);
         }
     }
 }
