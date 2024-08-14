@@ -1,58 +1,53 @@
-using System.Collections.Generic;
-
-public interface IRepository<T> where T : class
-{
-    IEnumerable<T> GetAll();
-    T GetById(int id);
-    void Insert(T entity);
-    void Update(T entity);
-    void Delete(int id);
-    void Save();
-}
-using Microsoft.EntityFrameworkCore;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
+using MVC_CodeFirst.Models;
+using System.Data.Entity;
 
-public class Repository<T> : IRepository<T> where T : class
+namespace MVC_CodeFirst.Repository
 {
-    private readonly MoviesDbContext _context;
-    private readonly DbSet<T> _dbSet;
-
-    public Repository(MoviesDbContext context)
+    public class ProductRepository<T> : IProductRepository<T> where T : class
     {
-        _context = context;
-        _dbSet = context.Set<T>();
+        ProductsContext db;
+        DbSet<T> dbset;
+        public ProductRepository()
+        {
+            db = new ProductsContext();
+            dbset = db.Set<T>();
+        }
+        public void Delete(object Id)
+        {
+            // Products p = db.Product.Find(Id);
+           // db.Product.Remove(p);
+            T getmodel = dbset.Find(Id);           
+            dbset.Remove(getmodel);
+        }
+
+        public IEnumerable<T> GetAll()
+        {
+            return dbset.ToList();
+        }
+
+        public T GetById(object Id)
+        {
+            return dbset.Find(Id);
+        }
+
+        public void Insert(T obj)
+        {
+            dbset.Add(obj);
+        }
+
+        public void Save()
+        {
+            db.SaveChanges();
+        }
+
+        public void Update(T obj)
+        {
+            db.Entry(obj).State = EntityState.Modified;
+        }
     }
 
-    public IEnumerable<T> GetAll()
-    {
-        return _dbSet.ToList();
-    }
-
-    public T GetById(int id)
-    {
-        return _dbSet.Find(id);
-    }
-
-    public void Insert(T entity)
-    {
-        _dbSet.Add(entity);
-    }
-
-    public void Update(T entity)
-    {
-        _dbSet.Attach(entity);
-        _context.Entry(entity).State = EntityState.Modified;
-    }
-
-    public void Delete(int id)
-    {
-        T entity = _dbSet.Find(id);
-        _dbSet.Remove(entity);
-    }
-
-    public void Save()
-    {
-        _context.SaveChanges();
-    }
 }
