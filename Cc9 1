@@ -1,0 +1,26 @@
+using System.Linq;
+using System.Web.Mvc;
+using YourNamespace.Models;  // Ensure the correct namespace for your data model
+
+public class CodeController : Controller
+{
+    private NorthwindEntities db = new NorthwindEntities();
+
+    public ActionResult GetGermanCustomers()
+    {
+        var germanCustomers = db.Customers.Where(c => c.Country == "Germany").ToList();
+        return View(germanCustomers);
+    }
+
+    // Add the second action method here
+}
+    public ActionResult GetCustomerByOrderId(int orderId)
+    {
+        var customerDetails = db.Orders
+                                .Where(o => o.OrderID == orderId)
+                                .Select(o => o.Customer)
+                                .FirstOrDefault();
+
+        return View(customerDetails);
+    }
+}
