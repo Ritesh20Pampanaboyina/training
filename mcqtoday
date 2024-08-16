@@ -1,0 +1,196 @@
+How can you comment using Razor Syntax?
+(1 Point)
+
+*@ Comment me *@
+
+@* Comment me *@
+
+@* Comment me @*
+
+*@ Comment me @*
+Which of the following is not a return type of an action method in MVC?
+(1 Point)
+
+Redirect Result
+
+Json Result
+
+Boolean Result
+
+Empty Result
+____helps you to maintain the data between Controllers to views
+(1 Point)
+
+TempData
+
+Viewbag
+
+ViewData
+
+Modelview
+What is ActionResult?
+(1 Point)
+
+Abstract Class
+
+Sealed Class
+
+Virtual Class
+
+Partial Class
+EmptyResult is a ________ class
+(1 Point)
+
+Sealed
+
+Abstract
+
+Partial
+
+Derived
+What is strongly typed view in MVC?
+(1 Point)
+
+view created with model class
+
+view having same name as class
+
+view created with strong keyword
+
+view created with controller class
+To Enable Attribute Routing, Which method call has to be added ?
+(1 Point)
+
+RegisterRoutes()
+
+MapRoute()
+
+routes.MapMvcAttributeRoutes()
+
+[Route]
+AuthConfig.cs file is under in which App folder ?
+(1 Point)
+
+App_Data
+
+App_Start
+
+Filters
+
+Contents
+Web Api Supports which protocol
+(1 Point)
+
+HTTP
+
+SOAP
+
+TCP
+
+Named Pipes
+In model-view-controller (MVC) architecture, model defines the _____________ .
+(1 Point)
+
+Data Access Layer
+
+Interface Layer
+
+Presentation Layer
+
+Business Logic
+What is the name of default Viewstart Page in ASP.Net MVC ?
+(1 Point)
+
+_ViewStart.cshtml
+
+_Login.cshtml
+
+_Layout.cshtml
+
+_LoginPartial
+ASP.Net follows ______technique to process Resquests
+(1 Point)
+
+Top-Down
+
+Pipeline
+
+Bottom-Up
+
+Waterfall
+A Web API controller action can return
+(1 Point)
+
+Void
+
+IHttpActionResult
+
+IHTTPResponseMessage
+
+All the above
+Full Form of REST
+(1 Point)
+
+Representational State Transfer
+
+Restructured Text
+
+Restricted Environment Stimulation Technique
+
+Retail Employee Super annuation Trust
+Which Namespaces are required to Data Annotation using MVC?
+(1 Point)
+
+System.ComponentModel.DataAnnotations
+
+System.ComponentModel
+
+Both 1 and 2
+
+None
+______________ is used to prevent a controller method from being accessed by an URL.
+(1 Point)
+
+NotAction
+
+NoAction
+
+NonAction
+
+ChildAction
+__________ is the base class for all MVC controllers
+(1 Point)
+
+Icontroller
+
+Controller
+
+ControllerBase
+
+None
+BundleConfig.cs file is in which folder?
+(1 Point)
+
+App_Data
+
+Content
+
+App_Start
+
+Web.config
+Which is the default http method for an action method?
+(1 Point)
+
+HttpPost
+
+HttpPut
+
+HttpGet
+
+HttpDelete
+Is ASPX View Engine faster than Razor View Engine?
+(1 Point)
+
+Yes
+
+No
