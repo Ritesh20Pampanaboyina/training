@@ -1,29 +1,30 @@
  
 
 Objective
-The project aims to develop an Attendance & Leave Management System to automate the management of employee attendance and leave using ASP.NET MVC, ASP.NET Web API, and Entity Framework.
+The project aims to develop an Attendance & Leave Management System to automate the management of employee attendance 
+and leave using ASP.NET MVC, ASP.NET Web API, and Entity Framework.
 
 Target Users
 Employees: To mark attendance, apply for leave, and view leave status.
 Managers: To approve/reject leave requests and view employee attendance and leave records.
 Administrators: To manage employee and project information, and oversee attendance and leave requests.
 Modules and Their Details
-Employees Module
 
+Employees Module
 Employees can add, update, or delete attendance and leave requests.
 Attendance gets auto-approved if the project code matches and no leave request exists on the same date.
 Managers (if managing other employees) can approve or reject leave requests.
-Admin Module
 
+Admin Module
 Admins can add, update, or delete employee and project information.
 They can assign projects to employees.
 They have the ability to view pending attendance and leave requests.
 Admins can also view project attendance statistics for different time frames (day, week, month).
+
 Project Module
-
 Project-specific attendance tracking.
-Leaves Module
 
+Leaves Module
 Employees can manage their leave requests, and managers can approve/reject them.
 Attendance Module
 
@@ -58,4 +59,6 @@ ASP.NET MVC: For building the web application.
 ASP.NET Web API: For developing services to support the application.
 Entity Framework: For data access and ORM (Object-Relational Mapping).
 SQL Server: For database management.
-This project structure and guideline should help in understanding what components to develop, where to apply certain technologies, and how to manage the overall development process. If you need more specific guidance on any part of the project, feel free to ask!
+This project structure and guideline should help in understanding what components to develop, where to apply certain technologies, 
+and how to manage the overall development process. If you need more specific guidance on any part of the project, feel free 
+to ask!
