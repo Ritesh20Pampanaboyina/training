@@ -1,3 +1,15 @@
-<connectionStrings>
-    <add name="DefaultConnection" connectionString="Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=AttendanceAndLeaveDB;Integrated Security=True" providerName="System.Data.SqlClient" />
-</connectionStrings>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data.Entity;
+
+namespace ALMSystem.Models
+{
+    public class ApplicationDbContext : DbContext
+    {
+        public ProductsContext() : base("connectstr")
+        { }
+        public DbSet<Employees> Employees { get; set; }
+    }
+}
