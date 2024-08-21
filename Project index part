@@ -96,3 +96,7 @@ routes.MapRoute(
     defaults: new { controller = "Employee", action = "Index", id = UrlParameter.Optional }
 );
 
+USE master;
+GO
+GRANT CREATE DATABASE TO [YourSqlServerLogin];
+GO
