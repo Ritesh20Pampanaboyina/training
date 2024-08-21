@@ -1,0 +1,16 @@
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY IDENTITY(1,1),
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) NOT NULL UNIQUE,
+    Phone VARCHAR(15),
+    HireDate DATE NOT NULL,
+    RoleID INT NOT NULL,
+    ManagerID INT NULL,
+    ProjectID INT NULL,
+    LeaveBalance INT DEFAULT 0,
+    PasswordHash VARCHAR(256) NOT NULL,
+    FOREIGN KEY (ManagerID) REFERENCES Employees(EmployeeID),
+);
+ 
+select * from Employees
