@@ -1,9 +1,78 @@
-Web Api Assessment :
- 
-1. Create a Model called Country under Models Folder.
-2. Add Properties in the country model as 
-   ID, CountryName, Capital
- 
-3. Create an Empty api controller called Country
- 
-4. Perform CRUD operations using either (HTTPResponseMessage/ IHttpActionResult / others) and show the changes to the user using Postman
+using System.Collections.Generic;
+using System.Web.Http;
+using YourNamespace.Models;
+
+namespace YourNamespace.Controllers
+{
+    public class CountryController : ApiController
+    {
+        // Static list to simulate a database
+        private static List<Country> countries = new List<Country>
+        {
+            new Country { ID = 1, CountryName = "USA", Capital = "Washington, D.C." },
+            new Country { ID = 2, CountryName = "India", Capital = "New Delhi" },
+        };
+
+        // GET: api/Country
+        public IHttpActionResult Get()
+        {
+            return Ok(countries);
+        }
+
+        // GET: api/Country/5
+        public IHttpActionResult Get(int id)
+        {
+            var country = countries.Find(c => c.ID == id);
+            if (country == null)
+            {
+                return NotFound();
+            }
+            return Ok(country);
+        }
+
+        // POST: api/Country
+        public IHttpActionResult Post([FromBody] Country country)
+        {
+            if (country == null)
+            {
+                return BadRequest("Invalid data.");
+            }
+
+            countries.Add(country);
+            return Created($"api/Country/{country.ID}", country);
+        }
+
+        // PUT: api/Country/5
+        public IHttpActionResult Put(int id, [FromBody] Country updatedCountry)
+        {
+            if (updatedCountry == null)
+            {
+                return BadRequest("Invalid data.");
+            }
+
+            var country = countries.Find(c => c.ID == id);
+            if (country == null)
+            {
+                return NotFound();
+            }
+
+            country.CountryName = updatedCountry.CountryName;
+            country.Capital = updatedCountry.Capital;
+
+            return Ok(country);
+        }
+
+        // DELETE: api/Country/5
+        public IHttpActionResult Delete(int id)
+        {
+            var country = countries.Find(c => c.ID == id);
+            if (country == null)
+            {
+                return NotFound();
+            }
+
+            countries.Remove(country);
+            return Ok();
+        }
+    }
+}
