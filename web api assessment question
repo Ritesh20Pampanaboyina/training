@@ -1,25 +1,28 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 using System.Web.Http;
-using YourNamespace.Models;
+using CC1.Models;
 
-namespace YourNamespace.Controllers
+namespace CC1.CountryControllers
 {
     public class CountryController : ApiController
     {
-        // Static list to simulate a database
+
         private static List<Country> countries = new List<Country>
         {
-            new Country { ID = 1, CountryName = "USA", Capital = "Washington, D.C." },
-            new Country { ID = 2, CountryName = "India", Capital = "New Delhi" },
+            new Country { ID = 33, CountryName = "INDIA", Capital = "NEW DELHI" },
+            new Country { ID = 77, CountryName = "CHINA", Capital = "BEIJING" },
         };
 
-        // GET: api/Country
+
         public IHttpActionResult Get()
         {
             return Ok(countries);
         }
 
-        // GET: api/Country/5
         public IHttpActionResult Get(int id)
         {
             var country = countries.Find(c => c.ID == id);
@@ -30,7 +33,7 @@ namespace YourNamespace.Controllers
             return Ok(country);
         }
 
-        // POST: api/Country
+
         public IHttpActionResult Post([FromBody] Country country)
         {
             if (country == null)
@@ -42,7 +45,7 @@ namespace YourNamespace.Controllers
             return Created($"api/Country/{country.ID}", country);
         }
 
-        // PUT: api/Country/5
+
         public IHttpActionResult Put(int id, [FromBody] Country updatedCountry)
         {
             if (updatedCountry == null)
@@ -62,7 +65,6 @@ namespace YourNamespace.Controllers
             return Ok(country);
         }
 
-        // DELETE: api/Country/5
         public IHttpActionResult Delete(int id)
         {
             var country = countries.Find(c => c.ID == id);
@@ -76,3 +78,7 @@ namespace YourNamespace.Controllers
         }
     }
 }
+
+
+
+
