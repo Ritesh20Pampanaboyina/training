@@ -1,12 +1,19 @@
 [HttpPut]
-public IEnumerable<Country> PutCountry(int pid, [FromUri] Country updatedCountry)
+public IHttpActionResult PutCountry(int pid, [FromBody] Country updatedCountry)
 {
-    // Use FirstOrDefault to avoid the error if multiple items with the same ID exist
+    // Find the existing country by ID using FirstOrDefault
     Country existingCountry = countries.FirstOrDefault(c => c.ID == pid);
-    if (existingCountry != null)
+    
+    // If the country doesn't exist, return a NotFound response
+    if (existingCountry == null)
     {
-        existingCountry.CountryName = updatedCountry.CountryName;
-        existingCountry.Capital = updatedCountry.Capital;
+        return NotFound();
     }
-    return countries;
+
+    // Update the existing country's properties with the values from the incoming data
+    existingCountry.CountryName = updatedCountry.CountryName;
+    existingCountry.Capital = updatedCountry.Capital;
+
+    // Return the updated country
+    return Ok(existingCountry);
 }
