@@ -1,1 +1,12 @@
-http://localhost:<port_number>/api/Country/countrypost?Id=100&name=Australia&capital=Canberra
+[HttpPut]
+public IEnumerable<Country> PutCountry(int pid, [FromUri] Country updatedCountry)
+{
+    // Use FirstOrDefault to avoid the error if multiple items with the same ID exist
+    Country existingCountry = countries.FirstOrDefault(c => c.ID == pid);
+    if (existingCountry != null)
+    {
+        existingCountry.CountryName = updatedCountry.CountryName;
+        existingCountry.Capital = updatedCountry.Capital;
+    }
+    return countries;
+}
