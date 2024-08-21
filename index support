@@ -1,16 +1,85 @@
-CREATE TABLE Employees (
-    EmployeeID INT PRIMARY KEY IDENTITY(1,1),
-    FirstName VARCHAR(50) NOT NULL,
-    LastName VARCHAR(50) NOT NULL,
-    Email VARCHAR(100) NOT NULL UNIQUE,
-    Phone VARCHAR(15),
-    HireDate DATE NOT NULL,
-    RoleID INT NOT NULL,
-    ManagerID INT NULL,
-    ProjectID INT NULL,
-    LeaveBalance INT DEFAULT 0,
-    PasswordHash VARCHAR(256) NOT NULL,
-    FOREIGN KEY (ManagerID) REFERENCES Employees(EmployeeID),
-);
- 
-select * from Employees
+@{
+    ViewBag.Title = "Employee Index";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Left Side: Title -->
+        <div class="col-md-6">
+            <h2>ATTENDANCE AND LEAVE MANAGEMENT SYSTEM</h2>
+        </div>
+
+        <!-- Right Side: Buttons -->
+        <div class="col-md-6 text-right">
+            <a href="@Url.Action("EmployeeLogin", "Account")" class="btn btn-primary">Employee Login</a>
+            <a href="@Url.Action("AdminLogin", "Account")" class="btn btn-success">Admin Login</a>
+            <a href="@Url.Action("ManagerLogin", "Account")" class="btn btn-info">Manager Login</a>
+        </div>
+    </div>
+
+    <hr />
+
+    <h3>Employees</h3>
+
+    <p>
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.FirstName)</th>
+                <th>@Html.DisplayNameFor(model => model.LastName)</th>
+                <th>@Html.DisplayNameFor(model => model.Email)</th>
+                <th>@Html.DisplayNameFor(model => model.Phone)</th>
+                <th>@Html.DisplayNameFor(model => model.HireDate)</th>
+                <th>@Html.DisplayNameFor(model => model.RoleID)</th>
+                <th>@Html.DisplayNameFor(model => model.ManagerID)</th>
+                <th>@Html.DisplayNameFor(model => model.ProjectID)</th>
+                <th>@Html.DisplayNameFor(model => model.LeaveBalance)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Phone)</td>
+                    <td>@Html.DisplayFor(modelItem => item.HireDate)</td>
+                    <td>@Html.DisplayFor(modelItem => item.RoleID)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ManagerID)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ProjectID)</td>
+                    <td>@Html.DisplayFor(modelItem => item.LeaveBalance)</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.EmployeeID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeID })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+using System;
+
+namespace YourNamespace.Models
+{
+    public class Employee
+    {
+        public int EmployeeID { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public DateTime HireDate { get; set; }
+        public int RoleID { get; set; }
+        public int? ManagerID { get; set; }
+        public int? ProjectID { get; set; }
+        public int LeaveBalance { get; set; }
+        public string PasswordHash { get; set; }
+    }
+}
