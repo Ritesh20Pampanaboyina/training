@@ -1,82 +1,132 @@
-@model IEnumerable<YourNamespace.Models.Employee>
+System.Data.Entity.ModelConfiguration.ModelValidationException: 'One or more validation errors were detected during model generation:
 
-@{
-    ViewBag.Title = "Index";
+ALMSystem.Models.Employees: : EntityType 'Employees' has no key defined. Define the key for this EntityType.
+Employees: EntityType: EntitySet 'Employees' is based on type 'Employees' that has no keys defined.
+'
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using ALMSystem.Models;
+
+namespace ALMSystem.Controllers
+{
+    public class EmployeesController : Controller
+    {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        // GET: Employees
+        public ActionResult Index()
+        {
+            return View(db.Employees.ToList());
+        }
+
+        // GET: Employees/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Employees employee = db.Employees.Find(id);
+            if (employee == null)
+            {
+                return HttpNotFound();
+            }
+            return View(employee);
+        }
+
+        // GET: Employees/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Employees/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "EmployeeID,Name,Email,Role,DateOfJoining,Department,IsActive")] Employees employee)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Employees.Add(employee);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(employee);
+        }
+
+        // GET: Employees/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Employees employee = db.Employees.Find(id);
+            if (employee == null)
+            {
+                return HttpNotFound();
+            }
+            return View(employee);
+        }
+
+        // POST: Employees/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "EmployeeID,Name,Email,Role,DateOfJoining,Department,IsActive")] Employees employee)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(employee).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(employee);
+        }
+
+        // GET: Employees/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Employees employee = db.Employees.Find(id);
+            if (employee == null)
+            {
+                return HttpNotFound();
+            }
+            return View(employee);
+        }
+
+        // POST: Employees/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Employees employee = db.Employees.Find(id);
+            db.Employees.Remove(employee);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
 }
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Phone)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HireDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RoleID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ManagerID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProjectID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LeaveBalance)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Phone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HireDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RoleID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ManagerID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProjectID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LeaveBalance)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.EmployeeID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.EmployeeID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.EmployeeID })
-        </td>
-    </tr>
-}
-
-</table>
