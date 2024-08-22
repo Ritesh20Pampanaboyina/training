@@ -76,8 +76,12 @@ public class RouteConfig
             url: "{controller}/{action}/{id}",
             defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
         );
+
+        // Example of a custom route if needed
+        routes.MapRoute(
+            name: "Employee",
+            url: "Employee/{action}/{id}",
+            defaults: new { controller = "Employee", action = "Login", id = UrlParameter.Optional }
+        );
     }
 }
-
-
-
