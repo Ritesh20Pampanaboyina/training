@@ -1,12 +1,1 @@
-using System.Data.Entity;
-
-namespace ALMSystem.Models
-{
-    public class ApplicationDbContext : DbContext
-    {
-        public ApplicationDbContext() : base("DefaultConnection")
-        { }
-
-        public DbSet<Employee> Employees { get; set; }
-    }
-}
+-- Employees Table CREATE TABLE Employees ( EmployeeID INT PRIMARY KEY IDENTITY(1,1), EmployeeName VARCHAR(50) NOT NULL, Email VARCHAR(100) NOT NULL UNIQUE, Phone VARCHAR(13) NOT NULL UNIQUE, HireDate DATE NOT NULL, RoleID INT NOT NULL, ManagerID INT NULL, ProjectID INT NOT NULL, LeaveBalance INT DEFAULT 3,   No_of_leave INT DEFAULT 0,   Emp_status varchar(10) , Password VARCHAR(256) NOT NULL, FOREIGN KEY (RoleID) REFERENCES Roles(RoleID), FOREIGN KEY (ManagerID) REFERENCES Employees(EmployeeID), FOREIGN KEY (ProjectID) REFERENCES Projects(ProjectID) ); drop table Employees ALTER TABLE Employees ADD CONSTRAINT DF_Employees_emp_status DEFAULT 'Active' FOR emp_status; select * from Employees
