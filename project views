@@ -91,17 +91,44 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            margin: 0;
         }
+
         .navbar-custom {
             background-color: #000000;
         }
+
         .navbar-custom .navbar-brand {
             color: #ffffff;
             font-size: 2rem;
         }
-        .btn-lg {
+
+        .navbar-custom .navbar-nav .nav-link {
+            color: #ffffff;
             font-size: 1.5rem;
-            padding: 1rem 1.5rem;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .login-container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-container .btn-lg {
+            font-size: 1.2rem;
+            padding: 0.75rem 1.5rem;
+        }
+
+        .footer {
+            font-size: 1rem;
         }
     </style>
 </head>
@@ -110,28 +137,24 @@
         <a class="navbar-brand" href="#">LeaveMaster</a>
     </nav>
 
-    <div class="container vh-100 d-flex align-items-center justify-content-center">
-        <div class="row w-100">
-            <div class="col-md-6 d-flex align-items-center justify-content-center">
-                <div class="text-center mt-5">
-                    <h1>Employee Login</h1>
-                    <form method="post" action="@Url.Action("Login", "Employee")">
-                        <div class="form-group">
-                            <label for="username">Username:</label>
-                            <input type="text" class="form-control" id="username" name="username" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password:</label>
-                            <input type="password" class="form-control" id="password" name="password" required />
-                        </div>
-                        <button type="submit" class="btn btn-info btn-lg">Login</button>
-                        @if (ViewBag.ErrorMessage != null)
-                        {
-                            <div class="alert alert-danger mt-3">@ViewBag.ErrorMessage</div>
-                        }
-                    </form>
+    <div class="container d-flex align-items-center justify-content-center vh-100">
+        <div class="login-container">
+            <h1 class="text-center">Employee Login</h1>
+            <form method="post" action="@Url.Action("Login", "Employee")">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" class="form-control" id="username" name="username" required />
                 </div>
-            </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" id="password" name="password" required />
+                </div>
+                <button type="submit" class="btn btn-info btn-lg btn-block">Login</button>
+                @if (ViewBag.ErrorMessage != null)
+                {
+                    <div class="alert alert-danger mt-3">@ViewBag.ErrorMessage</div>
+                }
+            </form>
         </div>
     </div>
 
@@ -146,7 +169,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
-
 
 
 
