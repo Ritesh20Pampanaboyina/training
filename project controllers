@@ -31,30 +31,33 @@ namespace ALMSystem2.Controllers
 {
     public class EmployeeController : Controller
     {
-        // GET: /Employee/Login
         public ActionResult Login()
         {
             return View();
         }
 
-        // POST: /Employee/Login
         [HttpPost]
-public ActionResult Login(string username, string password)
-{
-    if (IsValidUser(username, password))
-    {
-        return RedirectToAction("Dashboard");
-    }
+        public ActionResult Login(string username, string password)
+        {
+            if (IsValidUser(username, password))
+            {
+                return RedirectToAction("Dashboard");
+            }
 
-    ViewBag.ErrorMessage = "Invalid username or password.";
-    return View();
-}
+            ViewBag.ErrorMessage = "Invalid username or password.";
+            return View();
+        }
 
-
-        // GET: /Employee/Dashboard
         public ActionResult Dashboard()
         {
             return View();
+        }
+
+        // Simulated method for example purposes
+        private bool IsValidUser(string username, string password)
+        {
+            // Replace with actual credential validation logic
+            return username == "employee" && password == "password123";
         }
     }
 }
