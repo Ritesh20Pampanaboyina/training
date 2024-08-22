@@ -103,11 +103,6 @@
             font-size: 2rem;
         }
 
-        .navbar-custom .navbar-nav .nav-link {
-            color: #ffffff;
-            font-size: 1.5rem;
-        }
-
         .login-container {
             width: 100%;
             max-width: 400px;
@@ -193,7 +188,8 @@
 
     <div class="container mt-5">
         <h1>Welcome to Employee Dashboard</h1>
-        <!-- Dashboard content goes here -->
+        <p>Here you can manage your attendance and leave requests.</p>
+        <!-- Add more dashboard content here -->
     </div>
 
     <footer class="footer bg-light text-center py-3">
