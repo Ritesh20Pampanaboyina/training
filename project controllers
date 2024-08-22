@@ -39,21 +39,17 @@ namespace ALMSystem2.Controllers
 
         // POST: /Employee/Login
         [HttpPost]
-        public ActionResult Login(string username, string password)
-        {
-            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
-            {
-                // Normally you would validate credentials here
-                // For example:
-                // if (ValidateUser(username, password))
-                // {
-                return RedirectToAction("Dashboard");
-                // }
-            }
+public ActionResult Login(string username, string password)
+{
+    if (IsValidUser(username, password))
+    {
+        return RedirectToAction("Dashboard");
+    }
 
-            ViewBag.ErrorMessage = "Invalid username or password.";
-            return View();
-        }
+    ViewBag.ErrorMessage = "Invalid username or password.";
+    return View();
+}
+
 
         // GET: /Employee/Dashboard
         public ActionResult Dashboard()
