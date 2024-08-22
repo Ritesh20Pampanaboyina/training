@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/site.css" />
+    <style>
+        body {
+            background: linear-gradient(to right, #fc466b, #2575fc);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .navbar-custom {
+            background-color: #343a40;
+        }
+
+            .navbar-custom .navbar-brand {
+                color: #ffffff;
+                font-size: 2rem;
+            }
+
+                .navbar-custom .navbar-brand:hover {
+                    color: #c0c0c0;
+                }
+
+            .navbar-custom .navbar-nav .nav-link {
+                color: #ffffff;
+                font-size: 1.5rem;
+            }
+
+                .navbar-custom .navbar-nav .nav-link:hover {
+                    color: #c0c0c0;
+                }
+
+        .btn-lg {
+            font-size: 1.5rem;
+            padding: 1rem 1.5rem;
+        }
+
+        .text-center h1 {
+            font-size: 4rem;
+        }
+
+        .footer {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <a class="navbar-brand" href="#">LeaveMaster</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+        </div>
+    </nav>
+
+    <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+        <div class="row w-100">
+            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <div class="text-center mt-5">
+                    <h1>ATTENDANCE AND LEAVE MANAGEMENT SYSTEM</h1>
+                </div>
+            </div>
+            <div class="col-md-6 d-flex flex-column align-items-center justify-content-center mt-5">
+                <a href="@Url.Action("EmployeeLogin", "Account")" class="btn btn-info btn-lg mb-3 w-75">Employee Login</a>
+                <a href="@Url.Action("AdminLogin", "Account")" class="btn btn-primary btn-lg mb-3 w-75">Admin Login</a>
+                <a href="@Url.Action("ManagerLogin", "Account")" class="btn btn-success btn-lg mb-3 w-75">Manager Login</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer bg-light text-center py-3">
+        <div class="container">
+            <span class="text-muted">&copy; 2024 Attendance and Leave Management System. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
+@{
+    ViewBag.Title = "Employee Login";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/site.css" />
+    <style>
+        body {
+            background: linear-gradient(to right, #fc466b, #2575fc);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .navbar-custom {
+            background-color: #000000;
+        }
+
+            .navbar-custom .navbar-brand {
+                color: #ffffff;
+                font-size: 2rem;
+            }
+
+                .navbar-custom .navbar-brand:hover {
+                    color: #c0c0c0;
+                }
+
+            .navbar-custom .navbar-nav .nav-link {
+                color: #ffffff;
+                font-size: 1.5rem;
+            }
+
+                .navbar-custom .navbar-nav .nav-link:hover {
+                    color: #c0c0c0;
+                }
+
+        .btn-lg {
+            font-size: 1.5rem;
+            padding: 1rem 1.5rem;
+        }
+
+        .text-center h1 {
+            font-size: 4rem;
+        }
+
+        .footer {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <a class="navbar-brand" href="#">LeaveMaster</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+        </div>
+    </nav>
+
+    <div class="container vh-100 d-flex align-items-center justify-content-center">
+        <div class="row w-100">
+            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <div class="text-center mt-5">
+                    <h1>Employee Login</h1>
+                    <form method="post" action="@Url.Action("Login", "Account")">
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input type="text" class="form-control" id="username" name="username" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password" required />
+                        </div>
+                        <button type="submit" class="btn btn-info btn-lg">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer bg-light text-center py-3">
+        <div class="container">
+            <span class="text-muted">&copy; 2024 Attendance and Leave Management System. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
+
+@{
+    ViewBag.Title = "Employee Dashboard";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/site.css" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <a class="navbar-brand" href="#">LeaveMaster</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1>Welcome to Employee Dashboard</h1>
+        <!-- Add dashboard content here -->
+    </div>
+
+    <footer class="footer bg-light text-center py-3">
+        <div class="container">
+            <span class="text-muted">&copy; 2024 Attendance and Leave Management System. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
+
+namespace ALMSystem2
+{
+    public class RouteConfig
+    {
+        public static void RegisterRoutes(RouteCollection routes)
+        {
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.MapRoute(
+                name: "Default",
+                url: "{controller}/{action}",
+                defaults: new { controller = "Home", action = "Index"}
+            );
+        }
+    }
+}
