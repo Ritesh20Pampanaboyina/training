@@ -1,56 +1,989 @@
-﻿@model MVC_CodeFirst.Models.Products
+Which file is used to store environment specific configuration specific settings in ASP.net core applications
+(1 Point)
 
-@{
-    ViewBag.Title = "Create";
+appsettings.json
+
+Global.json
+
+web.config
+
+startup.cs
+In jQuery DOM, what does DOM stand for?
+(1 Point)
+
+Data Object Model
+
+Document Object Model
+
+Document Object Manipulation
+
+Document On Model
+What are the types of development approaches in EF?
+(1 Point)
+
+Code First
+
+Model First
+
+Database First
+
+All of the mentioned
+What is the purpose of the [Authorize] attribute in an ASP.NET MVC controller?
+(1 Point)
+
+To allow anonymous access to the controller
+
+To require authentication to access the controller
+
+To restrict access based on user roles
+
+To specify the HTTP method allowed for the action
+The HAVING clause does which of the following?
+(1 Point)
+
+Acts EXACTLY like a WHERE clause.
+
+Acts like a WHERE clause but is used for columns rather than groups.
+
+Acts like a WHERE clause but is used for groups rather than rows.
+
+Acts like a WHERE clause but is used for rows rather than columns.
+1.       What will be the output of the following code  
+  
+Class Program { 
+  
+static void Main(string[] args)
+  
+{ int[] nums={1, -2, 3, 0, -4, 5};
+  
+var posNums = from n in nums where n>=0 select n;
+  foreach(int i in posNums) { Console.Write(i+"" ""); Console.WriteLine(); Console.ReadLine();}}
+(1 Point)
+
+0,1,-2,-4,5
+
+1,3,0,5
+
+1,3,5
+
+run time error
+What will this JavaScript statement do? <button onclick=""window.print()"">Submit</button>
+(1 Point)
+
+It will write "Submit" on the current Window
+
+It will print the content of the current page
+
+It will write the content of the current page in the browser’s console
+
+It will call the print method
+Which is an alternative Query to the following SQL code in LINQ ____________ Select Top 10 upper(c1.Name) from Customer C1 where c1.Name Like 'A%' and c1.Id Not In(select top 20 c2.ID from Customer C2 where c2.Name like 'A%' order by c2.Name) Order by c1.Name
+(1 Point)
+
+var query=from c in db.Customers where c.Name.EndsWith ("A") order by c.Name select c.Name.ToUpper(); var x=query.Skip(20).Take(10);
+
+var query=from c in db.Customers where c.Name.StartsWith ("65") order by c.Name select c.Name.ToUpper(); var x=query.Skip(20).Take(10);
+
+var query=from c in db.Customers where c.Name.StartsWith ("A") order by c.Name select c.Name.ToUpper(); var x=query.Skip(20).Take(10);
+
+var query=from c in db.Customers where c.Name.StartsWith ("A") order by c.Name select c.Name.ToLower(); var x=query.Skip(20).Take(10);
+Which of the following is not a valid type of routing constraint in ASP.NET MVC?
+(1 Point)
+
+Regex
+
+Range
+
+Length
+
+Date
+LINQ to SQL is considered to be one of the Microsofts_____Product
+(1 Point)
+
+ORM
+
+ODBC
+
+JDBC
+
+SQL LIB
+Trigger is a special type of ___________ ?
+(1 Point)
+
+Stored Procedure
+
+Function
+
+View
+
+Table
+An ________ is a set of entities of the same type that share the same properties, or attributes.
+(1 Point)
+
+Entity Set
+
+Attribute Set
+
+Relation Set
+
+Entity Model
+Which of the following statement is correct regarding the difference between TRUNCATE, DELETE and DROP command?
+I. DELETE operation can be rolled back but TRUNCATE and DROP operations cannot be rolled back.
+II. TRUNCATE and DROP operations can be rolled back but DELETE operations cannot be rolled back.
+III. DELETE is an example of DML, but TRUNCATE and DROP are examples of DDL.
+IV. All are an example of DDL.
+(1 Point)
+
+I and III
+
+II and III
+
+II and IV
+
+I and IV
+1.       The following code, when used will perform______Operation in LINQ    Public bool IsValidUser(string userName, string passWord)
+{ DBNameDataContext myDB=new DBNameDataContext(); 
+  
+List<User>users=myDB.Users.Where(u=>u.Username==userName && u.Password==passWord);
+  
+If(Users.Count >0)
+  
+{ return True;} return False;}"       
+(1 Point)
+
+Update
+
+Select
+
+Insert
+
+All of the mentioned
+Which of the following is not a User defined function?
+(1 Point)
+
+MAX()
+
+Scalar
+
+Inline-Table-Valued
+
+Multiple-Statement-Table-Valued
+JavaScript ignores?
+(1 Point)
+
+New Lines
+
+Tabs
+
+Spaces
+
+All of the above
+Which of the following is not a valid Razor syntax in ASP.NET MVC?
+(1 Point)
+
+@{ }
+
+@( )
+
+@[]
+
+@if { }
+Point out the wrong statement
+(1 Point)
+
+Compared to SQL, LINQ is complex,tidier and lower-level
+
+LINQ supports adhoc Join
+
+Benefit of LINQ is that you can query across relations without having to join
+
+None of the Mentioned
+How many classes of triggers you have in SQL?
+(1 Point)
+
+DDL , DML
+
+DML , DCL
+
+DDL, DML,TCL
+
+DCL
+Which is the correct jQuery statement to hide all <div> elements?
+(1 Point)
+
+$("div").hide()
+
+$(div).hide()
+
+$(".div").hide()
+
+$("#div").hide()
+Which CSS property is used to style the hyperlinks on hover (Mouse over)?
+(1 Point)
+
+a:mouseover
+
+a:move
+
+a:mover
+
+a:hover
+Triggers can be enabled or disabled with the ________ statement.
+(1 Point)
+
+ALTER TABLE statement
+
+DROP TABLE statement
+
+DELETE TABLE statement
+
+None of the mentioned
+What does CSS describes?
+(1 Point)
+
+CSS describes how calculation perform on button click.
+
+CSS describes how HTML elements are to be displayed on screen, paper, or in other media
+
+Both A. and B.
+
+None of the above
+A SQL query will not work if there are no indexes on the relations - Is it true?
+(1 Point)
+
+No
+
+Yes
+In which Normal Form would a table be, if it has no transitive functional dependency?
+(1 Point)
+
+3NF
+
+2NF
+
+1NF
+
+BCNF
+Which is not a category of SQL Command
+(1 Point)
+
+TCL
+
+SCL
+
+DCL
+
+DDL
+What is the correct syntax of jQuery fadeOut() method?
+(1 Point)
+
+$(selector).fadeOut();
+
+$(selector).fadeOut(callback, speed);
+
+$(selector).fadeOut(callback);
+
+$(selector).fadeOut(speed,callback);
+Correct SQL Query to find all the cities whose humidity is 95 ?
+(1 Point)
+
+SELECT city WHERE humidity = 95
+
+SELECT city FROM weather
+
+SELECT city FROM weather WHERE humidity = 95
+
+SELECT humidity = 89 FROM weather
+Which of the following is not a DDL command?
+(1 Point)
+
+UPDATE
+
+TRUNCATE
+
+ALTER
+
+None of the Mentioned
+Which of the following is not a valid way to pass data from a controller to a view in ASP.NET MVC?
+(1 Point)
+
+ViewBag
+
+ViewData
+
+TempData
+
+HttpRequest
+Which SQL query is written to find out the list of student with name beginning from s.
+(1 Point)
+
+Select * from student Where name like 's—'
+
+Select * from student where name like 's%'
+
+Select name, age from s where name like 's$'
+
+select * from student where name='s%'
+What will be the output of the following JavaScript code?
+  
+<script>
+function addition(a, b) {
+return a+b;
 }
+document.getElementById(""test"").innerHTML = addition;
+</script>              
+(1 Point)
 
-<h2>Create</h2>
+Suntax Error
 
+Value Error
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Products</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
+0
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-            </div>
-        </div>
+function addition(a, b) { return a+b; }
+WebApi Supports which of the following request/response data formats by default
+(1 Point)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Qty, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger" })
-            </div>
-        </div>
+Json
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
+Xml
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+Bson
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+All
+What are all Scenarios Entity Framework can be applicable?
+(1 Point)
+
+If you have existing database already or you want to build your database first than other parts of the application
+
+If your prime focus is your domain classes and then create the database from your domain classes
+
+Both A and B
+
+None of the Mentioned
+Which of the following statements is true concerning subqueries?
+(1 Point)
+
+Involves the use of an inner and outer query
+
+Does not start with the word SELECT
+
+Outer Query executes First
+
+All of the mentioned
+All aggregate functions except __________ ignore null values in their input collection.
+(1 Point)
+
+Count(Attribute)
+
+Count(*)
+
+Avg()
+
+Sum()
+You need to display the report containing data from Customer and CustomerPaymentHistory tables. The report should contain all the matching and the non-matching rows from both the tables. Which type of join is used to display the required result set?
+(1 Point)
+
+INNER JOIN
+
+OUTER JOIN
+
+FULL OUTER JOIN
+
+CROSS JOIN
+__________ object is used to fill a DataSet/DataTable with query results in ADO.net.
+(1 Point)
+
+DataReader
+
+DataAdapter
+
+DataSet
+
+DataTables
+Implicit Transactions are maintained by the SQL server for…........
+(1 Point)
+
+Select
+
+DDL
+
+DML
+
+All of the mentioned
+What are the Command object property settings to execute a stored procedure
+(1 Point)
+
+commandType=text
+
+command=commandtext.storedprocedure
+
+CommandType=CommandType.Storedprocedure
+
+Command=storedprocedure
+What SQL Command Can Be Used To Delete Columns From A Table?
+(1 Point)
+
+MODIFY TABLE TableName DROP ColumnName
+
+MODIFY TABLE TableName DROP COLUMN ColumnName
+
+ALTER TABLE TableName DROP ColumnName
+
+ALTER TABLE TableName DROP COLUMN ColumnName
+Point out the correct statement.
+(1 Point)
+
+CHECK constraints enforce domain integrity
+
+UNIQUE constraints enforce the uniqueness of the values in a set of columns
+
+In a UNIQUE constraint, no two rows in the table can have the same value for the columns
+
+All of the mentioned
+What is the use of jQuery method toggle()?
+(1 Point)
+
+To shift current element at the previous position
+
+To remove current element
+
+To hide shown elements and to show hidden elements
+
+To replace elements with new elements
+State True or False: Can a Clustered Index also be a Unique Index
+(1 Point)
+
+No
+
+Yes
+Inline styles are written within the _____ attribute.
+(1 Point)
+
+Style
+
+Css
+
+Stylesheet
+
+Both A and B
+What Command is used to delete a table?
+(1 Point)
+
+Create Table
+
+Drop Table
+
+Describe Table
+
+Delete Table
+In the Code-First approach, ______ .
+(1 Point)
+
+EF creates entity classes from existing database.
+
+EF creates a database and schema from domain classes.
+
+EF creates entity classes and database from domain classes.
+
+EF creates entity classes and database scripts from designer db model.
+Hoe do we Open and Close connection in ADO.net :
+(1 Point)
+
+sqlConn.Open() and sqlConn.close()
+
+sqlConn.open() and sqlConn.Close()
+
+sqlConn.Open() and sqlConn.Close()
+
+Ado.Net Closes it automatically
+_______function that returns current Date and Time
+(1 Point)
+
+SETDATEFIRST
+
+SYSDATETIME
+
+TODAY
+
+GETDATE
+Identify the three primary kinds of parameters in ADO.Net?
+(1 Point)
+
+Input, Integer, String
+
+Input, Output, InputOutput
+
+int, varchar, nvarchar
+
+Integer,String,Datetime
+How many types of db migrations are supported by EF 6 Code-First approach?
+(1 Point)
+
+Automatic
+
+Codebased
+
+Both 1 and 2
+
+None of the Mentioned
+What is the correct syntax for referring an external CSS?
+(1 Point)
+
+<link rel="stylesheet" type="text/css" href="mystyle.css">
+
+<stylesheet rel="stylesheet" type="text/css" href="mystyle.css">
+
+<style rel="stylesheet" type="text/css" href="mystyle.css">
+
+All of the above
+What type of join is needed when you wish to include rows that do not have matching values?
+(1 Point)
+
+Equi Join
+
+Natural Join
+
+Outer Join
+
+Inner Join
+Which method is used to attach an event handler function to an HTML element when the form field loses focus?
+(1 Point)
+
+blur
+
+leave
+
+focusleave
+
+leavefocus
+"The ----- operator is used to search for values that are within a set of values, given the minimum value and the maximum value.
+(1 Point)
+
+Like
+
+WHERE
+
+IN
+
+BETWEEN
+Can a function be defined without a return statement
+(1 Point)
+
+Yes. Function need not return values
+
+Yes .Can return a NULL value
+
+No. A function must return a value
+
+None of the Mentioned
+Which of the following will retrieve no. of rows affected?
+(1 Point)
+
+ExecuteReader()
+
+ExecuteScalar()
+
+Equals()
+
+ExecuteNonQuery()
+Which of the user defined function will be preferred for adding two numbers?
+(1 Point)
+
+Inline Table Valued
+
+Saclar
+
+Max
+
+Min
+Give the Query to set 2 fields EMPLOYEE_ID,FIRST_NAME as primary key in employee table
+(1 Point)
+
+ALTER TABLE EMPLOYEE add PRIMARY KEY(EMPLOYEE_ID),PRIMARY KEY(FIRST_NAME)
+
+ALTER TABLE EMPLOYEE ALTER COLUMN CONSTRAINT EMPLOYEE_PK PRIMARY KEY(EMPLOYEE_ID,FIRST_NAME)
+
+ALTER TABLE EMPLOYEE ADD CONSTRAINT EMPLOYEE_PK PRIMARY KEY(EMPLOYEE_ID,FIRST_NAME)
+
+ALTER TABLE EMPLOYEE ALTER CONSTRAINT PRIMARY KEY(EMPLOYEE_ID,FIRST_NAME)
+What is the default "SORT" order for a SQL?
+(1 Point)
+
+Ascending
+
+Descending
+
+Mixed mode
+
+All of the mentioned
+Syntax for creation of user defined function is ____________
+(1 Point)
+
+CREATE FUNCTIONS
+
+CREATE FUNCTION
+
+CREATE FUNC
+
+All of the mentioned
+WebApi sends which of the status code on successful execution
+(1 Point)
+
+200
+
+202
+
+404
+
+501
+Which of the following class is used to send HttpRequest in .net 4.5
+(1 Point)
+
+Web Client
+
+HttpClient
+
+MessageClient
+
+None
+How many Primary key constraints can be included in a table definition?
+(1 Point)
+
+One
+
+Two
+
+Many
+
+None of the Mentioned
+In ASP.Net Core, which middleware is used for routing requests to appropriate Controller
+(1 Point)
+
+Actions Routing
+
+Validation
+
+Authorization
+
+Authentication
+What is the primary purpose of Dependency Injection in ASP Core applications
+(1 Point)
+
+To Optimize database queries
+
+To automatically generate database schemas
+
+To inject malicious code into the application
+
+To manage application dependencies and promote loose coupling
+Which type of integrity preserves the defined relationship between tables when records are entered or deleted?
+(1 Point)
+
+Entity Integrity
+
+Domain Integrity
+
+Referential Integrity
+
+User-Defined Integrity
+From the given options which is/are the valid way to represent a color?
+(1 Point)
+
+A valid color name like "blue"
+
+HEX code like "#0000ff"
+
+RGB Value like "rgb(0,0,255)
+
+All of the above
+Which SQL Keyword Is Used To Retrieve Only Unique Values?
+(1 Point)
+
+Distinct
+
+Distinctive
+
+Different
+
+Unique
+What are the various methods provided by the dataset object to generate Xml?
+(1 Point)
+
+ReadXml()
+
+GetXml()
+
+WriteXml()
+
+All of the mentioned
+Which feature(s) jQuery contains?
+(1 Point)
+
+HTML/DOM/CSS Manipulations
+
+Events/Utilities
+
+Effects/Animations/Ajax
+
+All of the above
+_____ Data Annotations attribute can be used to define a primary key property.
+(1 Point)
+
+[PrimaryKey]
+
+[Key]
+
+[Column]
+
+[InverseProperty]
+JavaScript language is _____ ?
+(1 Point)
+
+Object Oriented
+
+Functional Programming
+
+Object Based
+
+All of the above
+In a CSS file, there is a CSS rule for paragraphs tags – what does p stand for?
+(1 Point)
+
+Attribute
+
+Selector
+
+Tag
+
+Property
+Which of the following is the correct syntax for defining a route in ASP.NET MVC?
+(1 Point)
+
+routes.MapRoute(name, url, defaults)
+
+routes.DefineRoute(name, url, defaults)
+
+routes.AddRoute(name, url, defaults)
+
+routes.ConfigureRoute(name, url, defaults)
+What will be the value of VALUE?
+  
+<script>
+  
+const VALUE = 10;
+  
+VALUE = 20;
+  
+</script>"            
+(1 Point)
+
+10
+
+20
+
+TypeError
+
+ValueError
+What are Savetransaction points?
+(1 Point)
+
+Objects in schema
+
+Saved SQL statements
+
+Logical Markers
+
+Commited Transactions
+Which of the following specifies when the trigger will be executed?
+(1 Point)
+
+BEFORE
+
+AFTER
+
+INSTEAD OF
+
+All of the mentioned
+In the JSON syntax, data is separated by _____ .
+(1 Point)
+
+Semicolons
+
+Colons
+
+Commas
+
+Hyper
+In the JSON syntax, array is written within in ____ .
+(1 Point)
+
+Square Brackets
+
+Curly Braces
+
+Parenthesis
+
+All of the above
+Which statement is true regarding procedures?
+(1 Point)
+
+They include procedural and SQL statements.
+
+They work similarly to the functions.
+
+It does not need unique names.
+
+It cannot be created with SQL statements.
+HTML elements are positioned ___ by default.
+(1 Point)
+
+Static
+
+Fixed
+
+Relative
+
+None of the above
+Which Of The Following Must Be Enclosed In Double Quotes?
+(1 Point)
+
+Dates
+
+Strings
+
+Column alias
+
+All of the mentioned
+79.   Which Sql Query is/are incorrect to execute the below procedure:
+Create Procedure spGetEmployeeByGenderAnddept
+@Gender nvarchar(10), @did int
+As
+Begin
+Select empName, Gender, did from tblemployee Where Gender = @Gender
+And did = @did
+End 
+(1 Point)
+
+spGetemployeeByGenderAnddept 1, 'male'
+
+spGetemployeeByGenderAnddept 'male' , 1
+
+spGetemployeeByGenderAnddept @gender='male' ,@did=1
+
+spGetemployeeByGenderAnddept @did=1,@gender= 'male'
+What is the method invoked on the Data Adapter control to load your generated dataset?
+(1 Point)
+
+Fill()
+
+ExecuteQuery()
+
+Read()
+
+Execute()
+Which of the following is a lightweight and modular framework for building web applications and services in ASP Cor
+(1 Point)
+
+Razor Pages
+
+MVC Framework
+
+Middleware
+
+Entity Framework Core
+Which of the following is a legal expression in SQL?
+(1 Point)
+
+SELECT NULL FROM SALES;
+
+SELECT NAME FROM SALES;
+
+SELECT * FROM SALES WHEN PRICE = NULL;
+
+SELECT # FROM SALES
+ExecuteReader() function of your SqlCommand class returns which object
+(1 Point)
+
+DataReader
+
+DataTabale
+
+Dataset
+
+SqlReader
+Which SQL function is used to count the number of rows in a SQL query?
+(1 Point)
+
+COUNT()
+
+NUMBER()
+
+SUM()
+
+COUNT(*)
+Shared locks are applied while performing
+(1 Point)
+
+Read operations
+
+Write Operations
+
+A & B
+
+None of the mentioned
+Which of the following triggers fire in response to the LOGON event that's raised when a user's session is being established?
+(1 Point)
+
+Recursive Triggers
+
+Multiple Triggers
+
+Logon Trigger
+
+Both A and C
+A CASE SQL statement is ________
+(1 Point)
+
+A way to establish a loop in SQL.
+
+A way to establish an IF-THEN-ELSE in SQL
+
+A way to establish a data definition in SQL
+
+All of the above.
+WebApi Controller must be derived from which class
+(1 Point)
+
+Controller
+
+ApiController
+
+WebApiController
+
+None
+Evaluate the following procedure and give response?
+Create Proc LoginDetails(UserID varchar(20))
+As
+Begin
+Select Password from UserLogin where User_ID=@UserID
+End
+(1 Point)
+
+Procedure will return password
+
+The parameter name and the attribute name should be the same
+
+The statement should be ‘create procedure’ and not ‘create proc’
+
+The parameter name should be prefixed with the @ symbol
+How many Tables can be included with a Join?
+(1 Point)
+
+One Table
+
+2 Tables
+
+3 Tables
+
+No restrictions as such
