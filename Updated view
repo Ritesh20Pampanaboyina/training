@@ -289,6 +289,23 @@
             transform: scale(0.98);
         }
 
+        .welcome-box {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .welcome-box h3 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .welcome-box p {
+            font-size: 1.2em;
+        }
+
         .details-box {
             background-color: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -316,6 +333,11 @@
     </div>
 
     <div class="content">
+        <div class="welcome-box">
+            <h3>Welcome to the Manager Dashboard</h3>
+            <p>Select an option from the sidebar to manage the system.</p>
+        </div>
+
         <div class="details-box">
             <h3>Manager Details</h3>
             <p>Name: John Doe</p>
@@ -324,9 +346,6 @@
             <p>Email: johndoe@example.com</p>
             <p>Phone: 123-456-7890</p>
         </div>
-
-        <h2>Welcome to the Manager Dashboard</h2>
-        <p>Select an option from the sidebar to manage the system.</p>
 
         <div class="card">
             <div class="card-body">
