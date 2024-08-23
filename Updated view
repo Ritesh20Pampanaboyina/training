@@ -19,9 +19,9 @@
             transition: background-color 0.3s ease-in-out;
         }
 
-            .navbar:hover {
-                background-color: rgba(0, 0, 0, 0.9);
-            }
+        .navbar:hover {
+            background-color: rgba(0, 0, 0, 0.9);
+        }
 
         .navbar-brand {
             font-size: 1.8em;
@@ -41,30 +41,30 @@
             overflow-y: auto;
         }
 
-            .sidebar:hover {
-                width: 280px;
-            }
+        .sidebar:hover {
+            width: 280px;
+        }
 
-            .sidebar a {
-                color: #ffffff;
-                display: block;
-                padding: 20px;
-                text-decoration: none;
-                font-size: 1.2em;
-                transition: background-color 0.3s, padding-left 0.3s;
-                border-left: 4px solid transparent;
-            }
+        .sidebar a {
+            color: #ffffff;
+            display: block;
+            padding: 20px;
+            text-decoration: none;
+            font-size: 1.2em;
+            transition: background-color 0.3s, padding-left 0.3s;
+            border-left: 4px solid transparent;
+        }
 
-                .sidebar a:hover {
-                    background-color: rgba(255, 255, 255, 0.1);
-                    padding-left: 25px;
-                    border-left: 4px solid #16a085;
-                }
+        .sidebar a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding-left: 25px;
+            border-left: 4px solid #16a085;
+        }
 
-            .sidebar .active {
-                background-color: #16a085;
-                border-left: 4px solid #1abc9c;
-            }
+        .sidebar .active {
+            background-color: #16a085;
+            border-left: 4px solid #1abc9c;
+        }
 
         .content {
             margin-left: 270px;
@@ -81,11 +81,11 @@
             transition: transform 0.3s ease-in-out, background-color 0.3s, box-shadow 0.3s;
         }
 
-            .card:hover {
-                transform: scale(1.05);
-                background-color: rgba(255, 255, 255, 0.2);
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            }
+        .card:hover {
+            transform: scale(1.05);
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
 
         .card-title {
             font-size: 1.8em;
@@ -108,14 +108,14 @@
             margin-bottom: 30px;
         }
 
-            .welcome-box h3 {
-                font-size: 2em;
-                margin-bottom: 10px;
-            }
+        .welcome-box h3 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
 
-            .welcome-box p {
-                font-size: 1.2em;
-            }
+        .welcome-box p {
+            font-size: 1.2em;
+        }
     </style>
 </head>
 <body>
@@ -171,8 +171,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-
 
 
 @{
@@ -267,6 +265,28 @@
             background-color: rgba(255, 255, 255, 0.2);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
+
+        .card-title {
+            font-size: 1.8em;
+        }
+
+        .card-text {
+            font-size: 1.2em;
+        }
+
+        .btn {
+            font-size: 1.2em;
+            padding: 0.75em 1.5em;
+        }
+
+        .welcome-box h3 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .welcome-box p {
+            font-size: 1.2em;
+        }
     </style>
 </head>
 <body>
@@ -316,7 +336,3 @@
     </div>
 </body>
 </html>
-
-
-
-
