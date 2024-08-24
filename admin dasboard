@@ -1,0 +1,141 @@
+ public IActionResult ManageEmployees()
+        {
+            return View();
+        }
+
+        public IActionResult EmployeeDetails()
+        {
+            return View();
+        }
+
+        public IActionResult CreateNewEmployee()
+        {
+            return View();
+        }
+
+        // Optional: If you want to handle form submissions
+        [HttpPost]
+        public IActionResult CreateNewEmployee(EmployeeViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Save the new employee data to the database
+                // Redirect to Employee Details or another page after saving
+                return RedirectToAction("EmployeeDetails");
+            }
+            return View(model);
+        }
+
+@{
+    ViewData["Title"] = "Manage Employees";
+}
+
+<div class="content">
+    <h3>Manage Employees</h3>
+    <a href="/Admin/EmployeeDetails" class="btn btn-success">View Employee Details</a>
+</div>
+
+
+@{
+    ViewData["Title"] = "Employee Details";
+}
+
+<div class="content">
+    <h3>Employee Details</h3>
+    <a href="/Admin/CreateNewEmployee" class="btn btn-success">Create New</a>
+    <!-- Display list of employees here -->
+</div>
+
+
+@model YourNamespace.Models.EmployeeViewModel
+
+@{
+    ViewData["Title"] = "Create New Employee";
+}
+
+<div class="content">
+    <h3>Create New Employee</h3>
+    <form asp-action="CreateNewEmployee" method="post">
+        <div class="form-group">
+            <label asp-for="EmployeeID"></label>
+            <input asp-for="EmployeeID" class="form-control" />
+            <span asp-validation-for="EmployeeID" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="EmployeeName"></label>
+            <input asp-for="EmployeeName" class="form-control" />
+            <span asp-validation-for="EmployeeName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Phone"></label>
+            <input asp-for="Phone" class="form-control" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="HireDate"></label>
+            <input asp-for="HireDate" class="form-control" />
+            <span asp-validation-for="HireDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="RoleID"></label>
+            <input asp-for="RoleID" class="form-control" />
+            <span asp-validation-for="RoleID" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ManagerID"></label>
+            <input asp-for="ManagerID" class="form-control" />
+            <span asp-validation-for="ManagerID" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ProjectID"></label>
+            <input asp-for="ProjectID" class="form-control" />
+            <span asp-validation-for="ProjectID" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LeaveBalance"></label>
+            <input asp-for="LeaveBalance" class="form-control" />
+            <span asp-validation-for="LeaveBalance" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="No_of_leave"></label>
+            <input asp-for="No_of_leave" class="form-control" />
+            <span asp-validation-for="No_of_leave" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Emp_status"></label>
+            <input asp-for="Emp_status" class="form-control" />
+            <span asp-validation-for="Emp_status" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+
+using System;
+
+namespace YourNamespace.Models
+{
+    public class EmployeeViewModel
+    {
+        public string EmployeeID { get; set; }
+        public string EmployeeName { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public DateTime HireDate { get; set; }
+        public string RoleID { get; set; }
+        public string ManagerID { get; set; }
+        public string ProjectID { get; set; }
+        public int LeaveBalance { get; set; }
+        public int No_of_leave { get; set; }
+        public string Emp_status { get; set; }
+    }
+}
+
+
+
+
