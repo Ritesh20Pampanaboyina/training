@@ -1,4 +1,4 @@
-@*@model ALMSystem2.Models.EmployeeViewModel*@
+@model ALMSystem2.Models.EmployeeViewModel
 
 @{
     ViewData["Title"] = "Create New Employee";
@@ -8,67 +8,67 @@
     <h3>Create New Employee</h3>
     <form asp-action="CreateNewEmployee" method="post">
         <div class="form-group">
-            <label asp-for="EmployeeID"></label>
+            <label asp-for="EmployeeID" class="font-weight-bold"></label>
             <p class="text-muted">Enter a unique ID for the employee.</p>
             <input asp-for="EmployeeID" class="form-control" />
             <span asp-validation-for="EmployeeID" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="EmployeeName"></label>
+            <label asp-for="EmployeeName" class="font-weight-bold"></label>
             <p class="text-muted">Enter the full name of the employee.</p>
             <input asp-for="EmployeeName" class="form-control" />
             <span asp-validation-for="EmployeeName" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Email"></label>
+            <label asp-for="Email" class="font-weight-bold"></label>
             <p class="text-muted">Enter the employee's email address.</p>
             <input asp-for="Email" class="form-control" />
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Phone"></label>
+            <label asp-for="Phone" class="font-weight-bold"></label>
             <p class="text-muted">Enter the employee's phone number.</p>
             <input asp-for="Phone" class="form-control" />
             <span asp-validation-for="Phone" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="HireDate"></label>
+            <label asp-for="HireDate" class="font-weight-bold"></label>
             <p class="text-muted">Select the date when the employee was hired.</p>
             <input asp-for="HireDate" class="form-control" type="date" />
             <span asp-validation-for="HireDate" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="RoleID"></label>
+            <label asp-for="RoleID" class="font-weight-bold"></label>
             <p class="text-muted">Enter the role ID for the employee's job role.</p>
             <input asp-for="RoleID" class="form-control" />
             <span asp-validation-for="RoleID" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="ManagerID"></label>
+            <label asp-for="ManagerID" class="font-weight-bold"></label>
             <p class="text-muted">Enter the ID of the employee's manager.</p>
             <input asp-for="ManagerID" class="form-control" />
             <span asp-validation-for="ManagerID" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="ProjectID"></label>
+            <label asp-for="ProjectID" class="font-weight-bold"></label>
             <p class="text-muted">Enter the ID of the project assigned to the employee.</p>
             <input asp-for="ProjectID" class="form-control" />
             <span asp-validation-for="ProjectID" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="LeaveBalance"></label>
+            <label asp-for="LeaveBalance" class="font-weight-bold"></label>
             <p class="text-muted">Enter the current leave balance for the employee.</p>
             <input asp-for="LeaveBalance" class="form-control" />
             <span asp-validation-for="LeaveBalance" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="No_of_leave"></label>
+            <label asp-for="No_of_leave" class="font-weight-bold"></label>
             <p class="text-muted">Enter the number of leave days taken by the employee.</p>
             <input asp-for="No_of_leave" class="form-control" />
             <span asp-validation-for="No_of_leave" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Emp_status"></label>
+            <label asp-for="Emp_status" class="font-weight-bold"></label>
             <p class="text-muted">Enter the employment status (e.g., Active, Inactive).</p>
             <input asp-for="Emp_status" class="form-control" />
             <span asp-validation-for="Emp_status" class="text-danger"></span>
@@ -77,8 +77,40 @@
     </form>
 </div>
 
+<style>
+    .content {
+        margin-left: 270px;
+        padding: 30px;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: #ecf0f1;
+        border-radius: 8px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+    
+    .form-group label {
+        font-size: 1.2em;
+        color: #ecf0f1;
+    }
 
-@*@model IEnumerable<ALMSystem2.Models.EmployeeViewModel>*@
+    .form-group p {
+        font-size: 1em;
+        color: #bdc3c7;
+    }
+
+    .form-control {
+        font-size: 1em;
+    }
+
+    .btn-primary {
+        font-size: 1.2em;
+        padding: 0.75em 1.5em;
+        background-color: #16a085;
+        border: none;
+    }
+</style>
+
+
+@model IEnumerable<ALMSystem2.Models.EmployeeViewModel>
 
 @{
     ViewData["Title"] = "Employee Details";
@@ -104,7 +136,7 @@
                 <th>Emp_status</th>
             </tr>
         </thead>
-        @*<tbody>
+        <tbody>
             @foreach (var employee in Model)
             {
                 <tr>
@@ -121,9 +153,56 @@
                     <td>@employee.Emp_status</td>
                 </tr>
             }
-        </tbody>*@
+        </tbody>
     </table>
 </div>
 
+<style>
+    .content {
+        margin-left: 270px;
+        padding: 30px;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: #ecf0f1;
+        border-radius: 8px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
 
+    h3 {
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
 
+    .btn-success {
+        font-size: 1.2em;
+        padding: 0.75em 1.5em;
+        background-color: #1abc9c;
+        border: none;
+    }
+
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background-color: #34495e;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        color: #ecf0f1;
+    }
+
+    td {
+        color: #bdc3c7;
+    }
+
+    tr:nth-child(even) {
+        background-color: #2c3e50;
+    }
+</style>
