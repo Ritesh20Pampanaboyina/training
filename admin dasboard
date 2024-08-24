@@ -3,11 +3,11 @@
 }
 
 <div class="content">
-    <h3>Employee Details</h3>
+    <h3 class="page-header">Employee Details</h3>
     <a href="/Admin/CreateNewEmployee" class="btn btn-success mb-3">Create New</a>
 
-    <table class="table table-striped mt-3">
-        <thead>
+    <table class="table table-bordered table-hover mt-3">
+        <thead class="thead-dark">
             <tr>
                 <th>EmployeeID</th>
                 <th>EmployeeName</th>
@@ -52,34 +52,40 @@
 <style>
     body {
         font-family: 'Roboto', sans-serif;
-        background-color: #000;
-        color: #ecf0f1;
+        background-color: #f8f9fa;
+        color: #343a40;
         margin: 0;
         padding: 0;
     }
     .content {
         margin: 20px;
     }
+    .page-header {
+        border-bottom: 2px solid #343a40;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        color: #343a40;
+    }
     .table {
         width: 100%;
         margin-bottom: 1rem;
-        color: #fff;
+        color: #343a40;
+        background-color: #ffffff;
+        border-collapse: collapse;
     }
     .table th,
     .table td {
         padding: 0.75rem;
-        vertical-align: top;
-        border-top: 1px solid #dee2e6;
+        vertical-align: middle;
+        border: 1px solid #dee2e6;
     }
-    .table thead th {
-        vertical-align: bottom;
-        border-bottom: 2px solid #dee2e6;
-    }
-    .table tbody + tbody {
-        border-top: 2px solid #dee2e6;
-    }
-    .table .table {
+    .thead-dark th {
         background-color: #343a40;
+        color: #ffffff;
+        border-color: #454d55;
+    }
+    .table-hover tbody tr:hover {
+        background-color: #f1f1f1;
     }
     .btn {
         display: inline-block;
