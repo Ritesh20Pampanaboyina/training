@@ -1,242 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-public class AdminController : Controller
-{
-    // GET: Admin/Login
-    public ActionResult AdminLogin()
-    {
-        return View();
-    }
-
-    // POST: Admin/Login
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult AdminLogin(string username, string password)
-    {
-        // Implement login logic here
-        if (username == "admin" && password == "password") // Example validation
-        {
-            return RedirectToAction("AdminDashboard");
-        }
-
-        ModelState.AddModelError("", "Invalid login attempt.");
-        return View();
-    }
-
-    // GET: Admin/Dashboard
-    public ActionResult AdminDashboard()
-    {
-        return View();
-    }
-
-    public ActionResult EmployeeDetails()
-    {
-        return View();
-    }
-
-    public ActionResult CreateNewEmployee()
-    {
-        return View();
-    }
-
-////    // Optional: If you want to handle form submissions
-//////    [HttpPost]
-//////    public ActionResult CreateNewEmployee(EmployeeViewModel model)
-//////    {
-//////        if (ModelState.IsValid)
-//////        {
-//////            // Save the new employee data to the database
-//////            // Redirect to Employee Details or another page after saving
-//////            return RedirectToAction("EmployeeDetails");
-//////        }
-//////        return View(model);
-//////    }
-}
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #000;
-            color: #ecf0f1;
-            margin: 0;
-            padding: 0;
-        }
-
-        .navbar {
-            background-color: rgba(0, 0, 0, 0.8);
-            transition: background-color 0.3s ease-in-out;
-        }
-
-            .navbar:hover {
-                background-color: rgba(0, 0, 0, 0.9);
-            }
-
-        .navbar-brand {
-            font-size: 1.8em;
-            color: #ffffff !important;
-        }
-
-        .sidebar {
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.9);
-            padding-top: 30px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 250px;
-            transition: width 0.3s ease-in-out;
-            overflow: hidden;
-            overflow-y: auto;
-        }
-
-            .sidebar:hover {
-                width: 280px;
-            }
-
-            .sidebar a {
-                color: #ffffff;
-                display: block;
-                padding: 20px;
-                text-decoration: none;
-                font-size: 1.2em;
-                transition: background-color 0.3s, padding-left 0.3s;
-                border-left: 4px solid transparent;
-            }
-
-                .sidebar a:hover {
-                    background-color: rgba(255, 255, 255, 0.1);
-                    padding-left: 25px;
-                    border-left: 4px solid #16a085;
-                }
-
-            .sidebar .active {
-                background-color: #16a085;
-                border-left: 4px solid #1abc9c;
-            }
-
-        .content {
-            margin-left: 270px;
-            padding: 30px;
-            color: #ecf0f1;
-        }
-
-        .card {
-            margin-bottom: 30px;
-            border: none;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #ecf0f1;
-            transition: transform 0.3s ease-in-out, background-color 0.3s, box-shadow 0.3s;
-        }
-
-            .card:hover {
-                transform: scale(1.05);
-                background-color: rgba(255, 255, 255, 0.2);
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            }
-
-        .card-title {
-            font-size: 1.8em;
-        }
-
-        .card-text {
-            font-size: 1.2em;
-        }
-
-        .btn {
-            font-size: 1.2em;
-            padding: 0.75em 1.5em;
-        }
-
-        .welcome-box {
-            background-color: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 30px;
-        }
-
-            .welcome-box h3 {
-                font-size: 2em;
-                margin-bottom: 10px;
-            }
-
-            .welcome-box p {
-                font-size: 1.2em;
-            }
-    </style>
-</head>
-<body>
-    <div class="sidebar">
-        <a href="#" class="active">Dashboard</a>
-        <a href="/Admin/ManageEmployees">Manage Employees</a>
-        <a href="/Admin/ManageProjects">Manage Projects</a>
-        <a href="/Admin/ViewAttendanceRequests">Attendance Requests</a>
-        <a href="/Admin/ViewLeaveRequests">Leave Requests</a>
-    </div>
-
-    <div class="content">
-        <div class="welcome-box">
-            <h3>Welcome to the Admin Dashboard</h3>
-        </div>
-
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Manage Employees</h5>
-                <p class="card-text">Add, update, or delete employee information and manage their roles.</p>
-                <a href="/Admin/ManageEmployees" class="btn btn-primary">Manage Employees</a>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Manage Projects</h5>
-                <p class="card-text">Add, update, or delete project information and assign projects to employees.</p>
-                <a href="/Admin/ManageProjects" class="btn btn-primary">Manage Projects</a>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Attendance Requests</h5>
-                <p class="card-text">View and manage pending attendance requests.</p>
-                <a href="/Admin/ViewAttendanceRequests" class="btn btn-primary">View Requests</a>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Leave Requests</h5>
-                <p class="card-text">View and manage pending leave requests.</p>
-                <a href="/Admin/ViewLeaveRequests" class="btn btn-primary">View Requests</a>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
-
-
-@{
-    ViewData["Title"] = "Employee Details";
-}
-
-<div class="content">
-    <h3>Employee Details</h3>
-    <a href="/Admin/CreateNewEmployee" class="btn btn-success">Create New</a>
-</div>
-
 @model ALMSystem2.Models.EmployeeViewModel
 
 @{
@@ -268,7 +29,7 @@ public class AdminController : Controller
         </div>
         <div class="form-group">
             <label asp-for="HireDate"></label>
-            <input asp-for="HireDate" class="form-control" />
+            <input asp-for="HireDate" class="form-control" type="date" />
             <span asp-validation-for="HireDate" class="text-danger"></span>
         </div>
         <div class="form-group">
@@ -306,3 +67,86 @@ public class AdminController : Controller
 </div>
 
 
+@model IEnumerable<ALMSystem2.Models.EmployeeViewModel>
+
+@{
+    ViewData["Title"] = "Employee Details";
+}
+
+<div class="content">
+    <h3>Employee Details</h3>
+    <a href="/Admin/CreateNewEmployee" class="btn btn-success">Create New</a>
+    
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>EmployeeID</th>
+                <th>EmployeeName</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>HireDate</th>
+                <th>RoleID</th>
+                <th>ManagerID</th>
+                <th>ProjectID</th>
+                <th>LeaveBalance</th>
+                <th>No_of_leave</th>
+                <th>Emp_status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model)
+            {
+                <tr>
+                    <td>@employee.EmployeeID</td>
+                    <td>@employee.EmployeeName</td>
+                    <td>@employee.Email</td>
+                    <td>@employee.Phone</td>
+                    <td>@employee.HireDate.ToShortDateString()</td>
+                    <td>@employee.RoleID</td>
+                    <td>@employee.ManagerID</td>
+                    <td>@employee.ProjectID</td>
+                    <td>@employee.LeaveBalance</td>
+                    <td>@employee.No_of_leave</td>
+                    <td>@employee.Emp_status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using ALMSystem2.Models;
+
+public class AdminController : Controller
+{
+    private static List<EmployeeViewModel> employees = new List<EmployeeViewModel>(); // Simulated data store
+
+    // GET: Admin/EmployeeDetails
+    public ActionResult EmployeeDetails()
+    {
+        return View(employees);
+    }
+
+    // GET: Admin/CreateNewEmployee
+    public ActionResult CreateNewEmployee()
+    {
+        return View();
+    }
+
+    // POST: Admin/CreateNewEmployee
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult CreateNewEmployee(EmployeeViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            // Save the new employee data to the simulated data store
+            employees.Add(model);
+            return RedirectToAction("EmployeeDetails");
+        }
+        return View(model);
+    }
+}
