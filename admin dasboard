@@ -1,110 +1,59 @@
-@{
-    ViewData["Title"] = "Edit Employee";
-}
-
-<h2>Edit Employee</h2>
-
-@using (Html.BeginForm())
+// GET: Admin/EditEmployee/1
+public ActionResult EditEmployee(int id)
 {
-    @Html.AntiForgeryToken()
+    // Ideally, fetch the employee from the database using the id
+    // Example (replace with actual data retrieval logic):
+    var employee = new
+    {
+        EmployeeID = id,
+        EmployeeName = "John Doe",
+        Email = "johndoe@example.com",
+        Phone = "123-456-7890",
+        HireDate = DateTime.Now.AddYears(-5),
+        RoleID = 1,
+        ManagerID = 2,
+        ProjectID = 1,
+        LeaveBalance = 10,
+        No_of_leave = 5,
+        Emp_status = "Active"
+    };
 
-    <div class="form-group">
-        <label for="EmployeeName">Employee Name</label>
-        <input type="text" class="form-control" id="EmployeeName" name="EmployeeName" value="@ViewBag.EmployeeName" />
-    </div>
+    // Pass the data to the view using ViewBag
+    ViewBag.EmployeeName = employee.EmployeeName;
+    ViewBag.Email = employee.Email;
+    ViewBag.Phone = employee.Phone;
+    ViewBag.HireDate = employee.HireDate.ToShortDateString();
+    ViewBag.RoleID = employee.RoleID;
+    ViewBag.ManagerID = employee.ManagerID;
+    ViewBag.ProjectID = employee.ProjectID;
+    ViewBag.LeaveBalance = employee.LeaveBalance;
+    ViewBag.No_of_leave = employee.No_of_leave;
+    ViewBag.Emp_status = employee.Emp_status;
 
-    <div class="form-group">
-        <label for="Email">Email</label>
-        <input type="email" class="form-control" id="Email" name="Email" value="@ViewBag.Email" />
-    </div>
-
-    <div class="form-group">
-        <label for="Phone">Phone</label>
-        <input type="text" class="form-control" id="Phone" name="Phone" value="@ViewBag.Phone" />
-    </div>
-
-    <div class="form-group">
-        <label for="HireDate">Hire Date</label>
-        <input type="text" class="form-control" id="HireDate" name="HireDate" value="@ViewBag.HireDate" />
-    </div>
-
-    <div class="form-group">
-        <label for="RoleID">Role ID</label>
-        <input type="text" class="form-control" id="RoleID" name="RoleID" value="@ViewBag.RoleID" />
-    </div>
-
-    <div class="form-group">
-        <label for="ManagerID">Manager ID</label>
-        <input type="text" class="form-control" id="ManagerID" name="ManagerID" value="@ViewBag.ManagerID" />
-    </div>
-
-    <div class="form-group">
-        <label for="ProjectID">Project ID</label>
-        <input type="text" class="form-control" id="ProjectID" name="ProjectID" value="@ViewBag.ProjectID" />
-    </div>
-
-    <div class="form-group">
-        <label for="LeaveBalance">Leave Balance</label>
-        <input type="text" class="form-control" id="LeaveBalance" name="LeaveBalance" value="@ViewBag.LeaveBalance" />
-    </div>
-
-    <div class="form-group">
-        <label for="No_of_leave">Number of Leaves Taken</label>
-        <input type="text" class="form-control" id="No_of_leave" name="No_of_leave" value="@ViewBag.No_of_leave" />
-    </div>
-
-    <div class="form-group">
-        <label for="Emp_status">Employee Status</label>
-        <input type="text" class="form-control" id="Emp_status" name="Emp_status" value="@ViewBag.Emp_status" />
-    </div>
-
-    <button type="submit" class="btn btn-primary">Save</button>
-    <a href="@Url.Action("EmployeeDetails", "Admin")" class="btn btn-secondary">Cancel</a>
+    return View();
 }
 
-<style>
-    body {
-        font-family: 'Roboto', sans-serif;
-        background-color: #f8f9fa;
-        color: #343a40;
-        margin: 0;
-        padding: 0;
-    }
-    .form-group {
-        margin-bottom: 1rem;
-    }
-    .form-group label {
-        font-weight: bold;
-    }
-    .form-control {
-        width: 100%;
-        padding: 0.375rem 0.75rem;
-        border: 1px solid #ced4da;
-        border-radius: 0.25rem;
-    }
-    .btn {
-        display: inline-block;
-        font-weight: 400;
-        color: #fff;
-        text-align: center;
-        vertical-align: middle;
-        cursor: pointer;
-        background-color: #007bff;
-        border: 1px solid transparent;
-        padding: 0.375rem 0.75rem;
-        font-size: 1rem;
-        line-height: 1.5;
-        border-radius: 0.25rem;
-    }
-    .btn-primary {
-        background-color: #007bff;
-        border-color: #007bff;
-    }
-    .btn-secondary {
-        background-color: #6c757d;
-        border-color: #6c757d;
-    }
-    .btn-secondary:hover {
-        background-color: #5a6268;
-    }
-</style>
+// POST: Admin/EditEmployee/1
+[HttpPost]
+[ValidateAntiForgeryToken]
+public ActionResult EditEmployee(int id, FormCollection form)
+{
+    // You can extract form values like this (replace with actual logic)
+    string employeeName = form["EmployeeName"];
+    string email = form["Email"];
+    string phone = form["Phone"];
+    DateTime hireDate = Convert.ToDateTime(form["HireDate"]);
+    int roleID = Convert.ToInt32(form["RoleID"]);
+    int managerID = Convert.ToInt32(form["ManagerID"]);
+    int projectID = Convert.ToInt32(form["ProjectID"]);
+    int leaveBalance = Convert.ToInt32(form["LeaveBalance"]);
+    int no_of_leave = Convert.ToInt32(form["No_of_leave"]);
+    string emp_status = form["Emp_status"];
+
+    // Here, update the employee in the database
+    // Example (replace with actual update logic):
+    // db.UpdateEmployee(id, employeeName, email, phone, hireDate, roleID, managerID, projectID, leaveBalance, no_of_leave, emp_status);
+
+    // Redirect back to the employee details page
+    return RedirectToAction("EmployeeDetails");
+}
