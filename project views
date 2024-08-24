@@ -76,23 +76,20 @@
 </html>
 
 
-
-
 @{
-    ViewBag.Title = "Employee Login";
+    Layout = null; // or set to your layout file if you have one
 }
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@ViewBag.Title</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="~/Content/site.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Login</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
     <style>
         body {
-            background: linear-gradient(to right, #17a2b8, #2575fc);
+            background: linear-gradient(to right, #6a11cb, #2575fc);
             height: 100vh;
             display: flex;
             align-items: center;
@@ -100,77 +97,269 @@
             margin: 0;
         }
 
-        .navbar-custom {
-            background-color: #000000;
-        }
-
-            .navbar-custom .navbar-brand {
-                color: #ffffff;
-                font-size: 2rem;
-            }
-
         .login-container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
             width: 100%;
             max-width: 400px;
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            transform: translateY(0);
+            opacity: 1;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
         }
 
-            .login-container h1 {
-                font-size: 2.5rem;
-                margin-bottom: 1.5rem;
+            .login-container.hidden {
+                transform: translateY(-50%);
+                opacity: 0;
             }
 
-            .login-container .btn-lg {
-                font-size: 1.2rem;
-                padding: 0.75rem 1.5rem;
+            .login-container h2 {
+                margin-bottom: 1rem;
+                font-family: 'Arial', sans-serif;
+                color: #333;
             }
 
-        .footer {
-            font-size: 1rem;
+        .form-control {
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            transition: border-color 0.3s;
         }
+
+            .form-control:focus {
+                border-color: #2575fc;
+                box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
+            }
+
+        .btn-primary {
+            background: #2575fc;
+            border: none;
+            border-radius: 5px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.5rem;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+            .btn-primary:hover {
+                background: #1d64d1;
+            }
+
+            .btn-primary:active {
+                transform: scale(0.98);
+            }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-custom">
-        <a class="navbar-brand" href="#">LeaveMaster</a>
-    </nav>
-
-    <div class="container d-flex align-items-center justify-content-center vh-100">
-        <div class="login-container">
-            <h1 class="text-center">Employee Login</h1>
-            <form method="post" action="@Url.Action("EmployeeLogin", "Employee")">
-                <div class="form-group">
-                    <label for="username">Username:</label>
-                    <input type="text" class="form-control" id="username" name="username" required />
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" class="form-control" id="password" name="password" required />
-                </div>
-                <button type="submit" class="btn btn-info btn-lg btn-block">Login</button>
-                @if (ViewBag.ErrorMessage != null)
-                {
-                    <div class="alert alert-danger mt-3">@ViewBag.ErrorMessage</div>
-                }
-            </form>
-        </div>
+    <div class="login-container">
+        <h2>Employee Login</h2>
+        @using (Html.BeginForm("EmployeeLogin", "Employee", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.Label("username")
+                @Html.TextBox("username", null, new { @class = "form-control", required = "required" })
+            </div>
+            <div class="form-group">
+                @Html.Label("password")
+                @Html.Password("password", null, new { @class = "form-control", required = "required" })
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        }
     </div>
-
-    <footer class="footer bg-light text-center py-3">
-        <div class="container">
-            <span class="text-muted">&copy; 2024 Attendance and Leave Management System. All rights reserved.</span>
-        </div>
-    </footer>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
 
+
+
+
+@{
+    Layout = null; // or set to your layout file if you have one
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Login</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+        .login-container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            transform: translateY(0);
+            opacity: 1;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+        }
+
+            .login-container.hidden {
+                transform: translateY(-50%);
+                opacity: 0;
+            }
+
+            .login-container h2 {
+                margin-bottom: 1rem;
+                font-family: 'Arial', sans-serif;
+                color: #333;
+            }
+
+        .form-control {
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            transition: border-color 0.3s;
+        }
+
+            .form-control:focus {
+                border-color: #2575fc;
+                box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
+            }
+
+        .btn-primary {
+            background: #2575fc;
+            border: none;
+            border-radius: 5px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.5rem;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+            .btn-primary:hover {
+                background: #1d64d1;
+            }
+
+            .btn-primary:active {
+                transform: scale(0.98);
+            }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Employee Login</h2>
+        @using (Html.BeginForm("EmployeeLogin", "Employee", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.Label("username")
+                @Html.TextBox("username", null, new { @class = "form-control", required = "required" })
+            </div>
+            <div class="form-group">
+                @Html.Label("password")
+                @Html.Password("password", null, new { @class = "form-control", required = "required" })
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        }
+    </div>
+</body>
+</html>
+
+
+
+@{
+    Layout = null; // or set to your layout file if you have one
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+        .login-container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            transform: translateY(0);
+            opacity: 1;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+        }
+
+            .login-container.hidden {
+                transform: translateY(-50%);
+                opacity: 0;
+            }
+
+            .login-container h2 {
+                margin-bottom: 1rem;
+                font-family: 'Arial', sans-serif;
+                color: #333;
+            }
+
+        .form-control {
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            transition: border-color 0.3s;
+        }
+
+            .form-control:focus {
+                border-color: #2575fc;
+                box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
+            }
+
+        .btn-primary {
+            background: #2575fc;
+            border: none;
+            border-radius: 5px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.5rem;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+            .btn-primary:hover {
+                background: #1d64d1;
+            }
+
+            .btn-primary:active {
+                transform: scale(0.98);
+            }
+      
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Admin Login</h2>
+        @using (Html.BeginForm("AdminLogin", "Admin", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.Label("username")
+                @Html.TextBox("username", null, new { @class = "form-control", required = "required" })
+            </div>
+            <div class="form-group">
+                @Html.Label("password")
+                @Html.Password("password", null, new { @class = "form-control", required = "required" })
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        }
+    </div>
+</body>
+</html>
 
 
 
@@ -179,7 +368,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Dashboard</title>
+    <title>Admin Dashboard</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
     <style>
         body {
@@ -296,286 +485,48 @@
 </head>
 <body>
     <div class="sidebar">
-        <a href="#" class="active">Apply for Leave</a>
-        <a href="#">Submit Attendance</a>
-        <a href="#">View Project Details</a>
+        <a href="#" class="active">Dashboard</a>
+        <a href="/Admin/ManageEmployees">Manage Employees</a>
+        <a href="/Admin/ManageProjects">Manage Projects</a>
+        <a href="/Admin/ViewAttendanceRequests">Attendance Requests</a>
+        <a href="/Admin/ViewLeaveRequests">Leave Requests</a>
     </div>
 
     <div class="content">
         <div class="welcome-box">
-            <h3>Welcome to LeaveMaster Dashboard</h3>
-            
+            <h3>Welcome to the Admin Dashboard</h3>
         </div>
 
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Employee Details</h5>
-                <p class="card-text">Name: LeaveMaster</p>
-                <p class="card-text">Position: Software Engineer</p>
-                <p class="card-text">Department: HealthCare</p>
-                <p class="card-text">Email: leavemaster@gmail.com</p>
-                <p class="card-text">Phone: 9393939495</p>
+                <h5 class="card-title">Manage Employees</h5>
+                <p class="card-text">Add, update, or delete employee information and manage their roles.</p>
+                <a href="/Admin/ManageEmployees" class="btn btn-primary">Manage Employees</a>
             </div>
         </div>
 
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Apply for Leave</h5>
-                <p class="card-text">Submit your leave requests here.</p>
-                <a href="#" class="btn btn-primary">Apply Leave</a>
+                <h5 class="card-title">Manage Projects</h5>
+                <p class="card-text">Add, update, or delete project information and assign projects to employees.</p>
+                <a href="/Admin/ManageProjects" class="btn btn-primary">Manage Projects</a>
             </div>
         </div>
 
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Submit Attendance</h5>
-                <p class="card-text">Record your attendance here.</p>
-                <a href="#" class="btn btn-primary">Submit Attendance</a>
+                <h5 class="card-title">Attendance Requests</h5>
+                <p class="card-text">View and manage pending attendance requests.</p>
+                <a href="/Admin/ViewAttendanceRequests" class="btn btn-primary">View Requests</a>
             </div>
         </div>
 
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">View Project Details</h5>
-                <p class="card-text">View details related to your current projects.</p>
-                <a href="#" class="btn btn-primary">View Projects</a>
+                <h5 class="card-title">Leave Requests</h5>
+                <p class="card-text">View and manage pending leave requests.</p>
+                <a href="/Admin/ViewLeaveRequests" class="btn btn-primary">View Requests</a>
             </div>
-        </div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
-
-
-
-@{
-    Layout = null; // or set to your layout file if you have one
-}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
-    <style>
-        body {
-            background: linear-gradient(to right, #6a11cb, #2575fc);
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0;
-        }
-
-        .login-container {
-            background: #fff;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 400px;
-            transform: translateY(0);
-            opacity: 1;
-            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
-        }
-
-            .login-container.hidden {
-                transform: translateY(-50%);
-                opacity: 0;
-            }
-
-            .login-container h2 {
-                margin-bottom: 1rem;
-                font-family: 'Arial', sans-serif;
-                color: #333;
-            }
-
-        .form-control {
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            transition: border-color 0.3s;
-        }
-
-            .form-control:focus {
-                border-color: #2575fc;
-                box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
-            }
-
-        .btn-primary {
-            background: #2575fc;
-            border: none;
-            border-radius: 5px;
-            padding: 0.75rem 1.5rem;
-            font-size: 1.5rem;
-            transition: background 0.3s, transform 0.3s;
-        }
-
-            .btn-primary:hover {
-                background: #1d64d1;
-            }
-
-            .btn-primary:active {
-                transform: scale(0.98);
-            }
-      
-    </style>
-</head>
-<body>
-    <div class="login-container">
-        <h2>Admin Login</h2>
-        @using (Html.BeginForm("AdminLogin", "Admin", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            <div class="form-group">
-                @Html.Label("username")
-                @Html.TextBox("username", null, new { @class = "form-control", required = "required" })
-            </div>
-            <div class="form-group">
-                @Html.Label("password")
-                @Html.Password("password", null, new { @class = "form-control", required = "required" })
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-        }
-    </div>
-</body>
-</html>
-
-
-
-@{
-    Layout = null; // or set to your layout file if you have one
-}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #000;
-            color: #ecf0f1;
-            overflow: hidden;
-            margin: 0;
-            padding: 0;
-        }
-
-        .navbar {
-            background-color: rgba(0, 0, 0, 0.8);
-            transition: background-color 0.3s ease-in-out;
-        }
-
-            .navbar:hover {
-                background-color: rgba(0, 0, 0, 0.9);
-            }
-
-        .navbar-brand {
-            font-size: 1.5em;
-            color: #ffffff !important;
-        }
-
-        .sidebar {
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.9);
-            padding-top: 20px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 220px;
-            transition: width 0.3s ease-in-out;
-            overflow: hidden;
-        }
-
-            .sidebar:hover {
-                width: 250px;
-            }
-
-            .sidebar a {
-                color: #ffffff;
-                display: block;
-                padding: 15px;
-                text-decoration: none;
-                font-size: 1.1em;
-                transition: background-color 0.3s, padding-left 0.3s;
-                border-left: 4px solid transparent;
-            }
-
-                .sidebar a:hover {
-                    background-color: rgba(255, 255, 255, 0.1);
-                    padding-left: 20px;
-                    border-left: 4px solid #16a085;
-                }
-
-            .sidebar .active {
-                background-color: #16a085;
-                border-left: 4px solid #1abc9c;
-            }
-
-        .content {
-            margin-left: 240px;
-            padding: 20px;
-            color: #ecf0f1;
-            position: relative;
-            z-index: 2;
-        }
-
-        .card {
-            margin-bottom: 20px;
-            border: none;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #ecf0f1;
-            transition: transform 0.3s ease-in-out, background-color 0.3s, box-shadow 0.3s;
-        }
-
-            .card:hover {
-                transform: scale(1.05);
-                background-color: rgba(255, 255, 255, 0.2);
-                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            }
-        
-    </style>
-</head>
-<body>
-    <h2>Welcome to the Admin Dashboard</h2>
-    <p>Select an option from the sidebar to manage the system.</p>
-
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Manage Employees</h5>
-            <p class="card-text">Add, update, or delete employee information and manage their roles.</p>
-            <a href="#" class="btn btn-primary">Manage Employees</a>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Project Management</h5>
-            <p class="card-text">Add, update, or delete project information and assign projects to employees.</p>
-            <a href="#" class="btn btn-primary">Manage Projects</a>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Attendance Requests</h5>
-            <p class="card-text">View and manage pending attendance requests.</p>
-            <a href="#" class="btn btn-primary">View Requests</a>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Leave Requests</h5>
-            <p class="card-text">View and manage pending leave requests.</p>
-            <a href="#" class="btn btn-primary">View Requests</a>
         </div>
     </div>
 </body>
@@ -671,10 +622,6 @@
 
 
 
-@{
-    Layout = null; // or set to your layout file if you have one
-}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -687,7 +634,6 @@
             font-family: 'Roboto', sans-serif;
             background-color: #000;
             color: #ecf0f1;
-            overflow: hidden;
             margin: 0;
             padding: 0;
         }
@@ -709,32 +655,33 @@
         .sidebar {
             height: 100vh;
             background-color: rgba(0, 0, 0, 0.9);
-            padding-top: 20px;
+            padding-top: 30px;
             position: fixed;
             top: 0;
             left: 0;
-            width: 220px;
+            width: 250px;
             transition: width 0.3s ease-in-out;
             overflow: hidden;
+            overflow-y: auto;
         }
 
             .sidebar:hover {
-                width: 250px;
+                width: 280px;
             }
 
             .sidebar a {
                 color: #ffffff;
                 display: block;
-                padding: 15px;
+                padding: 20px;
                 text-decoration: none;
-                font-size: 1.1em;
+                font-size: 1.2em;
                 transition: background-color 0.3s, padding-left 0.3s;
                 border-left: 4px solid transparent;
             }
 
                 .sidebar a:hover {
                     background-color: rgba(255, 255, 255, 0.1);
-                    padding-left: 20px;
+                    padding-left: 25px;
                     border-left: 4px solid #16a085;
                 }
 
@@ -744,17 +691,15 @@
             }
 
         .content {
-            margin-left: 240px;
-            padding: 20px;
+            margin-left: 270px;
+            padding: 30px;
             color: #ecf0f1;
-            position: relative;
-            z-index: 2;
         }
 
         .card {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             border: none;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
             background-color: rgba(255, 255, 255, 0.1);
             color: #ecf0f1;
             transition: transform 0.3s ease-in-out, background-color 0.3s, box-shadow 0.3s;
@@ -763,8 +708,16 @@
             .card:hover {
                 transform: scale(1.05);
                 background-color: rgba(255, 255, 255, 0.2);
-                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
             }
+
+        .card-title {
+            font-size: 1.8em;
+        }
+
+        .card-text {
+            font-size: 1.2em;
+        }
 
         .btn-dashboard {
             display: block;
@@ -773,7 +726,7 @@
             margin: 0.5rem 0;
             border-radius: 5px;
             color: #fff;
-            font-size: 1.25rem;
+            font-size: 1.2em;
             text-align: center;
             text-decoration: none;
             background: #2575fc;
@@ -788,7 +741,40 @@
             .btn-dashboard:active {
                 transform: scale(0.98);
             }
-        
+
+        .welcome-box {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+            .welcome-box h3 {
+                font-size: 2em;
+                margin-bottom: 10px;
+            }
+
+            .welcome-box p {
+                font-size: 1.2em;
+            }
+
+        .details-box {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+            .details-box h3 {
+                font-size: 2em;
+                margin-bottom: 10px;
+            }
+
+            .details-box p {
+                font-size: 1.2em;
+            }
     </style>
 </head>
 <body>
@@ -800,8 +786,19 @@
     </div>
 
     <div class="content">
-        <h2>Welcome to the Manager Dashboard</h2>
-        <p>Select an option from the sidebar to manage the system.</p>
+        <div class="welcome-box">
+            <h3>Welcome to the Manager Dashboard</h3>
+            <p>Select an option from the sidebar to manage the system.</p>
+        </div>
+
+        <div class="details-box">
+            <h3>Manager Details</h3>
+            <p>Name: John Doe</p>
+            <p>Position: Project Manager</p>
+            <p>Department: IT</p>
+            <p>Email: johndoe@example.com</p>
+            <p>Phone: 123-456-7890</p>
+        </div>
 
         <div class="card">
             <div class="card-body">
