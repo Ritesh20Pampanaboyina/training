@@ -9,62 +9,74 @@
     <form asp-action="CreateNewEmployee" method="post">
         <div class="form-group">
             <label asp-for="EmployeeID"></label>
+            <p class="text-muted">Enter a unique ID for the employee.</p>
             <input asp-for="EmployeeID" class="form-control" />
             <span asp-validation-for="EmployeeID" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="EmployeeName"></label>
+            <p class="text-muted">Enter the full name of the employee.</p>
             <input asp-for="EmployeeName" class="form-control" />
             <span asp-validation-for="EmployeeName" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="Email"></label>
+            <p class="text-muted">Enter the employee's email address.</p>
             <input asp-for="Email" class="form-control" />
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="Phone"></label>
+            <p class="text-muted">Enter the employee's phone number.</p>
             <input asp-for="Phone" class="form-control" />
             <span asp-validation-for="Phone" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="HireDate"></label>
+            <p class="text-muted">Select the date when the employee was hired.</p>
             <input asp-for="HireDate" class="form-control" type="date" />
             <span asp-validation-for="HireDate" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="RoleID"></label>
+            <p class="text-muted">Enter the role ID for the employee's job role.</p>
             <input asp-for="RoleID" class="form-control" />
             <span asp-validation-for="RoleID" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="ManagerID"></label>
+            <p class="text-muted">Enter the ID of the employee's manager.</p>
             <input asp-for="ManagerID" class="form-control" />
             <span asp-validation-for="ManagerID" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="ProjectID"></label>
+            <p class="text-muted">Enter the ID of the project assigned to the employee.</p>
             <input asp-for="ProjectID" class="form-control" />
             <span asp-validation-for="ProjectID" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="LeaveBalance"></label>
+            <p class="text-muted">Enter the current leave balance for the employee.</p>
             <input asp-for="LeaveBalance" class="form-control" />
             <span asp-validation-for="LeaveBalance" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="No_of_leave"></label>
+            <p class="text-muted">Enter the number of leave days taken by the employee.</p>
             <input asp-for="No_of_leave" class="form-control" />
             <span asp-validation-for="No_of_leave" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="Emp_status"></label>
+            <p class="text-muted">Enter the employment status (e.g., Active, Inactive).</p>
             <input asp-for="Emp_status" class="form-control" />
             <span asp-validation-for="Emp_status" class="text-danger"></span>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
+
 
 
 @model IEnumerable<ALMSystem2.Models.EmployeeViewModel>
