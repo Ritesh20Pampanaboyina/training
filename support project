@@ -5,3 +5,22 @@ i want a full webapi model with a example from db to postman like every connecti
     • Leaves 
     • Attendance 
     • Registration and Login 
+
+
+
+i want you to add these things which are 
+you should add a clcikable button on manage employee button when you click on it, it should go to a dashboard where there should be few fields which are
+-title on left side written as Employee Details
+-under the title there should be a field called as create new button and when you click on create new then it should pop a page or go to another page where it should have these fields
+EmployeeID 
+    EmployeeName
+    Email 
+    Phone 
+    HireDate 
+    RoleID 
+    ManagerID 
+    ProjectID
+    LeaveBalance
+	No_of_leave 
+	Emp_status
+and in employee details page it should display these fields and data of newly added employee details
