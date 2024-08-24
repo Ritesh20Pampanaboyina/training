@@ -24,3 +24,19 @@ EmployeeID
 	No_of_leave 
 	Emp_status
 and in employee details page it should display these fields and data of newly added employee details
+
+
+
+i want you to connect everything and when i click on manageemployee then it should go to employee details page then on that page it should show the coloumns of these fields
+EmployeeID 
+    EmployeeName
+    Email 
+    Phone 
+    HireDate 
+    RoleID 
+    ManagerID 
+    ProjectID
+    LeaveBalance
+	No_of_leave 
+	Emp_status
+then when you clcik on create new employee then it should do to another page where we can add the above fields then when we submit it then we should be able to see the employee details on employee details page
