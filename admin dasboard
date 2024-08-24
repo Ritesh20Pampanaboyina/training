@@ -1,3 +1,111 @@
+@model IEnumerable<ALMSystem2.Models.EmployeeViewModel>
+
+@{
+    ViewData["Title"] = "Employee Details";
+}
+
+<div class="content">
+    <h3>Employee Details</h3>
+    <a href="/Admin/CreateNewEmployee" class="btn btn-success">Create New</a>
+
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>EmployeeID</th>
+                <th>EmployeeName</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>HireDate</th>
+                <th>RoleID</th>
+                <th>ManagerID</th>
+                <th>ProjectID</th>
+                <th>LeaveBalance</th>
+                <th>No_of_leave</th>
+                <th>Emp_status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model)
+            {
+                <tr>
+                    <td>@employee.EmployeeID</td>
+                    <td>@employee.EmployeeName</td>
+                    <td>@employee.Email</td>
+                    <td>@employee.Phone</td>
+                    <td>@employee.HireDate.ToShortDateString()</td>
+                    <td>@employee.RoleID</td>
+                    <td>@employee.ManagerID</td>
+                    <td>@employee.ProjectID</td>
+                    <td>@employee.LeaveBalance</td>
+                    <td>@employee.No_of_leave</td>
+                    <td>@employee.Emp_status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #000; /* Matches Admin Dashboard background color */
+        color: #ecf0f1;
+        margin: 0;
+        padding: 0;
+    }
+
+    .content {
+        margin-left: 250px; /* Adjusted to align with sidebar width */
+        padding: 30px;
+        background-color: rgba(0, 0, 0, 0.8); /* Dark background for content area */
+        color: #ecf0f1;
+        border-radius: 8px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        min-height: 100vh; /* Ensure content area takes full height */
+    }
+
+    h3 {
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+
+    .btn-success {
+        font-size: 1.2em;
+        padding: 0.75em 1.5em;
+        background-color: #1abc9c;
+        border: none;
+    }
+
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background-color: #34495e;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        color: #ecf0f1;
+    }
+
+    td {
+        color: #bdc3c7;
+    }
+
+    tr:nth-child(even) {
+        background-color: #2c3e50;
+    }
+</style>
+
+
+
 @model ALMSystem2.Models.EmployeeViewModel
 
 @{
@@ -78,15 +186,29 @@
 </div>
 
 <style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #000; /* Matches Admin Dashboard background color */
+        color: #ecf0f1;
+        margin: 0;
+        padding: 0;
+    }
+
     .content {
-        margin-left: 270px;
+        margin-left: 250px; /* Adjusted to align with sidebar width */
         padding: 30px;
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0.8); /* Dark background for content area */
         color: #ecf0f1;
         border-radius: 8px;
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        min-height: 100vh; /* Ensure content area takes full height */
     }
-    
+
+    h3 {
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+
     .form-group label {
         font-size: 1.2em;
         color: #ecf0f1;
@@ -106,103 +228,5 @@
         padding: 0.75em 1.5em;
         background-color: #16a085;
         border: none;
-    }
-</style>
-
-
-@model IEnumerable<ALMSystem2.Models.EmployeeViewModel>
-
-@{
-    ViewData["Title"] = "Employee Details";
-}
-
-<div class="content">
-    <h3>Employee Details</h3>
-    <a href="/Admin/CreateNewEmployee" class="btn btn-success">Create New</a>
-
-    <table class="table table-striped mt-3">
-        <thead>
-            <tr>
-                <th>EmployeeID</th>
-                <th>EmployeeName</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>HireDate</th>
-                <th>RoleID</th>
-                <th>ManagerID</th>
-                <th>ProjectID</th>
-                <th>LeaveBalance</th>
-                <th>No_of_leave</th>
-                <th>Emp_status</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var employee in Model)
-            {
-                <tr>
-                    <td>@employee.EmployeeID</td>
-                    <td>@employee.EmployeeName</td>
-                    <td>@employee.Email</td>
-                    <td>@employee.Phone</td>
-                    <td>@employee.HireDate.ToShortDateString()</td>
-                    <td>@employee.RoleID</td>
-                    <td>@employee.ManagerID</td>
-                    <td>@employee.ProjectID</td>
-                    <td>@employee.LeaveBalance</td>
-                    <td>@employee.No_of_leave</td>
-                    <td>@employee.Emp_status</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-
-<style>
-    .content {
-        margin-left: 270px;
-        padding: 30px;
-        background-color: rgba(0, 0, 0, 0.8);
-        color: #ecf0f1;
-        border-radius: 8px;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    h3 {
-        font-size: 2em;
-        margin-bottom: 20px;
-    }
-
-    .btn-success {
-        font-size: 1.2em;
-        padding: 0.75em 1.5em;
-        background-color: #1abc9c;
-        border: none;
-    }
-
-    table {
-        width: 100%;
-        margin-top: 20px;
-        border-collapse: collapse;
-    }
-
-    thead {
-        background-color: #34495e;
-    }
-
-    th, td {
-        padding: 10px;
-        text-align: left;
-    }
-
-    th {
-        color: #ecf0f1;
-    }
-
-    td {
-        color: #bdc3c7;
-    }
-
-    tr:nth-child(even) {
-        background-color: #2c3e50;
     }
 </style>
