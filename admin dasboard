@@ -1,4 +1,4 @@
-@model ALMSystem2.Models.EmployeeViewModel
+@*@model ALMSystem2.Models.EmployeeViewModel*@
 
 @{
     ViewData["Title"] = "Create New Employee";
@@ -78,8 +78,7 @@
 </div>
 
 
-
-@model IEnumerable<ALMSystem2.Models.EmployeeViewModel>
+@*@model IEnumerable<ALMSystem2.Models.EmployeeViewModel>*@
 
 @{
     ViewData["Title"] = "Employee Details";
@@ -88,7 +87,7 @@
 <div class="content">
     <h3>Employee Details</h3>
     <a href="/Admin/CreateNewEmployee" class="btn btn-success">Create New</a>
-    
+
     <table class="table table-striped mt-3">
         <thead>
             <tr>
@@ -105,7 +104,7 @@
                 <th>Emp_status</th>
             </tr>
         </thead>
-        <tbody>
+        @*<tbody>
             @foreach (var employee in Model)
             {
                 <tr>
@@ -122,43 +121,9 @@
                     <td>@employee.Emp_status</td>
                 </tr>
             }
-        </tbody>
+        </tbody>*@
     </table>
 </div>
 
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-using ALMSystem2.Models;
 
-public class AdminController : Controller
-{
-    private static List<EmployeeViewModel> employees = new List<EmployeeViewModel>(); // Simulated data store
-
-    // GET: Admin/EmployeeDetails
-    public ActionResult EmployeeDetails()
-    {
-        return View(employees);
-    }
-
-    // GET: Admin/CreateNewEmployee
-    public ActionResult CreateNewEmployee()
-    {
-        return View();
-    }
-
-    // POST: Admin/CreateNewEmployee
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult CreateNewEmployee(EmployeeViewModel model)
-    {
-        if (ModelState.IsValid)
-        {
-            // Save the new employee data to the simulated data store
-            employees.Add(model);
-            return RedirectToAction("EmployeeDetails");
-        }
-        return View(model);
-    }
-}
