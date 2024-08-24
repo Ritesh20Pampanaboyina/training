@@ -1,238 +1,166 @@
-public ActionResult EditEmployee(int id)
-{
-    // Fetch employee data from the database
-    var employee = GetEmployeeById(id); // Replace with actual data retrieval logic
-    return View(employee);
-}
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using YourNamespace.Models;
 
-// POST: Admin/EditEmployee
-[HttpPost]
-[ValidateAntiForgeryToken]
-public ActionResult EditEmployee(EmployeeViewModel model)
+public class AdminController : Controller
 {
-    if (ModelState.IsValid)
+    private static List<EmployeeViewModel> employees = new List<EmployeeViewModel>
     {
-        // Update employee data in the database
-        UpdateEmployee(model); // Replace with actual update logic
+        new EmployeeViewModel { EmployeeID = 1, EmployeeName = "John Doe", Email = "john@example.com", Phone = "123-456-7890", HireDate = DateTime.Now, RoleID = 1, ManagerID = 1, ProjectID = 1, LeaveBalance = 10, No_of_leave = 2, Emp_status = "Active" },
+        new EmployeeViewModel { EmployeeID = 2, EmployeeName = "Jane Smith", Email = "jane@example.com", Phone = "987-654-3210", HireDate = DateTime.Now, RoleID = 2, ManagerID = 2, ProjectID = 2, LeaveBalance = 15, No_of_leave = 3, Emp_status = "Active" }
+    };
+
+    // GET: EmployeeDetails
+    public ActionResult EmployeeDetails()
+    {
+        return View(employees);
+    }
+
+    // GET: CreateNewEmployee
+    public ActionResult CreateNewEmployee()
+    {
+        return View(new EmployeeViewModel());
+    }
+
+    // POST: CreateNewEmployee
+    [HttpPost]
+    public ActionResult CreateNewEmployee(EmployeeViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            // Add the new employee to the static list
+            model.EmployeeID = employees.Max(e => e.EmployeeID) + 1;
+            employees.Add(model);
+            return RedirectToAction("EmployeeDetails");
+        }
+
+        return View(model);
+    }
+
+    // GET: EditEmployee
+    public ActionResult EditEmployee(int id)
+    {
+        var employee = employees.FirstOrDefault(e => e.EmployeeID == id);
+        if (employee == null)
+        {
+            return HttpNotFound();
+        }
+        return View(employee);
+    }
+
+    // POST: EditEmployee
+    [HttpPost]
+    public ActionResult EditEmployee(EmployeeViewModel model)
+    {
+        var employee = employees.FirstOrDefault(e => e.EmployeeID == model.EmployeeID);
+        if (employee == null)
+        {
+            return HttpNotFound();
+        }
+
+        if (ModelState.IsValid)
+        {
+            // Update the employee details
+            employee.EmployeeName = model.EmployeeName;
+            employee.Email = model.Email;
+            employee.Phone = model.Phone;
+            employee.HireDate = model.HireDate;
+            employee.RoleID = model.RoleID;
+            employee.ManagerID = model.ManagerID;
+            employee.ProjectID = model.ProjectID;
+            employee.LeaveBalance = model.LeaveBalance;
+            employee.No_of_leave = model.No_of_leave;
+            employee.Emp_status = model.Emp_status;
+
+            return RedirectToAction("EmployeeDetails");
+        }
+
+        return View(model);
+    }
+
+    // POST: DeleteEmployee
+    [HttpPost]
+    public ActionResult DeleteEmployee(int id)
+    {
+        var employee = employees.FirstOrDefault(e => e.EmployeeID == id);
+        if (employee != null)
+        {
+            employees.Remove(employee);
+        }
+
         return RedirectToAction("EmployeeDetails");
     }
-    return View(model);
-}
-
-// POST: Admin/DeleteEmployee/{id}
-[HttpPost]
-[ValidateAntiForgeryToken]
-public ActionResult DeleteEmployee(int id)
-{
-    // Delete employee from the database
-    DeleteEmployeeById(id); // Replace with actual delete logic
-    return RedirectToAction("EmployeeDetails");
 }
 
 
-@model IEnumerable<ALMSystem2.Models.EmployeeViewModel>
+
+@model ALMSystem2.Models.Employee
 
 @{
-    ViewData["Title"] = "Employee Details";
+    ViewData["Title"] = "Edit Employee";
 }
 
 <div class="content">
-    <h3>Employee Details</h3>
-    <a href="/Admin/CreateNewEmployee" class="btn btn-success mb-3">Create New</a>
+    <h3>Edit Employee</h3>
+    <form asp-action="EditEmployee" method="post">
+        @Html.AntiForgeryToken()
 
-    <table class="table table-striped mt-3">
-        <thead>
-            <tr>
-                <th>EmployeeID</th>
-                <th>EmployeeName</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>HireDate</th>
-                <th>RoleID</th>
-                <th>ManagerID</th>
-                <th>ProjectID</th>
-                <th>LeaveBalance</th>
-                <th>No_of_leave</th>
-                <th>Emp_status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var employee in Model)
-            {
-                <tr>
-                    <td>@employee.EmployeeID</td>
-                    <td>@employee.EmployeeName</td>
-                    <td>@employee.Email</td>
-                    <td>@employee.Phone</td>
-                    <td>@employee.HireDate.ToShortDateString()</td>
-                    <td>@employee.RoleID</td>
-                    <td>@employee.ManagerID</td>
-                    <td>@employee.ProjectID</td>
-                    <td>@employee.LeaveBalance</td>
-                    <td>@employee.No_of_leave</td>
-                    <td>@employee.Emp_status</td>
-                    <td>
-                        <a href="/Admin/EditEmployee/@employee.EmployeeID" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="/Admin/DeleteEmployee/@employee.EmployeeID" method="post" style="display:inline;">
-                            @Html.AntiForgeryToken()
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this employee?');">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-
-<style>
-    .btn-sm {
-        font-size: 0.9em;
-        padding: 0.5em 1em;
-    }
-
-    .btn-warning {
-        background-color: #f39c12;
-        border: none;
-    }
-
-    .btn-warning:hover {
-        background-color: #e67e22;
-    }
-
-    .btn-danger {
-        background-color: #e74c3c;
-        border: none;
-    }
-
-    .btn-danger:hover {
-        background-color: #c0392b;
-    }
-</style>
-
-
-
-@model ALMSystem2.Models.EmployeeViewModel
-
-@{
-    ViewData["Title"] = "Create New Employee";
-}
-
-<div class="content">
-    <h3>Create New Employee</h3>
-    <form asp-action="CreateNewEmployee" method="post">
         <div class="form-group">
-            <label asp-for="EmployeeID" class="font-weight-bold"></label>
-            <p class="text-muted">Enter a unique ID for the employee.</p>
-            <input asp-for="EmployeeID" class="form-control" />
+            <label asp-for="EmployeeID"></label>
+            <input asp-for="EmployeeID" class="form-control" readonly />
             <span asp-validation-for="EmployeeID" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="EmployeeName" class="font-weight-bold"></label>
-            <p class="text-muted">Enter the full name of the employee.</p>
+            <label asp-for="EmployeeName"></label>
             <input asp-for="EmployeeName" class="form-control" />
             <span asp-validation-for="EmployeeName" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Email" class="font-weight-bold"></label>
-            <p class="text-muted">Enter the employee's email address.</p>
+            <label asp-for="Email"></label>
             <input asp-for="Email" class="form-control" />
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Phone" class="font-weight-bold"></label>
-            <p class="text-muted">Enter the employee's phone number.</p>
+            <label asp-for="Phone"></label>
             <input asp-for="Phone" class="form-control" />
             <span asp-validation-for="Phone" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="HireDate" class="font-weight-bold"></label>
-            <p class="text-muted">Select the date when the employee was hired.</p>
+            <label asp-for="HireDate"></label>
             <input asp-for="HireDate" class="form-control" type="date" />
             <span asp-validation-for="HireDate" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="RoleID" class="font-weight-bold"></label>
-            <p class="text-muted">Enter the role ID for the employee's job role.</p>
+            <label asp-for="RoleID"></label>
             <input asp-for="RoleID" class="form-control" />
             <span asp-validation-for="RoleID" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="ManagerID" class="font-weight-bold"></label>
-            <p class="text-muted">Enter the ID of the employee's manager.</p>
+            <label asp-for="ManagerID"></label>
             <input asp-for="ManagerID" class="form-control" />
             <span asp-validation-for="ManagerID" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="ProjectID" class="font-weight-bold"></label>
-            <p class="text-muted">Enter the ID of the project assigned to the employee.</p>
+            <label asp-for="ProjectID"></label>
             <input asp-for="ProjectID" class="form-control" />
             <span asp-validation-for="ProjectID" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="LeaveBalance" class="font-weight-bold"></label>
-            <p class="text-muted">Enter the current leave balance for the employee.</p>
+            <label asp-for="LeaveBalance"></label>
             <input asp-for="LeaveBalance" class="form-control" />
             <span asp-validation-for="LeaveBalance" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="No_of_leave" class="font-weight-bold"></label>
-            <p class="text-muted">Enter the number of leave days taken by the employee.</p>
+            <label asp-for="No_of_leave"></label>
             <input asp-for="No_of_leave" class="form-control" />
             <span asp-validation-for="No_of_leave" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Emp_status" class="font-weight-bold"></label>
-            <p class="text-muted">Enter the employment status (e.g., Active, Inactive).</p>
+            <label asp-for="Emp_status"></label>
             <input asp-for="Emp_status" class="form-control" />
             <span asp-validation-for="Emp_status" class="text-danger"></span>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
     </form>
 </div>
-
-<style>
-    body {
-        font-family: 'Roboto', sans-serif;
-        background-color: #000; /* Matches Admin Dashboard background color */
-        color: #ecf0f1;
-        margin: 0;
-        padding: 0;
-    }
-
-    .content {
-        margin-left: 250px; /* Adjusted to align with sidebar width */
-        padding: 30px;
-        background-color: rgba(0, 0, 0, 0.8); /* Dark background for content area */
-        color: #ecf0f1;
-        border-radius: 8px;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-        min-height: 100vh; /* Ensure content area takes full height */
-    }
-
-    h3 {
-        font-size: 2em;
-        margin-bottom: 20px;
-    }
-
-    .form-group label {
-        font-size: 1.2em;
-        color: #ecf0f1;
-    }
-
-    .form-group p {
-        font-size: 1em;
-        color: #bdc3c7;
-    }
-
-    .form-control {
-        font-size: 1em;
-    }
-
-    .btn-primary {
-        font-size: 1.2em;
-        padding: 0.75em 1.5em;
-        background-color: #16a085;
-        border: none;
-    }
-</style>
