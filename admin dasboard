@@ -1,117 +1,47 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
-namespace ALMSystem2.Controllers
+public class AdminController : Controller
 {
-    public class AdminController : Controller
+    [HttpGet]
+    public ActionResult Login()
     {
-        // GET: Admin/Login
-        public ActionResult AdminLogin()
-        {
-            return View();
-        }
-
-        // POST: Admin/Login
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult AdminLogin(string username, string password)
-        {
-            if (username == "admin" && password == "password") // Example validation
-            {
-                // Set session variable to indicate that the admin is logged in
-                Session["IsAdminLoggedIn"] = true;
-                return RedirectToAction("AdminDashboard");
-            }
-
-            ModelState.AddModelError("", "Invalid login attempt.");
-            return View();
-        }
-
-        // GET: Admin/Dashboard
-        [AuthorizeAdmin]
-        public ActionResult AdminDashboard()
-        {
-            return View();
-        }
-
-        // The rest of the actions remain the same
-
-        // GET: Admin/EmployeeDetails
-        [AuthorizeAdmin]
-        public ActionResult EmployeeDetails()
-        {
-            var employees = new List<object>
-            {
-                new { EmployeeID = 1, EmployeeName = "John Doe", Email = "johndoe@example.com", Phone = "123-456-7890", HireDate = DateTime.Now.AddYears(-5), RoleID = 1, ManagerID = 2, ProjectID = 1, LeaveBalance = 10, No_of_leave = 5, Emp_status = "Active" }
-                // Add more employees as necessary
-            };
-
-            ViewBag.Employees = employees; // Pass data to view
-            return View();
-        }
-
-        // Other actions (EditEmployee, DeleteEmployee, etc.) should also be protected with [AuthorizeAdmin]
+        return View();
     }
 
-    public class AuthorizeAdminAttribute : ActionFilterAttribute
+    [HttpPost]
+    public ActionResult Login(AdminLoginViewModel model)
     {
-        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        if (ModelState.IsValid)
         {
-            var session = filterContext.HttpContext.Session;
-            if (session["IsAdminLoggedIn"] == null || !(bool)session["IsAdminLoggedIn"])
+            // Validate admin credentials
+            bool isValidAdmin = ValidateAdminCredentials(model.Username, model.Password);
+
+            if (isValidAdmin)
             {
-                filterContext.Result = new RedirectResult("~/Admin/AdminLogin");
-            }
-            base.OnActionExecuting(filterContext);
-        }
-    }
-}
-
-
-using System.Web;
-using System.Web.Mvc;
-
-namespace ALMSystem2.Filters
-{
-    public class AuthorizeAdminAttribute : AuthorizeAttribute
-    {
-        protected override bool AuthorizeCore(HttpContextBase httpContext)
-        {
-            // Check if the session variable "AdminLoggedIn" is set to true
-            return httpContext.Session["AdminLoggedIn"] != null && (bool)httpContext.Session["AdminLoggedIn"];
-        }
-
-        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
-        {
-            // Redirect the user to the AdminLogin page if they are not authorized
-            if (!filterContext.HttpContext.User.Identity.IsAuthenticated)
-            {
-                filterContext.Result = new RedirectResult("~/Admin/AdminLogin");
+                // Create authentication ticket
+                FormsAuthentication.SetAuthCookie(model.Username, false);
+                return RedirectToAction("Index", "AdminDashboard");
             }
             else
             {
-                filterContext.Result = new RedirectResult("~/Admin/AdminLogin");
+                ModelState.AddModelError("", "Invalid login attempt.");
             }
         }
+        return View(model);
+    }
+
+    public ActionResult Logout()
+    {
+        FormsAuthentication.SignOut();
+        return RedirectToAction("Login");
+    }
+
+    private bool ValidateAdminCredentials(string username, string password)
+    {
+        // Implement your logic to validate admin credentials
+        // Example:
+        // return username == "admin" && password == "password";
+        return false;
     }
 }
-
-
-
-<system.web>
-    <sessionState mode="InProc" timeout="20" />
-</system.web>
-
-
-public ActionResult Logout()
-{
-    HttpContext.Session["AdminUser"] = null;
-    return RedirectToAction("Login");
-}
-
-
-
-
