@@ -1,3 +1,5 @@
+Microsoft.CSharp.RuntimeBinder.RuntimeBinderException: ''object' does not contain a definition for 'Description''
+
 when i am clicking on viewprojects then it should display the projecct details it the next page who ever is logged in their project details and a back to dashboard button now i will share you my controller code and make changes in it and share me the view code
 
 i want a full webapi model with a example from db to postman like every connection how to do it like step to step and also db connection and also these are the fields which we will be working on which are    
