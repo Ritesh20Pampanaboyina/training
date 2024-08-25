@@ -69,3 +69,39 @@ namespace ALMSystem2.Controllers
         }
     }
 }
+
+
+
+using System.Web;
+using System.Web.Mvc;
+
+namespace ALMSystem2.Filters
+{
+    public class AuthorizeAdminAttribute : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            if (filterContext.HttpContext.Session["AdminLoggedIn"] == null)
+            {
+                filterContext.Result = new RedirectToRouteResult(
+                    new System.Web.Routing.RouteValueDictionary
+                    {
+                        { "controller", "Admin" },
+                        { "action", "AdminLogin" }
+                    });
+            }
+            base.OnActionExecuting(filterContext);
+        }
+    }
+}
+
+
+<system.web>
+    <sessionState mode="InProc" timeout="20" />
+</system.web>
+
+
+
+
+
+
