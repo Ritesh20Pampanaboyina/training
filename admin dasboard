@@ -1,113 +1,37 @@
-
-@{
-    Layout = null; // or set to your layout file if you have one
-}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
-    <style>
-        body {
-            background: linear-gradient(to right, #6a11cb, #2575fc);
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0;
-        }
-
-        .login-container {
-            background: #fff;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 400px;
-            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
-        }
-
-        .login-container.hidden {
-            transform: translateY(-50%);
-            opacity: 0;
-        }
-
-        .login-container h2 {
-            margin-bottom: 1rem;
-            font-family: 'Arial', sans-serif;
-            color: #333;
-            text-align: center;
-        }
-
-        .form-control {
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            transition: border-color 0.3s;
-        }
-
-        .form-control:focus {
-            border-color: #2575fc;
-            box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
-        }
-
-        .btn-primary {
-            background: #2575fc;
-            border: none;
-            border-radius: 5px;
-            padding: 0.75rem 1.5rem;
-            font-size: 1.5rem;
-            transition: background 0.3s, transform 0.3s;
-        }
-
-        .btn-primary:hover {
-            background: #1d64d1;
-        }
-
-        .btn-primary:active {
-            transform: scale(0.98);
-        }
-    </style>
-</head>
-<body>
-    <div class="login-container">
-        <h2>Admin Login</h2>
-        @using (Html.BeginForm("AdminLogin", "Admin", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            <div class="form-group">
-                @Html.Label("username", "Username", new { @class = "control-label" })
-                @Html.TextBox("username", null, new { @class = "form-control", required = "required", id = "username" })
-            </div>
-            <div class="form-group">
-                @Html.Label("password", "Password", new { @class = "control-label" })
-                @Html.Password("password", null, new { @class = "form-control", required = "required", id = "password" })
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-        }
-    </div>
-</body>
-</html>
-
-
-
-
-using System;
-using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
 namespace ALMSystem2.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
+        // Ensure the user is authenticated and session is valid before executing actions
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+
+            // Check if the user is authenticated
+            if (!Request.IsAuthenticated)
+            {
+                // Redirect to login if not authenticated
+                filterContext.Result = RedirectToAction("AdminLogin");
+                return;
+            }
+
+            // Check if session has expired
+            if (Session["User"] == null)
+            {
+                // Redirect to login if session is null
+                filterContext.Result = RedirectToAction("AdminLogin");
+            }
+        }
+
         // GET: Admin/Login
         public ActionResult AdminLogin()
         {
-            if (Request.IsAuthenticated)
+            if (Request.IsAuthenticated) // If already authenticated, redirect to dashboard
             {
                 return RedirectToAction("AdminDashboard");
             }
@@ -119,9 +43,10 @@ namespace ALMSystem2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AdminLogin(string username, string password)
         {
-            if (username == "admin" && password == "password")
+            if (username == "admin" && password == "password") // Example validation
             {
                 FormsAuthentication.SetAuthCookie(username, false);
+                Session["User"] = username; // Set session data
                 return RedirectToAction("AdminDashboard");
             }
 
@@ -130,14 +55,20 @@ namespace ALMSystem2.Controllers
         }
 
         // GET: Admin/Dashboard
-        [Authorize]
         public ActionResult AdminDashboard()
         {
             return View();
         }
 
+        // GET: Admin/Logout
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut(); // Sign out from forms authentication
+            Session.Abandon(); // Clear session data
+            return RedirectToAction("AdminLogin");
+        }
+
         // GET: Admin/EmployeeDetails
-        [Authorize]
         public ActionResult EmployeeDetails()
         {
             var employees = new List<object>
@@ -149,7 +80,6 @@ namespace ALMSystem2.Controllers
         }
 
         // GET: Admin/CreateNewEmployee
-        [Authorize]
         public ActionResult CreateNewEmployee()
         {
             return View();
@@ -157,10 +87,10 @@ namespace ALMSystem2.Controllers
 
         // POST: Admin/CreateNewEmployee
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult CreateNewEmployee(FormCollection form)
         {
+            // Extract form values
             string employeeName = form["EmployeeName"];
             string email = form["Email"];
             string phone = form["Phone"];
@@ -174,11 +104,11 @@ namespace ALMSystem2.Controllers
 
             // Add the new employee to the database (replace with actual data insertion logic)
 
+            // After adding the new employee, redirect to EmployeeDetails
             return RedirectToAction("EmployeeDetails");
         }
 
         // GET: Admin/EditEmployee/1
-        [Authorize]
         public ActionResult EditEmployee(int id)
         {
             var employee = new
@@ -202,10 +132,10 @@ namespace ALMSystem2.Controllers
 
         // POST: Admin/EditEmployee/1
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult EditEmployee(int id, FormCollection form)
         {
+            // Extract form values
             string employeeName = form["EmployeeName"];
             string email = form["Email"];
             string phone = form["Phone"];
@@ -217,14 +147,13 @@ namespace ALMSystem2.Controllers
             int no_of_leave = Convert.ToInt32(form["No_of_leave"]);
             string emp_status = form["Emp_status"];
 
-            // Update the employee in the database (replace with actual update logic)
+            // Update employee in the database (replace with actual data update logic)
 
             return RedirectToAction("EmployeeDetails");
         }
 
         // POST: Admin/DeleteEmployee/1
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteEmployee(int id)
         {
@@ -234,7 +163,6 @@ namespace ALMSystem2.Controllers
         }
 
         // GET: Admin/CreateNewProject
-        [Authorize]
         public ActionResult CreateNewProject()
         {
             return View();
@@ -242,10 +170,10 @@ namespace ALMSystem2.Controllers
 
         // POST: Admin/CreateNewProject
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult CreateNewProject(FormCollection form)
         {
+            // Extract form values
             string projectName = form["ProjectName"];
             DateTime startDate = Convert.ToDateTime(form["StartDate"]);
             DateTime endDate = Convert.ToDateTime(form["EndDate"]);
@@ -257,7 +185,6 @@ namespace ALMSystem2.Controllers
         }
 
         // GET: Admin/EditProject/1
-        [Authorize]
         public ActionResult EditProject(int id)
         {
             var project = new
@@ -275,23 +202,22 @@ namespace ALMSystem2.Controllers
 
         // POST: Admin/EditProject/1
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult EditProject(int id, FormCollection form)
         {
+            // Extract form values
             string projectName = form["ProjectName"];
             DateTime startDate = Convert.ToDateTime(form["StartDate"]);
             DateTime endDate = Convert.ToDateTime(form["EndDate"]);
             string status = form["Status"];
 
-            // Update project in the database (replace with actual update logic)
+            // Update project in the database (replace with actual data update logic)
 
             return RedirectToAction("ProjectDetails");
         }
 
         // POST: Admin/DeleteProject/1
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteProject(int id)
         {
@@ -301,7 +227,6 @@ namespace ALMSystem2.Controllers
         }
 
         // GET: Admin/AttendanceRequests
-        [Authorize]
         public ActionResult AttendanceRequests()
         {
             var attendanceRequests = new List<object>
@@ -316,7 +241,6 @@ namespace ALMSystem2.Controllers
 
         // POST: Admin/ApproveAttendanceRequest/5
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult ApproveAttendanceRequest(int id)
         {
@@ -327,7 +251,6 @@ namespace ALMSystem2.Controllers
 
         // POST: Admin/RejectAttendanceRequest/5
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult RejectAttendanceRequest(int id)
         {
@@ -337,7 +260,6 @@ namespace ALMSystem2.Controllers
         }
 
         // GET: Admin/LeaveRequests
-        [Authorize]
         public ActionResult LeaveRequests()
         {
             var leaveRequests = new List<object>
@@ -352,7 +274,6 @@ namespace ALMSystem2.Controllers
 
         // POST: Admin/ApproveLeaveRequest/5
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult ApproveLeaveRequest(int id)
         {
@@ -363,7 +284,6 @@ namespace ALMSystem2.Controllers
 
         // POST: Admin/RejectLeaveRequest/5
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult RejectLeaveRequest(int id)
         {
@@ -371,13 +291,24 @@ namespace ALMSystem2.Controllers
             TempData["Message"] = "Leave request rejected.";
             return RedirectToAction("LeaveRequests");
         }
-
-        // GET: Admin/Logout
-        [Authorize]
-        public ActionResult Logout()
-        {
-            FormsAuthentication.SignOut();
-            return RedirectToAction("AdminLogin");
-        }
     }
 }
+
+
+<configuration>
+  <system.web>
+    <!-- Set session timeout (in minutes) -->
+    <sessionState timeout="10" /> <!-- Session expires after 10 minutes of inactivity -->
+
+    <!-- Configure forms authentication -->
+    <authentication mode="Forms">
+      <forms loginUrl="~/Admin/AdminLogin" timeout="10" /> <!-- Cookie timeout (in minutes) -->
+    </authentication>
+
+    <!-- Deny anonymous users -->
+    <authorization>
+      <deny users="?" />
+    </authorization>
+  </system.web>
+</configuration>
+
