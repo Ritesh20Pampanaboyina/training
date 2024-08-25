@@ -1,3 +1,23 @@
+Server Error in '/' Application.
+Configuration Error
+Description: An error occurred during the processing of a configuration file required to service this request. Please review the specific error details below and modify your configuration file appropriately.
+
+Parser Error Message: It is an error to use a section registered as allowDefinition='MachineToApplication' beyond application level.  This error can be caused by a virtual directory not being configured as an application in IIS.
+
+Source Error:
+
+
+Line 43: 		<!-- Session State Configuration -->
+Line 44: 		
+Line 45: 			<sessionState mode="InProc" timeout="20" />
+Line 46: 		
+Line 47: 	</system.web>
+
+Source File: C:\Final Project\ALMSystemClient\views\web.config    Line: 45
+
+Version Information: Microsoft .NET Framework Version:4.0.30319; ASP.NET Version:4.8.4712.0
+
+
 in admin page everytime i close the page or change the url from anothor page to admin dashboard it should nt accept instead it should go to admin login page use the concept authorization and validation concept
 before generating i will share you the admincontroller and admindashboardview
 
