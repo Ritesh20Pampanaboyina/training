@@ -71,29 +71,34 @@ namespace ALMSystem2.Controllers
 }
 
 
-
 using System.Web;
 using System.Web.Mvc;
 
 namespace ALMSystem2.Filters
 {
-    public class AuthorizeAdminAttribute : ActionFilterAttribute
+    public class AuthorizeAdminAttribute : AuthorizeAttribute
     {
-        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            if (filterContext.HttpContext.Session["AdminLoggedIn"] == null)
+            // Check if the session variable "AdminLoggedIn" is set to true
+            return httpContext.Session["AdminLoggedIn"] != null && (bool)httpContext.Session["AdminLoggedIn"];
+        }
+
+        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
+        {
+            // Redirect the user to the AdminLogin page if they are not authorized
+            if (!filterContext.HttpContext.User.Identity.IsAuthenticated)
             {
-                filterContext.Result = new RedirectToRouteResult(
-                    new System.Web.Routing.RouteValueDictionary
-                    {
-                        { "controller", "Admin" },
-                        { "action", "AdminLogin" }
-                    });
+                filterContext.Result = new RedirectResult("~/Admin/AdminLogin");
             }
-            base.OnActionExecuting(filterContext);
+            else
+            {
+                filterContext.Result = new RedirectResult("~/Admin/AdminLogin");
+            }
         }
     }
 }
+
 
 
 <system.web>
