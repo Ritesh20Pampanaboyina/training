@@ -1,145 +1,63 @@
-namespace AttendanceAndLeaveAPI.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
+using ALMSystemWebApi.Models;
+
+namespace ALMSystemWebApi.Controllers
 {
-    public class Leave
+    public class EmployeesController : ApiController
     {
-        public int Id { get; set; }
-        public int EmployeeId { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public string Reason { get; set; }
-        public bool IsApproved { get; set; }
-    }
-}
+        private LeaveMasterEntities db = new LeaveMasterEntities();
 
-
-
-using Microsoft.EntityFrameworkCore;
-using AttendanceAndLeaveAPI.Models;
-
-namespace AttendanceAndLeaveAPI.Data
-{
-    public class LeaveContext : DbContext
-    {
-        public LeaveContext(DbContextOptions<LeaveContext> options)
-            : base(options)
+        // GET: api/Employees
+        public IQueryable<Employee> GetEmployees()
         {
+            return db.Employees;
         }
 
-        public DbSet<Leave> Leaves { get; set; }
-    }
-}
-
-
-
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=your_server_name;Database=AttendanceAndLeaveDB;User Id=your_username;Password=your_password;"
-  }
-}
-
-
-
-
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-builder.Services.AddDbContext<LeaveContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddControllers();
-
-// Add Swagger for API documentation (optional)
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "AttendanceAndLeaveAPI", Version = "v1" });
-});
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
-
-
-
-
-
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using AttendanceAndLeaveAPI.Data;
-using AttendanceAndLeaveAPI.Models;
-
-namespace AttendanceAndLeaveAPI.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]
-    public class LeavesController : ControllerBase
-    {
-        private readonly LeaveContext _context;
-
-        public LeavesController(LeaveContext context)
+        // GET: api/Employees/5
+        [ResponseType(typeof(Employee))]
+        public IHttpActionResult GetEmployee(int id)
         {
-            _context = context;
-        }
-
-        // GET: api/Leaves
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Leave>>> GetLeaves()
-        {
-            return await _context.Leaves.ToListAsync();
-        }
-
-        // GET: api/Leaves/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Leave>> GetLeave(int id)
-        {
-            var leave = await _context.Leaves.FindAsync(id);
-
-            if (leave == null)
+            Employee employee = db.Employees.Find(id);
+            if (employee == null)
             {
                 return NotFound();
             }
 
-            return leave;
+            return Ok(employee);
         }
 
-        // POST: api/Leaves
-        [HttpPost]
-        public async Task<ActionResult<Leave>> PostLeave(Leave leave)
+        // PUT: api/Employees/5
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutEmployee(int id, Employee employee)
         {
-            _context.Leaves.Add(leave);
-            await _context.SaveChangesAsync();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            return CreatedAtAction(nameof(GetLeave), new { id = leave.Id }, leave);
-        }
-
-        // PUT: api/Leaves/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutLeave(int id, Leave leave)
-        {
-            if (id != leave.Id)
+            if (id != employee.EmployeeID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(leave).State = EntityState.Modified;
+            db.Entry(employee).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!LeaveExists(id))
+                if (!EmployeeExists(id))
                 {
                     return NotFound();
                 }
@@ -149,42 +67,68 @@ namespace AttendanceAndLeaveAPI.Controllers
                 }
             }
 
-            return NoContent();
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // DELETE: api/Leaves/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteLeave(int id)
+        // POST: api/Employees
+        [ResponseType(typeof(Employee))]
+        public IHttpActionResult PostEmployee(Employee employee)
         {
-            var leave = await _context.Leaves.FindAsync(id);
-            if (leave == null)
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.Employees.Add(employee);
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var entityValidationError in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError
+             in entityValidationError.ValidationErrors)
+                    {
+                        Console.WriteLine("Property:   
+             { 0}, Error: { 1}
+                        ", validationError.PropertyName, validationError.ErrorMessage);
+                    }
+                }
+            }
+
+            return CreatedAtRoute("DefaultApi", new { id = employee.EmployeeID }, employee);
+        }
+
+        // DELETE: api/Employees/5
+        [ResponseType(typeof(Employee))]
+        public IHttpActionResult DeleteEmployee(int id)
+        {
+            Employee employee = db.Employees.Find(id);
+            if (employee == null)
             {
                 return NotFound();
             }
 
-            _context.Leaves.Remove(leave);
-            await _context.SaveChangesAsync();
+            db.Employees.Remove(employee);
+            db.SaveChanges();
 
-            return NoContent();
+            return Ok(employee);
         }
 
-        private bool LeaveExists(int id)
+        protected override void Dispose(bool disposing)
         {
-            return _context.Leaves.Any(e => e.Id == id);
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool EmployeeExists(int id)
+        {
+            return db.Employees.Count(e => e.EmployeeID == id) > 0;
         }
     }
 }
-
-
-
-
-<configuration>
-  <connectionStrings>
-    <add name="AttendanceAndLeaveEntities" 
-         connectionString="metadata=res://*/Models.LeaveModel.csdl|res://*/Models.LeaveModel.ssdl|res://*/Models.LeaveModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=your_server_name;initial catalog=AttendanceAndLeaveDB;user id=your_username;password=your_password;MultipleActiveResultSets=True;App=EntityFramework&quot;" 
-         providerName="System.Data.EntityClient" />
-  </connectionStrings>
-</configuration>
-
-
-
