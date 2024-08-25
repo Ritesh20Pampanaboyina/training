@@ -1,0 +1,190 @@
+namespace AttendanceAndLeaveAPI.Models
+{
+    public class Leave
+    {
+        public int Id { get; set; }
+        public int EmployeeId { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public string Reason { get; set; }
+        public bool IsApproved { get; set; }
+    }
+}
+
+
+
+using Microsoft.EntityFrameworkCore;
+using AttendanceAndLeaveAPI.Models;
+
+namespace AttendanceAndLeaveAPI.Data
+{
+    public class LeaveContext : DbContext
+    {
+        public LeaveContext(DbContextOptions<LeaveContext> options)
+            : base(options)
+        {
+        }
+
+        public DbSet<Leave> Leaves { get; set; }
+    }
+}
+
+
+
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=your_server_name;Database=AttendanceAndLeaveDB;User Id=your_username;Password=your_password;"
+  }
+}
+
+
+
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddDbContext<LeaveContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddControllers();
+
+// Add Swagger for API documentation (optional)
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "AttendanceAndLeaveAPI", Version = "v1" });
+});
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
+
+
+
+
+
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using AttendanceAndLeaveAPI.Data;
+using AttendanceAndLeaveAPI.Models;
+
+namespace AttendanceAndLeaveAPI.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class LeavesController : ControllerBase
+    {
+        private readonly LeaveContext _context;
+
+        public LeavesController(LeaveContext context)
+        {
+            _context = context;
+        }
+
+        // GET: api/Leaves
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Leave>>> GetLeaves()
+        {
+            return await _context.Leaves.ToListAsync();
+        }
+
+        // GET: api/Leaves/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Leave>> GetLeave(int id)
+        {
+            var leave = await _context.Leaves.FindAsync(id);
+
+            if (leave == null)
+            {
+                return NotFound();
+            }
+
+            return leave;
+        }
+
+        // POST: api/Leaves
+        [HttpPost]
+        public async Task<ActionResult<Leave>> PostLeave(Leave leave)
+        {
+            _context.Leaves.Add(leave);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetLeave), new { id = leave.Id }, leave);
+        }
+
+        // PUT: api/Leaves/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutLeave(int id, Leave leave)
+        {
+            if (id != leave.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(leave).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!LeaveExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // DELETE: api/Leaves/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteLeave(int id)
+        {
+            var leave = await _context.Leaves.FindAsync(id);
+            if (leave == null)
+            {
+                return NotFound();
+            }
+
+            _context.Leaves.Remove(leave);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool LeaveExists(int id)
+        {
+            return _context.Leaves.Any(e => e.Id == id);
+        }
+    }
+}
+
+
+
+
+<configuration>
+  <connectionStrings>
+    <add name="AttendanceAndLeaveEntities" 
+         connectionString="metadata=res://*/Models.LeaveModel.csdl|res://*/Models.LeaveModel.ssdl|res://*/Models.LeaveModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=your_server_name;initial catalog=AttendanceAndLeaveDB;user id=your_username;password=your_password;MultipleActiveResultSets=True;App=EntityFramework&quot;" 
+         providerName="System.Data.EntityClient" />
+  </connectionStrings>
+</configuration>
+
+
+
