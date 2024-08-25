@@ -1,3 +1,36 @@
+using Microsoft.AspNetCore.Mvc;
+
+public class RequestsController : Controller
+{
+    [HttpPost]
+    public IActionResult ApproveAttendance(int id)
+    {
+        // Logic to approve attendance request by ID
+        return RedirectToAction("AttendanceRequests");
+    }
+
+    [HttpPost]
+    public IActionResult RejectAttendance(int id)
+    {
+        // Logic to reject attendance request by ID
+        return RedirectToAction("AttendanceRequests");
+    }
+
+    [HttpPost]
+    public IActionResult ApproveLeave(int id)
+    {
+        // Logic to approve leave request by ID
+        return RedirectToAction("LeaveRequests");
+    }
+
+    [HttpPost]
+    public IActionResult RejectLeave(int id)
+    {
+        // Logic to reject leave request by ID
+        return RedirectToAction("LeaveRequests");
+    }
+}
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
