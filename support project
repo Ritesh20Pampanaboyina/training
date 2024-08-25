@@ -1,3 +1,9 @@
+i will share you managercontroller and managerdashboard i want you add three more views which are view employes, pending attendence request and
+pending leave request and i want you to create the which will necesary and comment the code which has to be connected to the database
+and provide the hardcoded example for sample checkup
+
+
+
 Microsoft.CSharp.RuntimeBinder.RuntimeBinderException: ''object' does not contain a definition for 'Description''
 
 when i am clicking on viewprojects then it should display the projecct details it the next page who ever is logged in their project details and a back to dashboard button now i will share you my controller code and make changes in it and share me the view code
