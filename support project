@@ -1,3 +1,20 @@
+Server Error in '/' Application.
+Parser Error
+Description: An error occurred during the parsing of a resource required to service this request. Please review the following specific parse error details and modify your source file appropriately.
+
+Parser Error Message: Could not load type 'ALMSystem2.MvcApplication'.
+
+Source Error:
+
+
+Line 1:  <%@ Application Codebehind="Global.asax.cs" Inherits="ALMSystem2.MvcApplication" Language="C#" %>
+
+Source File: /global.asax    Line: 1
+
+
+
+
+
 i will share you managercontroller and managerdashboard i want you add three more views which are view employes, pending attendence request and
 pending leave request and i want you to create the which will necesary and comment the code which has to be connected to the database
 and provide the hardcoded example for sample checkup
