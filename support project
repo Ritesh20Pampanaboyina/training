@@ -111,8 +111,5 @@ you add and update new things which are needed make it similar to the employeeda
 
 
 
-now i will share you my admin controller and admin dashboard and employee details and createnew employe and editdetails and now i want you to handle all the three
-fields which are manage project, attendencerequests and leave requests like when you click on those buttons its should open thier forms like
-when you click on manage projects it should be same as the manage employe but instead employee details it will be having project details and also a create new project button and view for that and after submitting it should pop a msg that its created then 
-it should redirect to admin dashboard nxt attendence request what ever the request came na it should have a approve or reject button and same for the leave requestt 
- i will share you my codes from this  you add and update new things which are needed make it similar to the admin dashboard view.
+ 
+i will share you 5 codes from that as you did for manageemployee i want you do the same for manage projects with their names and provide me the full codes
