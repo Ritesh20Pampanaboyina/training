@@ -1,80 +1,108 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-namespace ALMSystem2.Controllers
+public ActionResult ViewProjects()
 {
-    public class EmployeeController : Controller
+    // Simulate getting the logged-in employee's name
+    string employeeName = "John Doe"; // Replace this with actual logic to get the logged-in user's name
+
+    // Sample project data for demonstration
+    var projects = new List<object>
     {
-        public ActionResult EmployeeLogin()
-        {
-            return View();
-        }
+        new { ProjectName = "Project Alpha", Description = "A project on AI development.", StartDate = "2024-01-01", EndDate = "2024-12-31", Status = "Ongoing" },
+        new { ProjectName = "Project Beta", Description = "A project on Blockchain technology.", StartDate = "2024-02-01", EndDate = "2024-11-30", Status = "Completed" },
+        new { ProjectName = "Project Gamma", Description = "A project on Web Development.", StartDate = "2024-03-01", EndDate = "2024-10-31", Status = "Ongoing" }
+    };
 
-        [HttpPost]
-        public ActionResult EmployeeLogin(string username, string password)
-        {
-            if (IsValidUser(username, password))
-            {
-                return RedirectToAction("EmployeeDashboard");
-            }
+    ViewBag.EmployeeName = employeeName;
+    ViewBag.Projects = projects;
 
-            ViewBag.ErrorMessage = "Invalid username or password.";
-            return View();
-        }
-
-        public ActionResult EmployeeDashboard()
-        {
-            return View();
-        }
-
-        public ActionResult ApplyLeave()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult ApplyLeave(FormCollection form)
-        {
-            // Handle form submission logic here
-
-            TempData["Message"] = "Leave application submitted successfully!";
-            return RedirectToAction("EmployeeDashboard");
-        }
-
-        public ActionResult SubmitAttendance()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult SubmitAttendance(FormCollection form)
-        {
-            // Handle attendance submission logic here
-
-            TempData["Message"] = "Attendance submitted successfully!";
-            return RedirectToAction("EmployeeDashboard");
-        }
-
-        public ActionResult ViewProjects()
-        {
-            // Sample data for demonstration
-            var projects = new List<string> { "Project A", "Project B", "Project C" };
-            ViewBag.Projects = projects;
-
-            return View();
-        }
-
-        // Simulated method for example purposes
-        private bool IsValidUser(string username, string password)
-        {
-            // Replace with actual credential validation logic
-            return username == "employee" && password == "password";
-        }
-    }
+    return View();
 }
+
+
+@{
+    Layout = null; // If you have a layout, set it accordingly
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Projects</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background: linear-gradient(to right, #3a1c71, #d76d77, #ffaf7b);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .project-container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            max-width: 800px;
+        }
+
+        .project-container h2 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .project-container h4 {
+            margin-bottom: 2rem;
+            color: #555;
+        }
+
+        .project-details {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .btn-primary {
+            background: #6a11cb;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #4b00a1;
+        }
+    </style>
+</head>
+<body>
+    <div class="project-container">
+        <h2>Your Projects</h2>
+        <h4>@ViewBag.EmployeeName</h4>
+
+        @if (ViewBag.Projects != null)
+        {
+            foreach (var project in ViewBag.Projects)
+            {
+                <div class="project-details">
+                    <h5>@project.ProjectName</h5>
+                    <p><strong>Description:</strong> @project.Description</p>
+                    <p><strong>Start Date:</strong> @project.StartDate</p>
+                    <p><strong>End Date:</strong> @project.EndDate</p>
+                    <p><strong>Status:</strong> @project.Status</p>
+                </div>
+            }
+        }
+
+        <a href="@Url.Action("EmployeeDashboard", "Employee")" class="btn btn-primary">Back to Dashboard</a>
+    </div>
+</body>
+</html>
+
 
 
 @{
