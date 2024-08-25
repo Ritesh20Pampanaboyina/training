@@ -1,166 +1,291 @@
-// GET: Admin/CreateNewEmployee
-public ActionResult CreateNewEmployee()
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace ALMSystem2.Controllers
 {
-    return View();
-}
+    public class AdminController : Controller
+    {
+        // GET: Admin/Login
+        public ActionResult AdminLogin()
+        {
+            return View();
+        }
 
-// POST: Admin/CreateNewEmployee
-[HttpPost]
-[ValidateAntiForgeryToken]
-public ActionResult CreateNewEmployee(FormCollection form)
-{
-    // Extract form values
-    string employeeName = form["EmployeeName"];
-    string email = form["Email"];
-    string phone = form["Phone"];
-    DateTime hireDate = Convert.ToDateTime(form["HireDate"]);
-    int roleID = Convert.ToInt32(form["RoleID"]);
-    int managerID = Convert.ToInt32(form["ManagerID"]);
-    int projectID = Convert.ToInt32(form["ProjectID"]);
-    int leaveBalance = Convert.ToInt32(form["LeaveBalance"]);
-    int no_of_leave = Convert.ToInt32(form["No_of_leave"]);
-    string emp_status = form["Emp_status"];
+        // POST: Admin/Login
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AdminLogin(string username, string password)
+        {
+            if (username == "admin" && password == "password") // Example validation
+            {
+                return RedirectToAction("AdminDashboard");
+            }
 
-    // Add the new employee to the database (replace with actual data insertion logic)
-    // Example:
-    // db.AddEmployee(employeeName, email, phone, hireDate, roleID, managerID, projectID, leaveBalance, no_of_leave, emp_status);
+            ModelState.AddModelError("", "Invalid login attempt.");
+            return View();
+        }
 
-    // After adding the new employee, redirect to EmployeeDetails
-    return RedirectToAction("EmployeeDetails");
-}
+        // GET: Admin/Dashboard
+        public ActionResult AdminDashboard()
+        {
+            return View();
+        }
 
-
-@{
-    ViewData["Title"] = "Create New Employee";
-}
-
-<h2>Create New Employee</h2>
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-group">
-        <label for="EmployeeName">Employee Name</label>
-        <input type="text" class="form-control" id="EmployeeName" name="EmployeeName" required />
-    </div>
-
-    <div class="form-group">
-        <label for="Email">Email</label>
-        <input type="email" class="form-control" id="Email" name="Email" required />
-    </div>
-
-    <div class="form-group">
-        <label for="Phone">Phone</label>
-        <input type="text" class="form-control" id="Phone" name="Phone" required />
-    </div>
-
-    <div class="form-group">
-        <label for="HireDate">Hire Date</label>
-        <input type="date" class="form-control" id="HireDate" name="HireDate" required />
-    </div>
-
-    <div class="form-group">
-        <label for="RoleID">Role ID</label>
-        <input type="text" class="form-control" id="RoleID" name="RoleID" required />
-    </div>
-
-    <div class="form-group">
-        <label for="ManagerID">Manager ID</label>
-        <input type="text" class="form-control" id="ManagerID" name="ManagerID" required />
-    </div>
-
-    <div class="form-group">
-        <label for="ProjectID">Project ID</label>
-        <input type="text" class="form-control" id="ProjectID" name="ProjectID" required />
-    </div>
-
-    <div class="form-group">
-        <label for="LeaveBalance">Leave Balance</label>
-        <input type="text" class="form-control" id="LeaveBalance" name="LeaveBalance" required />
-    </div>
-
-    <div class="form-group">
-        <label for="No_of_leave">Number of Leaves Taken</label>
-        <input type="text" class="form-control" id="No_of_leave" name="No_of_leave" required />
-    </div>
-
-    <div class="form-group">
-        <label for="Emp_status">Employee Status</label>
-        <input type="text" class="form-control" id="Emp_status" name="Emp_status" required />
-    </div>
-
-    <button type="submit" class="btn btn-primary">Create</button>
-    <a href="@Url.Action("EmployeeDetails", "Admin")" class="btn btn-secondary">Cancel</a>
-}
-
-<style>
-    body {
-        font-family: 'Roboto', sans-serif;
-        background-color: #f8f9fa;
-        color: #343a40;
-        margin: 0;
-        padding: 0;
-    }
-    .form-group {
-        margin-bottom: 1rem;
-    }
-    .form-group label {
-        font-weight: bold;
-    }
-    .form-control {
-        width: 100%;
-        padding: 0.375rem 0.75rem;
-        border: 1px solid #ced4da;
-        border-radius: 0.25rem;
-    }
-    .btn {
-        display: inline-block;
-        font-weight: 400;
-        color: #fff;
-        text-align: center;
-        vertical-align: middle;
-        cursor: pointer;
-        background-color: #007bff;
-        border: 1px solid transparent;
-        padding: 0.375rem 0.75rem;
-        font-size: 1rem;
-        line-height: 1.5;
-        border-radius: 0.25rem;
-    }
-    .btn-primary {
-        background-color: #007bff;
-        border-color: #007bff;
-    }
-    .btn-secondary {
-        background-color: #6c757d;
-        border-color: #6c757d;
-    }
-    .btn-secondary:hover {
-        background-color: #5a6268;
-    }
-</style>
-
-
-// GET: Admin/EmployeeDetails
-public ActionResult EmployeeDetails()
-{
-    // Retrieve the list of employees from the database
-    // Example (replace with actual data retrieval logic):
-    var employees = new List<object>
+        public ActionResult EmployeeDetails()
+        {
+            var employees = new List<object>
     {
         new { EmployeeID = 1, EmployeeName = "John Doe", Email = "johndoe@example.com", Phone = "123-456-7890", HireDate = DateTime.Now.AddYears(-5), RoleID = 1, ManagerID = 2, ProjectID = 1, LeaveBalance = 10, No_of_leave = 5, Emp_status = "Active" }
         // Add more employees as necessary
     };
+            return View();
+        }
+        
 
-    return View(employees);
+        public ActionResult CreateNewEmployee()
+        {
+            return View();
+        }
+
+        // POST: Admin/CreateNewEmployee
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateNewEmployee(FormCollection form)
+        {
+            // Extract form values
+            string employeeName = form["EmployeeName"];
+            string email = form["Email"];
+            string phone = form["Phone"];
+            DateTime hireDate = Convert.ToDateTime(form["HireDate"]);
+            int roleID = Convert.ToInt32(form["RoleID"]);
+            int managerID = Convert.ToInt32(form["ManagerID"]);
+            int projectID = Convert.ToInt32(form["ProjectID"]);
+            int leaveBalance = Convert.ToInt32(form["LeaveBalance"]);
+            int no_of_leave = Convert.ToInt32(form["No_of_leave"]);
+            string emp_status = form["Emp_status"];
+
+            // Add the new employee to the database (replace with actual data insertion logic)
+            // Example:
+            // db.AddEmployee(employeeName, email, phone, hireDate, roleID, managerID, projectID, leaveBalance, no_of_leave, emp_status);
+
+            // After adding the new employee, redirect to EmployeeDetails
+            return RedirectToAction("EmployeeDetails");
+        }
+
+
+        // GET: Admin/EditEmployee/1
+        public ActionResult EditEmployee(int id)
+        {
+            // Ideally, fetch the employee from the database using the id
+            // Example (replace with actual data retrieval logic):
+            var employee = new
+            {
+                EmployeeID = id,
+                EmployeeName = "John Doe",
+                Email = "johndoe@example.com",
+                Phone = "123-456-7890",
+                HireDate = DateTime.Now.AddYears(-5),
+                RoleID = 1,
+                ManagerID = 2,
+                ProjectID = 1,
+                LeaveBalance = 10,
+                No_of_leave = 5,
+                Emp_status = "Active"
+            };
+
+            // Pass the data to the view using ViewBag
+            ViewBag.EmployeeName = employee.EmployeeName;
+            ViewBag.Email = employee.Email;
+            ViewBag.Phone = employee.Phone;
+            ViewBag.HireDate = employee.HireDate.ToShortDateString();
+            ViewBag.RoleID = employee.RoleID;
+            ViewBag.ManagerID = employee.ManagerID;
+            ViewBag.ProjectID = employee.ProjectID;
+            ViewBag.LeaveBalance = employee.LeaveBalance;
+            ViewBag.No_of_leave = employee.No_of_leave;
+            ViewBag.Emp_status = employee.Emp_status;
+
+            return View();
+        }
+
+        // POST: Admin/EditEmployee/1
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditEmployee(int id, FormCollection form)
+        {
+            // You can extract form values like this (replace with actual logic)
+            string employeeName = form["EmployeeName"];
+            string email = form["Email"];
+            string phone = form["Phone"];
+            DateTime hireDate = Convert.ToDateTime(form["HireDate"]);
+            int roleID = Convert.ToInt32(form["RoleID"]);
+            int managerID = Convert.ToInt32(form["ManagerID"]);
+            int projectID = Convert.ToInt32(form["ProjectID"]);
+            int leaveBalance = Convert.ToInt32(form["LeaveBalance"]);
+            int no_of_leave = Convert.ToInt32(form["No_of_leave"]);
+            string emp_status = form["Emp_status"];
+
+            return RedirectToAction("EmployeeDetails");
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteEmployee(int id)
+        {
+            // Simulate delete logic here
+
+            return RedirectToAction("EmployeeDetails");
+        }
+
+        public ActionResult ProjectDetails()
+        {
+            var projects = new List<object>
+            {
+                new { ProjectID = 1, ProjectName = "Project Alpha", StartDate = DateTime.Now.AddMonths(-6), EndDate = DateTime.Now.AddMonths(6), Status = "Active" }
+                // Add more projects as necessary
+            };
+            return View(projects);
+        }
+
+        // GET: Admin/CreateNewProject
+        public ActionResult CreateNewProject()
+        {
+            return View();
+        }
+
+        // POST: Admin/CreateNewProject
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateNewProject(FormCollection form)
+        {
+            // Extract form values
+            string projectName = form["ProjectName"];
+            DateTime startDate = Convert.ToDateTime(form["StartDate"]);
+            DateTime endDate = Convert.ToDateTime(form["EndDate"]);
+            string status = form["Status"];
+
+            // Add the new project to the database (replace with actual data insertion logic)
+            // Example:
+            // db.AddProject(projectName, startDate, endDate, status);
+
+            // After adding the new project, redirect to ProjectDetails
+            return RedirectToAction("ProjectDetails");
+        }
+
+        // GET: Admin/EditProject/1
+        public ActionResult EditProject(int id)
+        {
+            // Ideally, fetch the project from the database using the id
+            // Example (replace with actual data retrieval logic):
+            var project = new
+            {
+                ProjectID = id,
+                ProjectName = "Project Alpha",
+                StartDate = DateTime.Now.AddMonths(-6),
+                EndDate = DateTime.Now.AddMonths(6),
+                Status = "Active"
+            };
+
+            // Pass the data to the view using ViewBag
+            ViewBag.ProjectName = project.ProjectName;
+            ViewBag.StartDate = project.StartDate.ToShortDateString();
+            ViewBag.EndDate = project.EndDate.ToShortDateString();
+            ViewBag.Status = project.Status;
+
+            return View();
+        }
+
+        // POST: Admin/EditProject/1
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditProject(int id, FormCollection form)
+        {
+            // Extract form values (replace with actual logic)
+            string projectName = form["ProjectName"];
+            DateTime startDate = Convert.ToDateTime(form["StartDate"]);
+            DateTime endDate = Convert.ToDateTime(form["EndDate"]);
+            string status = form["Status"];
+
+            // Update project in the database (replace with actual data update logic)
+
+            return RedirectToAction("ProjectDetails");
+        }
+
+        // POST: Admin/DeleteProject/1
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteProject(int id)
+        {
+            // Simulate delete logic here
+
+            return RedirectToAction("ProjectDetails");
+        }
+
+        public ActionResult AttendanceRequests()
+        {
+            // Example data for attendance requests
+            var attendanceRequests = new List<object>
+            {
+                new { EmployeeName = "John Doe", Date = "2024-08-20", Status = "Pending" },
+                new { EmployeeName = "Jane Smith", Date = "2024-08-21", Status = "Pending" }
+            };
+
+            return View(attendanceRequests);
+        }
+
+        // GET: /Requests/LeaveRequests
+        public ActionResult LeaveRequests()
+        {
+            // Example data for leave requests
+            var leaveRequests = new List<object>
+            {
+                new { EmployeeName = "Michael Brown", LeaveType = "Sick Leave", StartDate = "2024-08-20", EndDate = "2024-08-22", Status = "Pending" },
+                new { EmployeeName = "Emily Davis", LeaveType = "Annual Leave", StartDate = "2024-08-25", EndDate = "2024-08-30", Status = "Pending" }
+            };
+
+            return View(leaveRequests);
+        }
+
+        // POST: /Requests/ApproveAttendanceRequest/5
+        [HttpPost]
+        public ActionResult ApproveAttendanceRequest(int id)
+        {
+            // Logic to approve the attendance request
+            TempData["Message"] = "Attendance request approved.";
+            return RedirectToAction("AttendanceRequests");
+        }
+
+        // POST: /Requests/RejectAttendanceRequest/5
+        [HttpPost]
+        public ActionResult RejectAttendanceRequest(int id)
+        {
+            // Logic to reject the attendance request
+            TempData["Message"] = "Attendance request rejected.";
+            return RedirectToAction("AttendanceRequests");
+        }
+
+        // POST: /Requests/ApproveLeaveRequest/5
+        [HttpPost]
+        public ActionResult ApproveLeaveRequest(int id)
+        {
+            // Logic to approve the leave request
+            TempData["Message"] = "Leave request approved.";
+            return RedirectToAction("LeaveRequests");
+        }
+
+        // POST: /Requests/RejectLeaveRequest/5
+        [HttpPost]
+        public ActionResult RejectLeaveRequest(int id)
+        {
+            // Logic to reject the leave request
+            TempData["Message"] = "Leave request rejected.";
+            return RedirectToAction("LeaveRequests");
+        }
+    }
 }
 
-
-
-<form action="/Admin/DeleteEmployee/1" method="post" style="display:inline;">
-    @Html.AntiForgeryToken()
-    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this employee?');">Delete</button>
-</form>
-
-
+    
