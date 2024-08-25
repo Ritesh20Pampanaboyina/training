@@ -34,17 +34,20 @@ namespace ALMSystem2.Controllers
             return View();
         }
 
+        // GET: Admin/EmployeeDetails
         public ActionResult EmployeeDetails()
         {
             var employees = new List<object>
-    {
-        new { EmployeeID = 1, EmployeeName = "John Doe", Email = "johndoe@example.com", Phone = "123-456-7890", HireDate = DateTime.Now.AddYears(-5), RoleID = 1, ManagerID = 2, ProjectID = 1, LeaveBalance = 10, No_of_leave = 5, Emp_status = "Active" }
-        // Add more employees as necessary
-    };
+            {
+                new { EmployeeID = 1, EmployeeName = "John Doe", Email = "johndoe@example.com", Phone = "123-456-7890", HireDate = DateTime.Now.AddYears(-5), RoleID = 1, ManagerID = 2, ProjectID = 1, LeaveBalance = 10, No_of_leave = 5, Emp_status = "Active" }
+                // Add more employees as necessary
+            };
+
+            ViewBag.Employees = employees; // Pass data to view
             return View();
         }
-        
 
+        // GET: Admin/CreateNewEmployee
         public ActionResult CreateNewEmployee()
         {
             return View();
@@ -68,19 +71,15 @@ namespace ALMSystem2.Controllers
             string emp_status = form["Emp_status"];
 
             // Add the new employee to the database (replace with actual data insertion logic)
-            // Example:
-            // db.AddEmployee(employeeName, email, phone, hireDate, roleID, managerID, projectID, leaveBalance, no_of_leave, emp_status);
+            // Example: db.AddEmployee(employeeName, email, phone, hireDate, roleID, managerID, projectID, leaveBalance, no_of_leave, emp_status);
 
-            // After adding the new employee, redirect to EmployeeDetails
             return RedirectToAction("EmployeeDetails");
         }
-
 
         // GET: Admin/EditEmployee/1
         public ActionResult EditEmployee(int id)
         {
-            // Ideally, fetch the employee from the database using the id
-            // Example (replace with actual data retrieval logic):
+            // Fetch the employee from the database using the id (replace with actual data retrieval logic)
             var employee = new
             {
                 EmployeeID = id,
@@ -96,18 +95,8 @@ namespace ALMSystem2.Controllers
                 Emp_status = "Active"
             };
 
-            // Pass the data to the view using ViewBag
-            ViewBag.EmployeeName = employee.EmployeeName;
-            ViewBag.Email = employee.Email;
-            ViewBag.Phone = employee.Phone;
-            ViewBag.HireDate = employee.HireDate.ToShortDateString();
-            ViewBag.RoleID = employee.RoleID;
-            ViewBag.ManagerID = employee.ManagerID;
-            ViewBag.ProjectID = employee.ProjectID;
-            ViewBag.LeaveBalance = employee.LeaveBalance;
-            ViewBag.No_of_leave = employee.No_of_leave;
-            ViewBag.Emp_status = employee.Emp_status;
-
+            // Pass the data to the view
+            ViewBag.Employee = employee;
             return View();
         }
 
@@ -116,7 +105,7 @@ namespace ALMSystem2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditEmployee(int id, FormCollection form)
         {
-            // You can extract form values like this (replace with actual logic)
+            // Extract form values (replace with actual logic)
             string employeeName = form["EmployeeName"];
             string email = form["Email"];
             string phone = form["Phone"];
@@ -128,19 +117,22 @@ namespace ALMSystem2.Controllers
             int no_of_leave = Convert.ToInt32(form["No_of_leave"]);
             string emp_status = form["Emp_status"];
 
+            // Update employee in the database (replace with actual data update logic)
+
             return RedirectToAction("EmployeeDetails");
         }
 
-
+        // POST: Admin/DeleteEmployee/1
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteEmployee(int id)
         {
-            // Simulate delete logic here
+            // Simulate delete logic here (replace with actual delete logic)
 
             return RedirectToAction("EmployeeDetails");
         }
 
+        // GET: Admin/ProjectDetails
         public ActionResult ProjectDetails()
         {
             var projects = new List<object>
@@ -148,7 +140,9 @@ namespace ALMSystem2.Controllers
                 new { ProjectID = 1, ProjectName = "Project Alpha", StartDate = DateTime.Now.AddMonths(-6), EndDate = DateTime.Now.AddMonths(6), Status = "Active" }
                 // Add more projects as necessary
             };
-            return View(projects);
+
+            ViewBag.Projects = projects; // Pass data to view
+            return View();
         }
 
         // GET: Admin/CreateNewProject
@@ -169,18 +163,15 @@ namespace ALMSystem2.Controllers
             string status = form["Status"];
 
             // Add the new project to the database (replace with actual data insertion logic)
-            // Example:
-            // db.AddProject(projectName, startDate, endDate, status);
+            // Example: db.AddProject(projectName, startDate, endDate, status);
 
-            // After adding the new project, redirect to ProjectDetails
             return RedirectToAction("ProjectDetails");
         }
 
         // GET: Admin/EditProject/1
         public ActionResult EditProject(int id)
         {
-            // Ideally, fetch the project from the database using the id
-            // Example (replace with actual data retrieval logic):
+            // Fetch the project from the database using the id (replace with actual data retrieval logic)
             var project = new
             {
                 ProjectID = id,
@@ -190,12 +181,8 @@ namespace ALMSystem2.Controllers
                 Status = "Active"
             };
 
-            // Pass the data to the view using ViewBag
-            ViewBag.ProjectName = project.ProjectName;
-            ViewBag.StartDate = project.StartDate.ToShortDateString();
-            ViewBag.EndDate = project.EndDate.ToShortDateString();
-            ViewBag.Status = project.Status;
-
+            // Pass the data to the view
+            ViewBag.Project = project;
             return View();
         }
 
@@ -220,38 +207,27 @@ namespace ALMSystem2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteProject(int id)
         {
-            // Simulate delete logic here
+            // Simulate delete logic here (replace with actual delete logic)
 
             return RedirectToAction("ProjectDetails");
         }
 
+        // GET: Admin/AttendanceRequests
         public ActionResult AttendanceRequests()
         {
-            // Example data for attendance requests
             var attendanceRequests = new List<object>
             {
                 new { EmployeeName = "John Doe", Date = "2024-08-20", Status = "Pending" },
                 new { EmployeeName = "Jane Smith", Date = "2024-08-21", Status = "Pending" }
             };
 
-            return View(attendanceRequests);
+            ViewBag.AttendanceRequests = attendanceRequests; // Pass data to view
+            return View();
         }
 
-        // GET: /Requests/LeaveRequests
-        public ActionResult LeaveRequests()
-        {
-            // Example data for leave requests
-            var leaveRequests = new List<object>
-            {
-                new { EmployeeName = "Michael Brown", LeaveType = "Sick Leave", StartDate = "2024-08-20", EndDate = "2024-08-22", Status = "Pending" },
-                new { EmployeeName = "Emily Davis", LeaveType = "Annual Leave", StartDate = "2024-08-25", EndDate = "2024-08-30", Status = "Pending" }
-            };
-
-            return View(leaveRequests);
-        }
-
-        // POST: /Requests/ApproveAttendanceRequest/5
+        // POST: Admin/ApproveAttendanceRequest/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ApproveAttendanceRequest(int id)
         {
             // Logic to approve the attendance request
@@ -259,8 +235,9 @@ namespace ALMSystem2.Controllers
             return RedirectToAction("AttendanceRequests");
         }
 
-        // POST: /Requests/RejectAttendanceRequest/5
+        // POST: Admin/RejectAttendanceRequest/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult RejectAttendanceRequest(int id)
         {
             // Logic to reject the attendance request
@@ -268,8 +245,22 @@ namespace ALMSystem2.Controllers
             return RedirectToAction("AttendanceRequests");
         }
 
-        // POST: /Requests/ApproveLeaveRequest/5
+        // GET: Admin/LeaveRequests
+        public ActionResult LeaveRequests()
+        {
+            var leaveRequests = new List<object>
+            {
+                new { EmployeeName = "Michael Brown", LeaveType = "Sick Leave", StartDate = "2024-08-20", EndDate = "2024-08-22", Status = "Pending" },
+                new { EmployeeName = "Emily Davis", LeaveType = "Annual Leave", StartDate = "2024-08-25", EndDate = "2024-08-30", Status = "Pending" }
+            };
+
+            ViewBag.LeaveRequests = leaveRequests; // Pass data to view
+            return View();
+        }
+
+        // POST: Admin/ApproveLeaveRequest/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ApproveLeaveRequest(int id)
         {
             // Logic to approve the leave request
@@ -277,8 +268,9 @@ namespace ALMSystem2.Controllers
             return RedirectToAction("LeaveRequests");
         }
 
-        // POST: /Requests/RejectLeaveRequest/5
+        // POST: Admin/RejectLeaveRequest/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult RejectLeaveRequest(int id)
         {
             // Logic to reject the leave request
@@ -288,4 +280,110 @@ namespace ALMSystem2.Controllers
     }
 }
 
-    
+
+
+@{
+    ViewBag.Title = "Attendance Requests";
+}
+
+<h2>Attendance Requests</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">
+        @TempData["Message"]
+    </div>
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Employee Name</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in ViewBag.AttendanceRequests)
+        {
+            <tr>
+                <td>@request.EmployeeName</td>
+                <td>@request.Date</td>
+                <td>@request.Status</td>
+                <td>
+                    @using (Html.BeginForm("ApproveAttendanceRequest", "Admin", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@request.EmployeeName" />
+                        <button type="submit" class="btn btn-success">Approve</button>
+                    }
+                    @using (Html.BeginForm("RejectAttendanceRequest", "Admin", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@request.EmployeeName" />
+                        <button type="submit" class="btn btn-danger">Reject</button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("AdminDashboard", "Admin")" class="btn btn-primary">Back to Dashboard</a>
+
+
+
+@{
+    ViewBag.Title = "Leave Requests";
+}
+
+<h2>Leave Requests</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">
+        @TempData["Message"]
+    </div>
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Employee Name</th>
+            <th>Leave Type</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in ViewBag.LeaveRequests)
+        {
+            <tr>
+                <td>@request.EmployeeName</td>
+                <td>@request.LeaveType</td>
+                <td>@request.StartDate</td>
+                <td>@request.EndDate</td>
+                <td>@request.Status</td>
+                <td>
+                    @using (Html.BeginForm("ApproveLeaveRequest", "Admin", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@request.EmployeeName" />
+                        <button type="submit" class="btn btn-success">Approve</button>
+                    }
+                    @using (Html.BeginForm("RejectLeaveRequest", "Admin", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@request.EmployeeName" />
+                        <button type="submit" class="btn btn-danger">Reject</button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("AdminDashboard", "Admin")" class="btn btn-primary">Back to Dashboard</a>
