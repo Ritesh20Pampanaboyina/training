@@ -68,33 +68,48 @@
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
   </appSettings>
+  
   <system.web>
-    <!-- Set session timeout (in minutes) -->
-    <sessionState timeout="10" /> <!-- Session expires after 10 minutes of inactivity -->
+    <compilation debug="true" targetFramework="4.7.2" />
+    <httpRuntime targetFramework="4.7.2" />
+    
+    <!-- Session State Configuration -->
+    <sessionState timeout="20" />
 
-    <!-- Configure forms authentication -->
+    <!-- Authentication Configuration -->
     <authentication mode="Forms">
-      <forms loginUrl="~/Admin/AdminLogin" timeout="10" /> <!-- Cookie timeout (in minutes) -->
+      <forms loginUrl="~/Admin/AdminLogin" timeout="30" />
     </authentication>
 
-    <!-- Authorization settings -->
+    <!-- Authorization Configuration -->
     <authorization>
-      <!-- Deny anonymous users by default -->
       <deny users="?" />
     </authorization>
 
-    <!-- Configure custom errors -->
-    <customErrors mode="On" defaultRedirect="Error">
+    <!-- Custom Error Pages (optional) -->
+    <customErrors mode="On" defaultRedirect="~/Error/General">
       <error statusCode="404" redirect="~/Error/NotFound" />
+      <error statusCode="500" redirect="~/Error/ServerError" />
     </customErrors>
-
-    <!-- Enable ViewState MAC (Message Authentication Code) for added security -->
-    <pages enableViewStateMac="true" />
-
-    <!-- Other settings can go here -->
-    <compilation debug="true" targetFramework="4.7.2" />
-    <httpRuntime targetFramework="4.7.2" />
   </system.web>
+
+  <system.webServer>
+    <rewrite>
+      <rules>
+        <!-- Rule to redirect unauthorized requests -->
+        <rule name="RedirectUnauthorized" stopProcessing="true">
+          <match url="^Admin/.*" />
+          <conditions>
+            <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+            <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+            <add input="{HTTP_COOKIE}" pattern="AdminSession" negate="true" />
+          </conditions>
+          <action type="Redirect" url="/Admin/AdminLogin" redirectType="Permanent" />
+        </rule>
+      </rules>
+    </rewrite>
+  </system.webServer>
+
   <runtime>
     <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
       <dependentAssembly>
@@ -127,26 +142,11 @@
       </dependentAssembly>
     </assemblyBinding>
   </runtime>
+
   <system.codedom>
     <compilers>
       <compiler language="c#;cs;csharp" extension=".cs" type="Microsoft.CodeDom.Providers.DotNetCompilerPlatform.CSharpCodeProvider, Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" warningLevel="4" compilerOptions="/langversion:default /nowarn:1659;1699;1701" />
-      <compiler language="vb;vbs;visualbasic;vbscript" extension=".vb" type="Microsoft.CodeDom.Providers.DotNetCompilerPlatform.VBCodeProvider, Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" warningLevel="4" compilerOptions="/langversion:default /nowarn:41008 /define:_MYTYPE=\&quot;Web\&quot; /optionInfer+" />
+      <compiler language="vb;vbs;visualbasic;vbscript" extension=".vb" type="Microsoft.CodeDom.Providers.DotNetCompilerPlatform.VBCodeProvider, Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" warningLevel="4" compilerOptions="/langversion:default /nowarn:41008 /define:_MYTYPE=&quot;Web&quot; /optionInfer+" />
     </compilers>
   </system.codedom>
-  <system.webServer>
-    <!-- Optional URL rewriting (if needed) -->
-    <rewrite>
-      <rules>
-        <!-- Example rule for redirecting requests to the login page if not authenticated -->
-        <rule name="Redirect to Login" stopProcessing="true">
-          <match url=".*" />
-          <conditions>
-            <add input="{REQUEST_URI}" pattern="^/Admin" />
-            <add input="{AUTH_USER}" pattern="^$" />
-          </conditions>
-          <action type="Redirect" url="/Admin/AdminLogin" redirectType="Permanent" />
-        </rule>
-      </rules>
-    </rewrite>
-  </system.webServer>
 </configuration>
