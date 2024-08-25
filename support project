@@ -107,3 +107,12 @@ fields which are apply for, submmit attendence and view project details like whe
 when you click on apply for leave then it should open a form foe enetering details and after submitting it should pop a msg that its applied then it should redirect to employee dashboard
 nxt submit attendence same open the form enter details and submit should show a pop up message then redirect to dashboard and in view project details in that i want you to show all the project details of employee and i will share you my employee controller and employeedashboard view from this 
 you add and update new things which are needed make it similar to the employeedashboard view.
+
+
+
+
+now i will share you my admin controller and admin dashboard and employee details and createnew employe and editdetails and now i want you to handle all the three
+fields which are manage project, attendencerequests and leave requests like when you click on those buttons its should open thier forms like
+when you click on manage projects it should be same as the manage employe but instead employee details it will be having project details and also a create new project button and view for that and after submitting it should pop a msg that its created then 
+it should redirect to admin dashboard nxt attendence request what ever the request came na it should have a approve or reject button and same for the leave requestt 
+ i will share you my codes from this  you add and update new things which are needed make it similar to the admin dashboard view.
