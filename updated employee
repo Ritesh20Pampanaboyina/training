@@ -1,3 +1,19 @@
+using System;
+
+namespace ALMSystem2.Models
+{
+    public class Project
+    {
+        public int ProjectID { get; set; }
+        public string ProjectName { get; set; }
+        public string Description { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public string Status { get; set; }
+    }
+}
+
+
 @{
     Layout = null; // If you have a layout, set it accordingly
     var projects = ViewBag.Projects as IEnumerable<dynamic>;
