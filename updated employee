@@ -1,0 +1,152 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace ALMSystem2.Controllers
+{
+    public class EmployeeController : Controller
+    {
+        public ActionResult EmployeeLogin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EmployeeLogin(string username, string password)
+        {
+            if (IsValidUser(username, password))
+            {
+                return RedirectToAction("EmployeeDashboard");
+            }
+
+            ViewBag.ErrorMessage = "Invalid username or password.";
+            return View();
+        }
+
+        public ActionResult EmployeeDashboard()
+        {
+            return View();
+        }
+
+        public ActionResult ApplyLeave()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ApplyLeave(FormCollection form)
+        {
+            // Handle form submission logic here
+
+            TempData["Message"] = "Leave application submitted successfully!";
+            return RedirectToAction("EmployeeDashboard");
+        }
+
+        public ActionResult SubmitAttendance()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SubmitAttendance(FormCollection form)
+        {
+            // Handle attendance submission logic here
+
+            TempData["Message"] = "Attendance submitted successfully!";
+            return RedirectToAction("EmployeeDashboard");
+        }
+
+        public ActionResult ViewProjects()
+        {
+            // Sample data for demonstration
+            var projects = new List<string> { "Project A", "Project B", "Project C" };
+            ViewBag.Projects = projects;
+
+            return View();
+        }
+
+        // Simulated method for example purposes
+        private bool IsValidUser(string username, string password)
+        {
+            // Replace with actual credential validation logic
+            return username == "employee" && password == "password";
+        }
+    }
+}
+
+
+@{
+    ViewBag.Title = "Apply Leave";
+}
+
+<h2>Apply Leave</h2>
+<form action="/Employee/ApplyLeave" method="post">
+    <div class="form-group">
+        <label for="leaveType">Leave Type</label>
+        <select id="leaveType" name="leaveType" class="form-control">
+            <option value="Sick">Sick Leave</option>
+            <option value="Casual">Casual Leave</option>
+            <option value="Annual">Annual Leave</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="startDate">Start Date</label>
+        <input type="date" id="startDate" name="startDate" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label for="endDate">End Date</label>
+        <input type="date" id="endDate" name="endDate" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label for="reason">Reason</label>
+        <textarea id="reason" name="reason" class="form-control" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+
+
+@{
+    ViewBag.Title = "Submit Attendance";
+}
+
+<h2>Submit Attendance</h2>
+<form action="/Employee/SubmitAttendance" method="post">
+    <div class="form-group">
+        <label for="date">Date</label>
+        <input type="date" id="date" name="date" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label for="status">Status</label>
+        <select id="status" name="status" class="form-control">
+            <option value="Present">Present</option>
+            <option value="Absent">Absent</option>
+            <option value="Leave">On Leave</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+
+
+@{
+    ViewBag.Title = "View Projects";
+}
+
+<h2>Project Details</h2>
+<ul class="list-group">
+    @foreach (var project in ViewBag.Projects as List<string>)
+    {
+        <li class="list-group-item">@project</li>
+    }
+</ul>
+
+
+
+<a href="@Url.Action("ApplyLeave", "Employee")" class="btn btn-primary">Apply Leave</a>
+<a href="@Url.Action("SubmitAttendance", "Employee")" class="btn btn-primary">Submit Attendance</a>
+<a href="@Url.Action("ViewProjects", "Employee")" class="btn btn-primary">View Projects</a>
