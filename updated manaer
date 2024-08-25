@@ -246,3 +246,112 @@
     </div>
 </body>
 </html>
+
+
+
+using System.Collections.Generic;
+using System.Web.Mvc;
+
+public class ManagerController : Controller
+{
+    // GET: Manager/Login
+    public ActionResult ManagerLogin()
+    {
+        return View();
+    }
+
+    // POST: Manager/Login
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult ManagerLogin(string username, string password)
+    {
+        // Implement login logic here
+        if (username == "manager" && password == "password") // Example validation
+        {
+            return RedirectToAction("ManagerDashboard");
+        }
+
+        ModelState.AddModelError("", "Invalid login attempt.");
+        return View();
+    }
+
+    // GET: Manager/Dashboard
+    public ActionResult ManagerDashboard()
+    {
+        return View();
+    }
+
+    // GET: Manager/ViewEmployees
+    public ActionResult ViewEmployees()
+    {
+        // Hardcoded data for testing
+        var employees = new List<Employee>
+        {
+            new Employee { EmployeeID = 1, Name = "John Doe", Email = "john.doe@example.com", Phone = "123-456-7890", Role = "Developer" },
+            new Employee { EmployeeID = 2, Name = "Jane Smith", Email = "jane.smith@example.com", Phone = "234-567-8901", Role = "Designer" },
+            new Employee { EmployeeID = 3, Name = "Bob Johnson", Email = "bob.johnson@example.com", Phone = "345-678-9012", Role = "Manager" }
+        };
+
+        // Pass the data to the view
+        return View(employees);
+    }
+
+    // GET: Manager/ViewPendingAttendance
+    public ActionResult ViewPendingAttendance()
+    {
+        // Hardcoded data for testing
+        var attendanceRequests = new List<AttendanceRequest>
+        {
+            new AttendanceRequest { RequestID = 1, EmployeeName = "John Doe", RequestDate = "2024-08-01", Status = "Pending" },
+            new AttendanceRequest { RequestID = 2, EmployeeName = "Jane Smith", RequestDate = "2024-08-02", Status = "Pending" },
+            new AttendanceRequest { RequestID = 3, EmployeeName = "Bob Johnson", RequestDate = "2024-08-03", Status = "Pending" }
+        };
+
+        // Pass the data to the view
+        return View(attendanceRequests);
+    }
+
+    // GET: Manager/ViewPendingLeave
+    public ActionResult ViewPendingLeave()
+    {
+        // Hardcoded data for testing
+        var leaveRequests = new List<LeaveRequest>
+        {
+            new LeaveRequest { RequestID = 1, EmployeeName = "Alice Williams", LeaveType = "Annual Leave", StartDate = "2024-08-10", EndDate = "2024-08-15", Status = "Pending" },
+            new LeaveRequest { RequestID = 2, EmployeeName = "David Brown", LeaveType = "Sick Leave", StartDate = "2024-08-12", EndDate = "2024-08-13", Status = "Pending" },
+            new LeaveRequest { RequestID = 3, EmployeeName = "Emma Davis", LeaveType = "Personal Leave", StartDate = "2024-08-20", EndDate = "2024-08-22", Status = "Pending" }
+        };
+
+        // Pass the data to the view
+        return View(leaveRequests);
+    }
+}
+
+// Sample models for testing purposes
+public class Employee
+{
+    public int EmployeeID { get; set; }
+    public string Name { get; set; }
+    public string Email { get; set; }
+    public string Phone { get; set; }
+    public string Role { get; set; }
+}
+
+public class AttendanceRequest
+{
+    public int RequestID { get; set; }
+    public string EmployeeName { get; set; }
+    public string RequestDate { get; set; }
+    public string Status { get; set; }
+}
+
+public class LeaveRequest
+{
+    public int RequestID { get; set; }
+    public string EmployeeName { get; set; }
+    public string LeaveType { get; set; }
+    public string StartDate { get; set; }
+    public string EndDate { get; set; }
+    public string Status { get; set; }
+}
+
