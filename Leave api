@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -12,44 +12,44 @@ using ALMSystemWebApi.Models;
 
 namespace ALMSystemWebApi.Controllers
 {
-    public class EmployeesController : ApiController
+    public class LeavesController : ApiController
     {
         private LeaveMasterEntities db = new LeaveMasterEntities();
 
-        // GET: api/Employees
-        public IQueryable<Employee> GetEmployees()
+        // GET: api/Leaves
+        public IQueryable<Leave> GetLeaves()
         {
-            return db.Employees;
+            return db.Leaves;
         }
 
-        // GET: api/Employees/5
-        [ResponseType(typeof(Employee))]
-        public IHttpActionResult GetEmployee(int id)
+        // GET: api/Leaves/5
+        [ResponseType(typeof(Leave))]
+        public IHttpActionResult GetLeave(int id)
         {
-            Employee employee = db.Employees.Find(id);
-            if (employee == null)
+            Leave leave = db.Leaves.Find(id);
+            if (leave == null)
             {
                 return NotFound();
             }
 
-            return Ok(employee);
+            return Ok(leave);
         }
 
-        // PUT: api/Employees/5
+        // PUT: api/Leaves/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutEmployee(int id, Employee employee)
+        public IHttpActionResult PutLeave(int id, Leave leave)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != employee.EmployeeID)
+            if (id != leave.LeaveID)
             {
                 return BadRequest();
             }
 
-            db.Entry(employee).State = EntityState.Modified;
+            db.Entry(leave).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace ALMSystemWebApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EmployeeExists(id))
+                if (!LeaveExists(id))
                 {
                     return NotFound();
                 }
@@ -70,16 +70,16 @@ namespace ALMSystemWebApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Employees
-        [ResponseType(typeof(Employee))]
-        public IHttpActionResult PostEmployee(Employee employee)
+        // POST: api/Leaves
+        [ResponseType(typeof(Leave))]
+        public IHttpActionResult PostLeave(Leave leave)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Employees.Add(employee);
+            db.Leaves.Add(leave);
             try
             {
                 db.SaveChanges();
@@ -88,33 +88,30 @@ namespace ALMSystemWebApi.Controllers
             {
                 foreach (var entityValidationError in ex.EntityValidationErrors)
                 {
-                    foreach (var validationError
-             in entityValidationError.ValidationErrors)
+                    foreach (var validationError in entityValidationError.ValidationErrors)
                     {
-                        Console.WriteLine("Property:   
-             { 0}, Error: { 1}
-                        ", validationError.PropertyName, validationError.ErrorMessage);
+                        Console.WriteLine("Property: {0}, Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
                     }
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = employee.EmployeeID }, employee);
+            return CreatedAtRoute("DefaultApi", new { id = leave.LeaveID }, leave);
         }
 
-        // DELETE: api/Employees/5
-        [ResponseType(typeof(Employee))]
-        public IHttpActionResult DeleteEmployee(int id)
+        // DELETE: api/Leaves/5
+        [ResponseType(typeof(Leave))]
+        public IHttpActionResult DeleteLeave(int id)
         {
-            Employee employee = db.Employees.Find(id);
-            if (employee == null)
+            Leave leave = db.Leaves.Find(id);
+            if (leave == null)
             {
                 return NotFound();
             }
 
-            db.Employees.Remove(employee);
+            db.Leaves.Remove(leave);
             db.SaveChanges();
 
-            return Ok(employee);
+            return Ok(leave);
         }
 
         protected override void Dispose(bool disposing)
@@ -126,9 +123,9 @@ namespace ALMSystemWebApi.Controllers
             base.Dispose(disposing);
         }
 
-        private bool EmployeeExists(int id)
+        private bool LeaveExists(int id)
         {
-            return db.Employees.Count(e => e.EmployeeID == id) > 0;
+            return db.Leaves.Count(e => e.LeaveID == id) > 0;
         }
     }
 }
