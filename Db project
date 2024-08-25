@@ -1,43 +1,17 @@
-1. Setting Up the Environment
-Before starting with code, ensure you have the following:
+using System.Data.SqlClient; using System.Threading.Tasks; using System.Web.Http; using System.Configuration; using System.Web.Mvc; namespace ALMSystem2.Controllers { [System.Web.Http.RoutePrefix("api/manager")] public class ManagerApiController : ApiController { private readonly string _connectionString = ConfigurationManager.ConnectionStrings["YourConnectionString"].ConnectionString; [System.Web.Http.HttpPost] [System.Web.Http.Route("login")] public async Task<IHttpActionResult> Login(LoginModel model) { if (!ModelState.IsValid) { return BadRequest(ModelState); } using (var connection = new SqlConnection(_connectionString)) { await connection.OpenAsync(); var query = "SELECT COUNT(*) FROM Employees WHERE Email = @Email AND Password = @Password AND RoleID = (SELECT RoleID FROM Roles WHERE RoleName = 'Manager')"; using (var command = new SqlCommand(query, connection)) { command.Parameters.AddWithValue("@Email", model.Username); command.Parameters.AddWithValue("@Password", model.Password); var count = (int)await command.ExecuteScalarAsync(); if (count > 0) { return Ok(new { message = "Login successful" }); } else { return Unauthorized(); } } } } } public class LoginModel { public string Username { get; set; } public string Password { get; set; } } }
 
-Visual Studio 2019 for development.
-SQL Server 2016 or 2019 for database management.
-Git for version control.
-2. Create the Database
-SQL Server Database Schema
-Start by creating the database and tables:
 
-CREATE DATABASE AttendanceLeaveDB;
-
-USE AttendanceLeaveDB;
-
-CREATE TABLE Employees (
-    EmployeeID INT PRIMARY KEY IDENTITY(1,1),
-    Name NVARCHAR(100),
-    Role NVARCHAR(50),
-    Email NVARCHAR(100),
-    PasswordHash NVARCHAR(255)
-);
-
-CREATE TABLE Projects (
-    ProjectID INT PRIMARY KEY IDENTITY(1,1),
-    ProjectName NVARCHAR(100)
-);
-
-CREATE TABLE Attendance (
-    AttendanceID INT PRIMARY KEY IDENTITY(1,1),
-    EmployeeID INT FOREIGN KEY REFERENCES Employees(EmployeeID),
-    ProjectID INT FOREIGN KEY REFERENCES Projects(ProjectID),
-    Date DATE,
-    Status NVARCHAR(50)
-);
-
-CREATE TABLE Leaves (
-    LeaveID INT PRIMARY KEY IDENTITY(1,1),
-    EmployeeID INT FOREIGN KEY REFERENCES Employees(EmployeeID),
-    LeaveType NVARCHAR(50),
-    StartDate DATE,
-    EndDate DATE,
-    Status NVARCHAR(50)
-);
+Severity	Code	Description	Project	File	Line	Suppression State
+Error (active)	CS1980	Cannot define a class or member that utilizes 'dynamic' because the compiler required type 'System.Runtime.CompilerServices.DynamicAttribute' cannot be found. Are you missing a reference?	6_Views_Shared__AdminLayout.cshtml	D:\Backup Project\ALMSystemClient\Views\Shared\_AdminLayout.cshtml	29	
+Error (active)	CS1980	Cannot define a class or member that utilizes 'dynamic' because the compiler required type 'System.Runtime.CompilerServices.DynamicAttribute' cannot be found. Are you missing a reference?	2_Views_Home_Contact.cshtml	D:\Backup Project\ALMSystemClient\Views\Home\Contact.cshtml	29	
+Error (active)	CS1980	Cannot define a class or member that utilizes 'dynamic' because the compiler required type 'System.Runtime.CompilerServices.DynamicAttribute' cannot be found. Are you missing a reference?	3_Views_Admin_Login.cshtml	D:\Backup Project\ALMSystemClient\Views\Admin\Login.cshtml	29	
+Error (active)	CS1980	Cannot define a class or member that utilizes 'dynamic' because the compiler required type 'System.Runtime.CompilerServices.DynamicAttribute' cannot be found. Are you missing a reference?	5_Views_Admin_ManageEmployees.cshtml	D:\Backup Project\ALMSystemClient\Views\Admin\ManageEmployees.cshtml	29	
+Warning	NU1901	Package 'jQuery.Validation' 1.17.0 has a known low severity vulnerability, https://github.com/advisories/GHSA-j9m2-h2pv-wvph	ALMSystem2	ALMSystem2		
+Warning	NU1902	Package 'Azure.Identity' 1.11.3 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-m5vv-6r4h-3vj9	ALMSystem2	ALMSystem2		
+Warning	NU1902	Package 'bootstrap' 3.4.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-9mvj-f7w8-pvh2	ALMSystem2	ALMSystem2		
+Warning	NU1903	Package 'jQuery.Validation' 1.17.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-jxwx-85vp-gvwm	ALMSystem2	ALMSystem2		
+Warning	NU1902	Package 'Microsoft.Identity.Client' 4.60.3 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-m5vv-6r4h-3vj9	ALMSystem2	ALMSystem2		
+Warning	NU1902	Package 'jQuery' 3.4.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-jpcq-cgw6-v4j6	ALMSystem2	ALMSystem2		
+Warning	NU1902	Package 'jQuery' 3.4.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-gxr4-xjj5-5px2	ALMSystem2	ALMSystem2		
+Warning (active)	CS0105	The using directive for 'System.Collections.Generic' appeared previously in this namespace	ALMSystem2	D:\Backup Project\ALMSystemClient\Controllers\AdminController.cs	6	
+Warning (active)	CS0105	The using directive for 'System.Web.Mvc' appeared previously in this namespace	ALMSystem2	D:\Backup Project\ALMSystemClient\Controllers\AdminController.cs	7 
