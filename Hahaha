@@ -1,72 +1,42 @@
-using System.Web.Mvc;
-using ALMSystem2.Controllers;
-using Xunit;
+ALMSystem2.Tests.Controllers.AdminControllerTests.AdminLogin_Get_WhenUserIsAuthenticated_RedirectsToAdminDashboard
+   Source: AdminControllerTests.cs line 10
+   Duration: 2 sec
 
-namespace ALMSystem2.Tests.Controllers
-{
-    public class AdminControllerTests
-    {
-        [Fact]
-        public void AdminLogin_Get_WhenUserIsAuthenticated_RedirectsToAdminDashboard()
-        {
-            // Arrange
-            var controller = new AdminController();
-            controller.Session["User"] = "admin"; // Simulate an authenticated session
+  Message: 
+System.NullReferenceException : Object reference not set to an instance of an object.
 
-            // Act
-            var result = controller.AdminLogin() as RedirectToRouteResult;
+  Stack Trace: 
+AdminControllerTests.AdminLogin_Get_WhenUserIsAuthenticated_RedirectsToAdminDashboard() line 14
 
-            // Assert
-            Assert.NotNull(result); // Ensure the result is not null
-            Assert.Equal("AdminDashboard", result.RouteValues["action"]); // Ensure it redirects to AdminDashboard
-        }
+ALMSystem2.Tests.Controllers.AdminControllerTests.AdminLogin_Get_WhenUserIsNotAuthenticated_ReturnsView
+   Source: AdminControllerTests.cs line 25
+   Duration: 1 ms
 
-        [Fact]
-        public void AdminLogin_Get_WhenUserIsNotAuthenticated_ReturnsView()
-        {
-            // Arrange
-            var controller = new AdminController();
-            controller.Session["User"] = null; // Simulate an unauthenticated session
+  Message: 
+System.NullReferenceException : Object reference not set to an instance of an object.
 
-            // Act
-            var result = controller.AdminLogin() as ViewResult;
+  Stack Trace: 
+AdminControllerTests.AdminLogin_Get_WhenUserIsNotAuthenticated_ReturnsView() line 29
 
-            // Assert
-            Assert.NotNull(result); // Ensure the result is not null
-            Assert.Null(result.ViewName); // Check if it returns the default view (if using a default view name)
-        }
+ALMSystem2.Tests.Controllers.AdminControllerTests.AdminLogin_Post_InvalidCredentials_ReturnsViewWithError
+   Source: AdminControllerTests.cs line 57
+   Duration: 526 ms
 
-        [Fact]
-        public void AdminLogin_Post_ValidCredentials_RedirectsToAdminDashboard()
-        {
-            // Arrange
-            var controller = new AdminController();
-            var username = "admin";
-            var password = "password";
+  Message: 
+Assert.False() Failure
+Expected: False
+Actual:   True
 
-            // Act
-            var result = controller.AdminLogin(username, password) as RedirectToRouteResult;
+  Stack Trace: 
+AdminControllerTests.AdminLogin_Post_InvalidCredentials_ReturnsViewWithError() line 69
 
-            // Assert
-            Assert.NotNull(result); // Ensure the result is not null
-            Assert.Equal("AdminDashboard", result.RouteValues["action"]); // Ensure it redirects to AdminDashboard
-            Assert.Equal(username, controller.Session["User"]); // Ensure the session has the username
-        }
+ALMSystem2.Tests.Controllers.AdminControllerTests.AdminLogin_Post_ValidCredentials_RedirectsToAdminDashboard
+   Source: AdminControllerTests.cs line 40
+   Duration: 11 ms
 
-        [Fact]
-        public void AdminLogin_Post_InvalidCredentials_ReturnsViewWithError()
-        {
-            // Arrange
-            var controller = new AdminController();
-            var username = "wronguser";
-            var password = "wrongpass";
+  Message: 
+System.NullReferenceException : Object reference not set to an instance of an object.
 
-            // Act
-            var result = controller.AdminLogin(username, password) as ViewResult;
-
-            // Assert
-            Assert.NotNull(result); // Ensure the result is not null
-            Assert.False(controller.ModelState.IsValid); // Check if ModelState is invalid
-        }
-    }
-}
+  Stack Trace: 
+AdminController.AdminLogin(String username, String password) line 26
+AdminControllerTests.AdminLogin_Post_ValidCredentials_RedirectsToAdminDashboard() line 48
