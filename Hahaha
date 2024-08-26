@@ -489,10 +489,10 @@ namespace ALMSystem2.Controllers
         .btn-primary:active {
             transform: scale(0.98);
         }
-
+        
         .error-message {
             color: red;
-            margin-top: 0.5rem;
+            margin-top: 1rem;
         }
     </style>
 </head>
@@ -510,13 +510,13 @@ namespace ALMSystem2.Controllers
                 @Html.Label("password")
                 @Html.Password("password", null, new { @class = "form-control", required = "required" })
             </div>
+            <button type="submit" class="btn btn-primary">Login</button>
             @if (ViewBag.ErrorMessage != null)
             {
                 <div class="error-message">
                     @ViewBag.ErrorMessage
                 </div>
             }
-            <button type="submit" class="btn btn-primary">Login</button>
         }
     </div>
 </body>
