@@ -1,243 +1,100 @@
-public ActionResult ViewProjects()
+public class AdminController : Controller
+{
+    private readonly MyDbContext _context;
+
+    public AdminController(MyDbContext context)
+    {
+        _context = context;
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult AdminLogin(string username, string password)
+    {
+        var admin = _context.Admins.SingleOrDefault(a => a.Username == username && a.Password == password);
+        
+        if (admin != null)
         {
-            // Simulate getting the logged-in employee's name
-            string employeeName = Session["EmployeeName"] as string;
-
-            // Sample project data for demonstration
-            var projects = new List<object>
-            {
-                new { ProjectName = "Project Alpha", Description = "A project on AI development.", StartDate = "2024-01-01", EndDate = "2024-12-31", Status = "Ongoing" },
-                new { ProjectName = "Project Beta", Description = "A project on Blockchain technology.", StartDate = "2024-02-01", EndDate = "2024-11-30", Status = "Completed" },
-                new { ProjectName = "Project Gamma", Description = "A project on Web Development.", StartDate = "2024-03-01", EndDate = "2024-10-31", Status = "Ongoing" }
-            };
-
-            ViewBag.EmployeeName = employeeName;
-            ViewBag.Projects = projects;
-
-            return View();
+            Session["AdminID"] = admin.Id;
+            return RedirectToAction("AdminDashboard");
         }
-
-
-
-@{
-    ViewBag.Title = "View Projects";
-    var employeeName = ViewBag.EmployeeName as string;
+        
+        ModelState.AddModelError("", "Invalid login attempt.");
+        return View();
+    }
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
-</head>
-<body>
-    <div class="container mt-5">
-        <h2 class="text-center">Projects for @employeeName</h2>
-        <table class="table table-bordered table-hover mt-4">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Project Name</th>
-                    <th>Description</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Project Alpha</td>
-                    <td>A project on AI development.</td>
-                    <td>2024-01-01</td>
-                    <td>2024-12-31</td>
-                    <td>Ongoing</td>
-                </tr>
-                <tr>
-                    <td>Project Beta</td>
-                    <td>A project on Blockchain technology.</td>
-                    <td>2024-02-01</td>
-                    <td>2024-11-30</td>
-                    <td>Completed</td>
-                </tr>
-                <tr>
-                    <td>Project Gamma</td>
-                    <td>A project on Web Development.</td>
-                    <td>2024-03-01</td>
-                    <td>2024-10-31</td>
-                    <td>Ongoing</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</body>
-</html>
 
 
+using Moq;
+using NUnit.Framework;
+using MyMvcApp.Controllers;
+using MyMvcApp.Models;
+using System.Linq;
+using System.Web.Mvc;
 
+namespace MyMvcApp.Tests.Controllers
+{
+    [TestFixture]
+    public class AdminControllerTests
+    {
+        private Mock<MyDbContext> _mockContext;
+        private AdminController _controller;
 
-# I now have the Admin Dashboard structure and will proceed to match the Manager Dashboard accordingly.
-# Both dashboards will have the same layout, sidebar, button size, and color.
-
-# Here is the updated Manager Dashboard code:
-
-manager_dashboard_code = """
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manager Dashboard</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
-    <style>
-        body {
-            display: flex;
-            margin: 0;
-            height: 100vh;
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+        [SetUp]
+        public void SetUp()
+        {
+            _mockContext = new Mock<MyDbContext>();
+            _controller = new AdminController(_mockContext.Object);
         }
 
-        .sidebar {
-            width: 250px;
-            background-color: #343a40;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            padding: 15px;
+        [Test]
+        public void AdminLogin_ValidCredentials_ShouldRedirectToAdminDashboard()
+        {
+            // Arrange
+            var admins = new List<Admin>
+            {
+                new Admin { Id = 1, Username = "admin", Password = "password" }
+            }.AsQueryable();
+
+            var mockSet = new Mock<DbSet<Admin>>();
+            mockSet.As<IQueryable<Admin>>().Setup(m => m.Provider).Returns(admins.Provider);
+            mockSet.As<IQueryable<Admin>>().Setup(m => m.Expression).Returns(admins.Expression);
+            mockSet.As<IQueryable<Admin>>().Setup(m => m.ElementType).Returns(admins.ElementType);
+            mockSet.As<IQueryable<Admin>>().Setup(m => m.GetEnumerator()).Returns(admins.GetEnumerator());
+
+            _mockContext.Setup(c => c.Admins).Returns(mockSet.Object);
+
+            // Act
+            var result = _controller.AdminLogin("admin", "password") as RedirectToRouteResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual("AdminDashboard", result.RouteValues["action"]);
         }
 
-        .sidebar a {
-            color: #fff;
-            text-decoration: none;
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
+        [Test]
+        public void AdminLogin_InvalidCredentials_ShouldReturnLoginViewWithError()
+        {
+            // Arrange
+            var admins = new List<Admin>().AsQueryable();
+
+            var mockSet = new Mock<DbSet<Admin>>();
+            mockSet.As<IQueryable<Admin>>().Setup(m => m.Provider).Returns(admins.Provider);
+            mockSet.As<IQueryable<Admin>>().Setup(m => m.Expression).Returns(admins.Expression);
+            mockSet.As<IQueryable<Admin>>().Setup(m => m.ElementType).Returns(admins.ElementType);
+            mockSet.As<IQueryable<Admin>>().Setup(m => m.GetEnumerator()).Returns(admins.GetEnumerator());
+
+            _mockContext.Setup(c => c.Admins).Returns(mockSet.Object);
+
+            // Act
+            var result = _controller.AdminLogin("admin", "wrongpassword") as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual("", result.ViewName); // Should return the same view
+            Assert.AreEqual(1, _controller.ModelState.Count);
         }
+    }
+}
 
-        .sidebar a:hover,
-        .sidebar a.active {
-            background-color: #007bff;
-        }
-
-        .content {
-            flex-grow: 1;
-            padding: 20px;
-            background-color: #f4f4f4;
-            overflow-y: auto;
-        }
-
-        .card {
-            margin-bottom: 20px;
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            color: #007bff;
-        }
-
-        .btn-dashboard {
-            background-color: #007bff;
-            border: none;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-dashboard:hover {
-            background-color: #0056b3;
-        }
-
-        .welcome-box {
-            margin-bottom: 20px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .welcome-box h3 {
-            font-size: 1.8rem;
-            color: #333;
-        }
-
-        .details-box {
-            margin-bottom: 20px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .details-box h3 {
-            font-size: 1.8rem;
-            color: #333;
-        }
-
-        .details-box p {
-            font-size: 1.2em;
-        }
-    </style>
-</head>
-<body>
-    <div class="sidebar">
-        <a href="#" class="active">Dashboard</a>
-        <a href="@Url.Action("ViewEmployees", "Manager")">View Employees</a>
-        <a href="@Url.Action("ViewPendingAttendance", "Manager")">View Pending Attendance Requests</a>
-        <a href="@Url.Action("ViewPendingLeave", "Manager")">View Pending Leave Requests</a>
-        <a href="@Url.Action("Logout", "Manager")" class="btn-dashboard">Logout</a>
-    </div>
-
-    <div class="content">
-        <div class="welcome-box">
-            <h3>Welcome to the Manager Dashboard</h3>
-            <p>Select an option from the sidebar to manage the system.</p>
-        </div>
-
-        <div class="details-box">
-            <h3>Manager Details</h3>
-            <p>Name: John Doe</p>
-            <p>Position: Project Manager</p>
-            <p>Department: IT</p>
-            <p>Email: johndoe@example.com</p>
-            <p>Phone: 123-456-7890</p>
-        </div>
-
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">View Employees</h5>
-                <p class="card-text">Manage employees under your supervision.</p>
-                <a href="@Url.Action("ViewEmployees", "Manager")" class="btn-dashboard">View Employees</a>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Pending Attendance Requests</h5>
-                <p class="card-text">Review and manage pending attendance requests.</p>
-                <a href="@Url.Action("ViewPendingAttendance", "Manager")" class="btn-dashboard">View Requests</a>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Pending Leave Requests</h5>
-                <p class="card-text">Review and manage pending leave requests.</p>
-                <a href="@Url.Action("ViewPendingLeave", "Manager")" class="btn-dashboard">View Requests</a>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
-"""
-
-manager_dashboard_code
