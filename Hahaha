@@ -1,489 +1,69 @@
-
-using System;
-using System.Collections.Generic;
 using System.Web.Mvc;
+using ALMSystem2.Controllers;
+using Xunit;
 
-namespace ALMSystem2.Controllers
+public class AdminControllerTests
 {
-    public class AdminController : Controller
-    {
-        // GET: Admin/Login
-        public ActionResult AdminLogin()
-        {
-            if (Session["User"] != null) // Check if the user is already authenticated
-            {
-                return RedirectToAction("AdminDashboard");
-            }
-            return View();
-        }
+    // Test methods will be added here
+}
+[Fact]
+public void AdminLogin_WhenUserIsAuthenticated_RedirectsToAdminDashboard()
+{
+    // Arrange
+    var controller = new AdminController();
+    controller.Session["User"] = "admin"; // Simulate an authenticated session
 
-        // POST: Admin/Login
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult AdminLogin(string username, string password)
-        {
-            if (IsValidAdmin(username, password))
-            {
-                Session["User"] = username; // Store user information in session
-                return RedirectToAction("AdminDashboard");
-            }
+    // Act
+    var result = controller.AdminLogin() as RedirectToRouteResult;
 
-            ModelState.AddModelError("", "Invalid login attempt.");
-            return View();
-        }
+    // Assert
+    Assert.NotNull(result); // Ensure the result is not null
+    Assert.Equal("AdminDashboard", result.RouteValues["action"]); // Ensure it redirects to AdminDashboard
+}
+[Fact]
+public void AdminLogin_WhenUserIsNotAuthenticated_ReturnsView()
+{
+    // Arrange
+    var controller = new AdminController();
+    controller.Session["User"] = null; // Simulate an unauthenticated session
 
-        // GET: Admin/Dashboard
-        public ActionResult AdminDashboard()
-        {
-            if (Session["User"] == null) // Check if the user is authenticated
-            {
-                return RedirectToAction("AdminLogin");
-            }
-            return View();
-        }
+    // Act
+    var result = controller.AdminLogin() as ViewResult;
 
-        // GET: Admin/Logout
-        public ActionResult Logout()
-        {
-            Session.Clear(); // Clear all session data
-            Session.Abandon(); // End the session
-            return RedirectToAction("AdminLogin");
-        }
-
-        // GET: Admin/EmployeeDetails
-        public ActionResult EmployeeDetails()
-        {
-            if (Session["User"] == null) // Check if the user is authenticated
-            {
-                return RedirectToAction("AdminLogin");
-            }
-
-            var employees = new List<object>
-            {
-                new { EmployeeID = 1, EmployeeName = "John Doe", Email = "johndoe@example.com", Phone = "123-456-7890", HireDate = DateTime.Now.AddYears(-5), RoleID = 1, ManagerID = 2, ProjectID = 1, LeaveBalance = 10, No_of_leave = 5, Emp_status = "Active" }
-                // Add more employees as necessary
-            };
-
-            ViewBag.Employees = employees; // Pass data to view
-            return View();
-        }
-
-        // GET: Admin/CreateNewEmployee
-        public ActionResult CreateNewEmployee()
-        {
-            if (Session["User"] == null) // Check if the user is authenticated
-            {
-                return RedirectToAction("AdminLogin");
-            }
-            return View();
-        }
-
-        // POST: Admin/CreateNewEmployee
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateNewEmployee(FormCollection form)
-        {
-            if (Session["User"] == null) // Check if the user is authenticated
-            {
-                return RedirectToAction("AdminLogin");
-            }
-
-            // Extract form values
-            string employeeName = form["EmployeeName"];
-            string email = form["Email"];
-            string phone = form["Phone"];
-            DateTime hireDate = Convert.ToDateTime(form["HireDate"]);
-            int roleID = Convert.ToInt32(form["RoleID"]);
-            int managerID = Convert.ToInt32(form["ManagerID"]);
-            int projectID = Convert.ToInt32(form["ProjectID"]);
-            int leaveBalance = Convert.ToInt32(form["LeaveBalance"]);
-            int no_of_leave = Convert.ToInt32(form["No_of_leave"]);
-            string emp_status = form["Emp_status"];
-
-            // Add the new employee to the database (replace with actual data insertion logic)
-            // Example: db.AddEmployee(employeeName, email, phone, hireDate, roleID, managerID, projectID, leaveBalance, no_of_leave, emp_status);
-
-            return RedirectToAction("EmployeeDetails");
-        }
-
-        // GET: Admin/EditEmployee/1
-        public ActionResult EditEmployee(int id)
-        {
-            if (Session["User"] == null) // Check if the user is authenticated
-            {
-                return RedirectToAction("AdminLogin");
-            }
-
-            // Fetch the employee from the database using the id (replace with actual data retrieval logic)
-            var employee = new
-            {
-                EmployeeID = id,
-                EmployeeName = "John Doe",
-                Email = "johndoe@example.com",
-                Phone = "123-456-7890",
-                HireDate = DateTime.Now.AddYears(-5),
-                RoleID = 1,
-                ManagerID = 2,
-                ProjectID = 1,
-                LeaveBalance = 10,
-                No_of_leave = 5,
-                Emp_status = "Active"
-            };
-
-            // Pass the data to the view
-            ViewBag.Employee = employee;
-            return View();
-        }
-
-        // POST: Admin/EditEmployee/1
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditEmployee(int id, FormCollection form)
-        {
-            if (Session["User"] == null) // Check if the user is authenticated
-            {
-                return RedirectToAction("AdminLogin");
-            }
-
-            // Extract form values (replace with actual logic)
-            string employeeName = form["EmployeeName"];
-            string email = form["Email"];
-            string phone = form["Phone"];
-            DateTime hireDate = Convert.ToDateTime(form["HireDate"]);
-            int roleID = Convert.ToInt32(form["RoleID"]);
-            int managerID = Convert.ToInt32(form["ManagerID"]);
-            int projectID = Convert.ToInt32(form["ProjectID"]);
-            int leaveBalance = Convert.ToInt32(form["LeaveBalance"]);
-            int no_of_leave = Convert.ToInt32(form["No_of_leave"]);
-            string emp_status = form["Emp_status"];
-
-            // Update employee in the database (replace with actual data update logic)
-
-            return RedirectToAction("EmployeeDetails");
-        }
-
-        // POST: Admin/DeleteEmployee/1
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteEmployee(int id)
-        {
-            if (Session["User"] == null) // Check if the user is authenticated
-            {
-                return RedirectToAction("AdminLogin");
-            }
-
-            // Simulate delete logic here (replace with actual delete logic)
-
-            return RedirectToAction("EmployeeDetails");
-        }
-
-        // GET: Admin/ProjectDetails
-        public ActionResult ProjectDetails()
-        {
-            if (Session["User"] == null) // Check if the user is authenticated
-            {
-                return RedirectToAction("AdminLogin");
-            }
-
-            var projects = new List<object>
-            {
-                new { ProjectID = 1, ProjectName = "Project Alpha", StartDate = DateTime.Now.AddMonths(-6), EndDate = DateTime.Now.AddMonths(6), Status = "Active" }
-                // Add more projects as necessary
-            };
-
-            ViewBag.Projects = projects; // Pass data to view
-            return View();
-        }
-
-        // GET: Admin/CreateNewProject
-        public ActionResult CreateNewProject()
-        {
-            if (Session["User"] == null) // Check if the user is authenticated
-            {
-                return RedirectToAction("AdminLogin");
-            }
-            return View();
-        }
-
-        // POST: Admin/CreateNewProject
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateNewProject(FormCollection form)
-        {
-            if (Session["User"] == null) // Check if the user is authenticated
-            {
-                return RedirectToAction("AdminLogin");
-            }
-
-            // Extract form values
-            string projectName = form["ProjectName"];
-            DateTime startDate = Convert.ToDateTime(form["StartDate"]);
-            DateTime endDate = Convert.ToDateTime(form["EndDate"]);
-            string status = form["Status"];
-
-            // Add the new project to the database (replace with actual data insertion logic)
-            // Example: db.AddProject(projectName, startDate, endDate, status);
-
-            return RedirectToAction("ProjectDetails");
-        }
-
-        // GET: Admin/EditProject/1
-        public ActionResult EditProject(int id)
-        {
-            if (Session["User"] == null) // Check if the user is authenticated
-            {
-                return RedirectToAction("AdminLogin");
-            }
-
-            // Fetch the project from the database using the id (replace with actual data retrieval logic)
-            var project = new
-            {
-                ProjectID = id,
-                ProjectName = "Project Alpha",
-                StartDate = DateTime.Now.AddMonths(-6),
-                EndDate = DateTime.Now.AddMonths(6),
-                Status = "Active"
-            };
-
-            // Pass the data to the view
-            ViewBag.Project = project;
-            return View();
-        }
-
-        // POST: Admin/EditProject/1
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditProject(int id, FormCollection form)
-        {
-            if (Session["User"] == null) // Check if the user is authenticated
-            {
-                return RedirectToAction("AdminLogin");
-            }
-
-            // Extract form values (replace with actual logic)
-            string projectName = form["ProjectName"];
-            DateTime startDate = Convert.ToDateTime(form["StartDate"]);
-            DateTime endDate = Convert.ToDateTime(form["EndDate"]);
-            string status = form["Status"];
-
-            // Update project in the database (replace with actual data update logic)
-
-            return RedirectToAction("ProjectDetails");
-        }
-
-        // POST: Admin/DeleteProject/1
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteProject(int id)
-        {
-            if (Session["User"] == null) // Check if the user is authenticated
-            {
-                return RedirectToAction("AdminLogin");
-            }
-
-            // Simulate delete logic here (replace with actual delete logic)
-
-            return RedirectToAction("ProjectDetails");
-        }
-
-        // GET: Admin/AttendanceRequests
-        public ActionResult AttendanceRequests()
-        {
-            if (Session["User"] == null) // Check if the user is authenticated
-            {
-                return RedirectToAction("AdminLogin");
-            }
-
-            var requests = new List<object>
-            {
-                new { RequestID = 1, EmployeeName = "John Doe", RequestDate = DateTime.Now.AddDays(-1), Status = "Pending" }
-                // Add more requests as necessary
-            };
-
-            ViewBag.Requests = requests; // Pass data to view
-            return View();
-        }
-
-        // POST: Admin/ApproveAttendanceRequest/1
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult ApproveAttendanceRequest(int id)
-        {
-            if (Session["User"] == null) // Check if the user is authenticated
-            {
-                return RedirectToAction("AdminLogin");
-            }
-
-            // Simulate approval logic here (replace with actual approval logic)
-
-            return RedirectToAction("AttendanceRequests");
-        }
-
-        // POST: Admin/RejectAttendanceRequest/1
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult RejectAttendanceRequest(int id)
-        {
-            if (Session["User"] == null) // Check if the user is authenticated
-            {
-                return RedirectToAction("AdminLogin");
-            }
-
-            // Simulate rejection logic here (replace with actual rejection logic)
-
-            return RedirectToAction("AttendanceRequests");
-        }
-
-        // GET: Admin/LeaveRequests
-        public ActionResult LeaveRequests()
-        {
-            if (Session["User"] == null) // Check if the user is authenticated
-            {
-                return RedirectToAction("AdminLogin");
-            }
-
-            var requests = new List<object>
-            {
-                new { RequestID = 1, EmployeeName = "Jane Doe", RequestDate = DateTime.Now.AddDays(-2), Status = "Pending" }
-                // Add more requests as necessary
-            };
-
-            ViewBag.Requests = requests; // Pass data to view
-            return View();
-        }
-
-        // POST: Admin/ApproveLeaveRequest/1
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult ApproveLeaveRequest(int id)
-        {
-            if (Session["User"] == null) // Check if the user is authenticated
-            {
-                return RedirectToAction("AdminLogin");
-            }
-
-            // Simulate approval logic here (replace with actual approval logic)
-
-            return RedirectToAction("LeaveRequests");
-        }
-
-        // POST: Admin/RejectLeaveRequest/1
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult RejectLeaveRequest(int id)
-        {
-            if (Session["User"] == null) // Check if the user is authenticated
-            {
-                return RedirectToAction("AdminLogin");
-            }
-
-            // Simulate rejection logic here (replace with actual rejection logic)
-
-            return RedirectToAction("LeaveRequests");
-        }
-
-        // Helper method to validate admin credentials
-        private bool IsValidAdmin(string username, string password)
-        {
-            // Replace with actual credential validation logic
-            return username == "admin" && password == "password";
-        }
-    }
+    // Assert
+    Assert.NotNull(result); // Ensure the result is not null
+    Assert.Null(result.ViewName); // Check if it returns the default view (if using a default view name)
 }
 
+[Fact]
+public void AdminLogin_Post_ValidCredentials_RedirectsToAdminDashboard()
+{
+    // Arrange
+    var controller = new AdminController();
+    var username = "admin";
+    var password = "password";
 
+    // Act
+    var result = controller.AdminLogin(username, password) as RedirectToRouteResult;
 
-
-@{
-    Layout = null; // or set to your layout file if you have one
+    // Assert
+    Assert.NotNull(result); // Ensure the result is not null
+    Assert.Equal("AdminDashboard", result.RouteValues["action"]); // Ensure it redirects to AdminDashboard
+    Assert.Equal(username, controller.Session["User"]); // Ensure the session has the username
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
-    <style>
-        body {
-            background: linear-gradient(to right, #6a11cb, #2575fc);
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0;
-        }
+[Fact]
+public void AdminLogin_Post_InvalidCredentials_ReturnsViewWithError()
+{
+    // Arrange
+    var controller = new AdminController();
+    var username = "wronguser";
+    var password = "wrongpass";
 
-        .login-container {
-            background: #fff;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 400px;
-            transform: translateY(0);
-            opacity: 1;
-            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
-        }
+    // Act
+    var result = controller.AdminLogin(username, password) as ViewResult;
 
-            .login-container.hidden {
-                transform: translateY(-50%);
-                opacity: 0;
-            }
-
-            .login-container h2 {
-                margin-bottom: 1rem;
-                font-family: 'Arial', sans-serif;
-                color: #333;
-            }
-
-        .form-control {
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            transition: border-color 0.3s;
-        }
-
-            .form-control:focus {
-                border-color: #2575fc;
-                box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
-            }
-
-        .btn-primary {
-            background: #2575fc;
-            border: none;
-            border-radius: 5px;
-            padding: 0.75rem 1.5rem;
-            font-size: 1.5rem;
-            transition: background 0.3s, transform 0.3s;
-        }
-
-            .btn-primary:hover {
-                background: #1d64d1;
-            }
-
-            .btn-primary:active {
-                transform: scale(0.98);
-            }
-      
-    </style>
-</head>
-<body>
-    <div class="login-container">
-        <h2>Admin Login</h2>
-        @using (Html.BeginForm("AdminLogin", "Admin", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            <div class="form-group">
-                @Html.Label("username")
-                @Html.TextBox("username", null, new { @class = "form-control", required = "required" })
-            </div>
-            <div class="form-group">
-                @Html.Label("password")
-                @Html.Password("password", null, new { @class = "form-control", required = "required" })
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-        }
-    </div>
-</body>
-</html>
+    // Assert
+    Assert.NotNull(result); // Ensure the result is not null
+    Assert.False(controller.ModelState.IsValid); // Check if ModelState is invalid
+}
