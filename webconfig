@@ -22,7 +22,6 @@ public ActionResult ViewProjects()
 @{
     ViewBag.Title = "View Projects";
     var employeeName = ViewBag.EmployeeName as string;
-    var projects = ViewBag.Projects as List<dynamic>;
 }
 
 <!DOCTYPE html>
@@ -35,8 +34,8 @@ public ActionResult ViewProjects()
 </head>
 <body>
     <div class="container mt-5">
-        <h2>Projects for @employeeName</h2>
-        <table class="table table-bordered table-hover mt-3">
+        <h2 class="text-center">Projects for @employeeName</h2>
+        <table class="table table-bordered table-hover mt-4">
             <thead class="thead-dark">
                 <tr>
                     <th>Project Name</th>
@@ -47,25 +46,27 @@ public ActionResult ViewProjects()
                 </tr>
             </thead>
             <tbody>
-                @if (projects != null && projects.Count > 0)
-                {
-                    foreach (var project in projects)
-                    {
-                        <tr>
-                            <td>@project.ProjectName</td>
-                            <td>@project.Description</td>
-                            <td>@project.StartDate</td>
-                            <td>@project.EndDate</td>
-                            <td>@project.Status</td>
-                        </tr>
-                    }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="5" class="text-center">No projects available.</td>
-                    </tr>
-                }
+                <tr>
+                    <td>Project Alpha</td>
+                    <td>A project on AI development.</td>
+                    <td>2024-01-01</td>
+                    <td>2024-12-31</td>
+                    <td>Ongoing</td>
+                </tr>
+                <tr>
+                    <td>Project Beta</td>
+                    <td>A project on Blockchain technology.</td>
+                    <td>2024-02-01</td>
+                    <td>2024-11-30</td>
+                    <td>Completed</td>
+                </tr>
+                <tr>
+                    <td>Project Gamma</td>
+                    <td>A project on Web Development.</td>
+                    <td>2024-03-01</td>
+                    <td>2024-10-31</td>
+                    <td>Ongoing</td>
+                </tr>
             </tbody>
         </table>
     </div>
