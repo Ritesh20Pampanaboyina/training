@@ -1,79 +1,44 @@
-using Moq;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Xunit;
-using ALMSystem2.Controllers;
+ALMSystem2.Tests.Controllers.AdminControllerTests.AdminLogin_Post_ValidCredentials_RedirectsToAdminDashboard
+   Source: AdminControllerTests.cs line 70
+   Duration: 8 ms
 
-namespace ALMSystem2.Tests.Controllers
-{
-    public class AdminControllerTests
-    {
-        private readonly AdminController _controller;
-        private readonly Mock<HttpSessionStateBase> _session;
-        private readonly Mock<HttpContextBase> _httpContext;
+  Message: 
+System.NullReferenceException : Object reference not set to an instance of an object.
 
-        public AdminControllerTests()
-        {
-            _session = new Mock<HttpSessionStateBase>();
-            _httpContext = new Mock<HttpContextBase>();
+  Stack Trace: 
+AdminController.AdminLogin(String username, String password) line 26
+AdminControllerTests.AdminLogin_Post_ValidCredentials_RedirectsToAdminDashboard() line 48
 
-            _httpContext.Setup(c => c.Session).Returns(_session.Object);
+ALMSystem2.Tests.Controllers.AdminControllerTests.AdminLogin_Post_InvalidCredentials_ReturnsViewWithError
+   Source: AdminControllerTests.cs line 58
+   Duration: 527 ms
 
-            _controller = new AdminController
-            {
-                ControllerContext = new ControllerContext(_httpContext.Object, new RouteData(), _controller)
-            };
-        }
+  Message: 
+Assert.False() Failure
+Expected: False
+Actual:   True
 
-        [Fact]
-        public void AdminLogin_Get_WhenUserIsAuthenticated_RedirectsToAdminDashboard()
-        {
-            // Arrange
-            _session.Setup(s => s["User"]).Returns("admin");
+  Stack Trace: 
+AdminControllerTests.AdminLogin_Post_InvalidCredentials_ReturnsViewWithError() line 69
 
-            // Act
-            var result = _controller.AdminLogin() as RedirectToRouteResult;
 
-            // Assert
-            Assert.NotNull(result);
-            Assert.Equal("AdminDashboard", result.RouteValues["action"]);
-        }
+ALMSystem2.Tests.Controllers.AdminControllerTests.AdminLogin_Get_WhenUserIsNotAuthenticated_ReturnsView
+   Source: AdminControllerTests.cs line 45
+   Duration: 1 ms
 
-        [Fact]
-        public void AdminLogin_Get_WhenUserIsNotAuthenticated_ReturnsView()
-        {
-            // Arrange
-            _session.Setup(s => s["User"]).Returns(null);
+  Message: 
+System.NullReferenceException : Object reference not set to an instance of an object.
 
-            // Act
-            var result = _controller.AdminLogin() as ViewResult;
+  Stack Trace: 
+AdminControllerTests.AdminLogin_Get_WhenUserIsNotAuthenticated_ReturnsView() line 29
 
-            // Assert
-            Assert.NotNull(result);
-        }
 
-        [Fact]
-        public void AdminLogin_Post_InvalidCredentials_ReturnsViewWithError()
-        {
-            // Act
-            var result = _controller.AdminLogin("invalid", "credentials") as ViewResult;
+ALMSystem2.Tests.Controllers.AdminControllerTests.AdminLogin_Get_WhenUserIsAuthenticated_RedirectsToAdminDashboard
+   Source: AdminControllerTests.cs line 31
+   Duration: 1.6 sec
 
-            // Assert
-            Assert.NotNull(result);
-            Assert.False(_controller.ModelState.IsValid);
-            Assert.Contains(_controller.ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage), error => error.Contains("Invalid login attempt."));
-        }
+  Message: 
+System.NullReferenceException : Object reference not set to an instance of an object.
 
-        [Fact]
-        public void AdminLogin_Post_ValidCredentials_RedirectsToAdminDashboard()
-        {
-            // Act
-            var result = _controller.AdminLogin("admin", "password") as RedirectToRouteResult;
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.Equal("AdminDashboard", result.RouteValues["action"]);
-        }
-    }
-}
+  Stack Trace: 
+AdminControllerTests.AdminLogin_Get_WhenUserIsAuthenticated_RedirectsToAdminDashboard() line 14
