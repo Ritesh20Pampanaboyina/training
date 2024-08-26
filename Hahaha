@@ -2,68 +2,71 @@ using System.Web.Mvc;
 using ALMSystem2.Controllers;
 using Xunit;
 
-public class AdminControllerTests
+namespace ALMSystem2.Tests.Controllers
 {
-    // Test methods will be added here
-}
-[Fact]
-public void AdminLogin_WhenUserIsAuthenticated_RedirectsToAdminDashboard()
-{
-    // Arrange
-    var controller = new AdminController();
-    controller.Session["User"] = "admin"; // Simulate an authenticated session
+    public class AdminControllerTests
+    {
+        [Fact]
+        public void AdminLogin_Get_WhenUserIsAuthenticated_RedirectsToAdminDashboard()
+        {
+            // Arrange
+            var controller = new AdminController();
+            controller.Session["User"] = "admin"; // Simulate an authenticated session
 
-    // Act
-    var result = controller.AdminLogin() as RedirectToRouteResult;
+            // Act
+            var result = controller.AdminLogin() as RedirectToRouteResult;
 
-    // Assert
-    Assert.NotNull(result); // Ensure the result is not null
-    Assert.Equal("AdminDashboard", result.RouteValues["action"]); // Ensure it redirects to AdminDashboard
-}
-[Fact]
-public void AdminLogin_WhenUserIsNotAuthenticated_ReturnsView()
-{
-    // Arrange
-    var controller = new AdminController();
-    controller.Session["User"] = null; // Simulate an unauthenticated session
+            // Assert
+            Assert.NotNull(result); // Ensure the result is not null
+            Assert.Equal("AdminDashboard", result.RouteValues["action"]); // Ensure it redirects to AdminDashboard
+        }
 
-    // Act
-    var result = controller.AdminLogin() as ViewResult;
+        [Fact]
+        public void AdminLogin_Get_WhenUserIsNotAuthenticated_ReturnsView()
+        {
+            // Arrange
+            var controller = new AdminController();
+            controller.Session["User"] = null; // Simulate an unauthenticated session
 
-    // Assert
-    Assert.NotNull(result); // Ensure the result is not null
-    Assert.Null(result.ViewName); // Check if it returns the default view (if using a default view name)
-}
+            // Act
+            var result = controller.AdminLogin() as ViewResult;
 
-[Fact]
-public void AdminLogin_Post_ValidCredentials_RedirectsToAdminDashboard()
-{
-    // Arrange
-    var controller = new AdminController();
-    var username = "admin";
-    var password = "password";
+            // Assert
+            Assert.NotNull(result); // Ensure the result is not null
+            Assert.Null(result.ViewName); // Check if it returns the default view (if using a default view name)
+        }
 
-    // Act
-    var result = controller.AdminLogin(username, password) as RedirectToRouteResult;
+        [Fact]
+        public void AdminLogin_Post_ValidCredentials_RedirectsToAdminDashboard()
+        {
+            // Arrange
+            var controller = new AdminController();
+            var username = "admin";
+            var password = "password";
 
-    // Assert
-    Assert.NotNull(result); // Ensure the result is not null
-    Assert.Equal("AdminDashboard", result.RouteValues["action"]); // Ensure it redirects to AdminDashboard
-    Assert.Equal(username, controller.Session["User"]); // Ensure the session has the username
-}
+            // Act
+            var result = controller.AdminLogin(username, password) as RedirectToRouteResult;
 
-[Fact]
-public void AdminLogin_Post_InvalidCredentials_ReturnsViewWithError()
-{
-    // Arrange
-    var controller = new AdminController();
-    var username = "wronguser";
-    var password = "wrongpass";
+            // Assert
+            Assert.NotNull(result); // Ensure the result is not null
+            Assert.Equal("AdminDashboard", result.RouteValues["action"]); // Ensure it redirects to AdminDashboard
+            Assert.Equal(username, controller.Session["User"]); // Ensure the session has the username
+        }
 
-    // Act
-    var result = controller.AdminLogin(username, password) as ViewResult;
+        [Fact]
+        public void AdminLogin_Post_InvalidCredentials_ReturnsViewWithError()
+        {
+            // Arrange
+            var controller = new AdminController();
+            var username = "wronguser";
+            var password = "wrongpass";
 
-    // Assert
-    Assert.NotNull(result); // Ensure the result is not null
-    Assert.False(controller.ModelState.IsValid); // Check if ModelState is invalid
+            // Act
+            var result = controller.AdminLogin(username, password) as ViewResult;
+
+            // Assert
+            Assert.NotNull(result); // Ensure the result is not null
+            Assert.False(controller.ModelState.IsValid); // Check if ModelState is invalid
+        }
+    }
 }
