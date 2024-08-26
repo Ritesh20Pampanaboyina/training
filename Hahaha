@@ -1,4 +1,5 @@
 using Moq;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Xunit;
@@ -10,20 +11,19 @@ namespace ALMSystem2.Tests.Controllers
     {
         private readonly AdminController _controller;
         private readonly Mock<HttpSessionStateBase> _session;
+        private readonly Mock<HttpContextBase> _httpContext;
 
         public AdminControllerTests()
         {
             _session = new Mock<HttpSessionStateBase>();
+            _httpContext = new Mock<HttpContextBase>();
+
+            _httpContext.Setup(c => c.Session).Returns(_session.Object);
 
             _controller = new AdminController
             {
-                ControllerContext = new ControllerContext
-                {
-                    HttpContext = new Mock<HttpContextBase>().Object
-                }
+                ControllerContext = new ControllerContext(_httpContext.Object, new RouteData(), _controller)
             };
-
-            _controller.HttpContext.Session = _session.Object;
         }
 
         [Fact]
