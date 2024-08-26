@@ -1,0 +1,718 @@
+@{
+    ViewBag.Title = "Apply for Leave";
+}
+
+<h2>Apply for Leave</h2>
+
+@using (Html.BeginForm("ApplyLeave", "Employee", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.Label("Leave Type")
+        @Html.DropDownList("LeaveType", new SelectList(new[] { "Sick", "Casual", "Annual" }), "Select Leave Type", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Start Date")
+        @Html.TextBox("StartDate", null, new { @class = "form-control", type = "date" })
+    </div>
+    <div class="form-group">
+        @Html.Label("End Date")
+        @Html.TextBox("EndDate", null, new { @class = "form-control", type = "date" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Reason")
+        @Html.TextArea("Reason", null, new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Leave Application</button>
+}
+
+
+
+@{
+    ViewData["Title"] = "Attendance Details";
+}
+
+<div class="content">
+    <h3 class="page-header">Attendance Details</h3>
+    <a href="/Employee/CreateAttendance" class="btn btn-success mb-3">Create New Attendance</a>
+
+    <table class="table table-bordered table-hover mt-3">
+        <thead class="thead-dark">
+            <tr>
+                <th>AttendanceID</th>
+                <th>EmployeeID</th>
+                <th>ProjectID</th>
+                <th>Attendance Date</th>
+                <th>Status</th>
+                <th>Approval Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>101</td>
+                <td>1</td>
+                <td>2024-08-01</td>
+                <td>Present</td>
+                <td>Approved</td>
+                <td>
+                    
+                    <form action="/Employee/DeleteAttendance/1" method="post" style="display:inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this attendance record?');">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            <!-- Add more rows as necessary with different hardcoded values -->
+        </tbody>
+    </table>
+</div>
+
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f8f9fa;
+        color: #343a40;
+        margin: 0;
+        padding: 0;
+    }
+
+    .content {
+        margin: 20px;
+    }
+
+    .page-header {
+        border-bottom: 2px solid #343a40;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        color: #343a40;
+    }
+
+    .table {
+        width: 100%;
+        margin-bottom: 1rem;
+        color: #343a40;
+        background-color: #ffffff;
+        border-collapse: collapse;
+    }
+
+        .table th,
+        .table td {
+            padding: 0.75rem;
+            vertical-align: middle;
+            border: 1px solid #dee2e6;
+        }
+
+    .thead-dark th {
+        background-color: #343a40;
+        color: #ffffff;
+        border-color: #454d55;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .btn {
+        display: inline-block;
+        font-weight: 400;
+        color: #fff;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        background-color: #007bff;
+        border: 1px solid transparent;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+    }
+
+    .btn-warning {
+        background-color: #f39c12;
+        border: none;
+    }
+
+        .btn-warning:hover {
+            background-color: #e67e22;
+        }
+
+    .btn-danger {
+        background-color: #e74c3c;
+        border: none;
+    }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+    .mb-3 {
+        margin-bottom: 1rem;
+    }
+
+    .mt-3 {
+        margin-top: 1rem;
+    }
+</style>
+
+
+
+@{
+    ViewBag.Title = "Create Attendance Record";
+}
+
+<h2>Create Attendance Record</h2>
+
+@using (Html.BeginForm("CreateAttendance", "Employee", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.Label("Employee")
+        @Html.DropDownList("EmployeeID", ViewBag.Employees as IEnumerable<SelectListItem>, "Select Employee", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Project")
+        @Html.DropDownList("ProjectID", ViewBag.Projects as IEnumerable<SelectListItem>, "Select Project", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Attendance Date")
+        @Html.TextBox("AttendanceDate", null, new { @class = "form-control", type = "date" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Status")
+        @Html.DropDownList("Status", new SelectList(new[] { "Present", "Absent" }), "Select Status", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Approval Status")
+        @Html.DropDownList("ApprovalStatus", new SelectList(new[] { "Pending", "Approved", "Rejected" }), "Select Approval Status", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Manager")
+        @Html.DropDownList("ManagerID", ViewBag.Managers as IEnumerable<SelectListItem>, "Select Manager", new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Create Attendance Record</button>
+}
+
+
+
+
+
+@{
+    ViewBag.Title = "Create Leave";
+}
+
+<h2>Create Leave Request</h2>
+
+@using (Html.BeginForm("CreateLeave", "Employee", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.Label("Employee")
+        @Html.DropDownList("EmployeeID", ViewBag.Employees as IEnumerable<SelectListItem>, "Select Employee", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Start Date")
+        @Html.TextBox("StartDate", null, new { @class = "form-control", type = "date" })
+    </div>
+    <div class="form-group">
+        @Html.Label("End Date")
+        @Html.TextBox("EndDate", null, new { @class = "form-control", type = "date" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Leave Type")
+        @Html.DropDownList("LeaveType", new SelectList(new[] { "Sick", "Casual", "Annual" }), "Select Leave Type", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Reason")
+        @Html.TextArea("Reason", null, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Approval Status")
+        @Html.DropDownList("ApprovalStatus", new SelectList(new[] { "Pending", "Approved", "Rejected" }), "Select Approval Status", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Manager")
+        @Html.DropDownList("ManagerID", ViewBag.Managers as IEnumerable<SelectListItem>, "Select Manager", new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Create Leave Request</button>
+}
+
+
+
+
+@{
+    ViewBag.Title = "Employee Dashboard";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #000;
+            color: #ecf0f1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.8);
+            transition: background-color 0.3s ease-in-out;
+        }
+
+            .navbar:hover {
+                background-color: rgba(0, 0, 0, 0.9);
+            }
+
+        .navbar-brand {
+            font-size: 1.8em;
+            color: #ffffff !important;
+        }
+
+        .sidebar {
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.9);
+            padding-top: 30px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            transition: width 0.3s ease-in-out;
+            overflow: hidden;
+            overflow-y: auto;
+        }
+
+            .sidebar:hover {
+                width: 280px;
+            }
+
+            .sidebar a {
+                color: #ffffff;
+                display: block;
+                padding: 20px;
+                text-decoration: none;
+                font-size: 1.2em;
+                transition: background-color 0.3s, padding-left 0.3s;
+                border-left: 4px solid transparent;
+            }
+
+                .sidebar a:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                    padding-left: 25px;
+                    border-left: 4px solid #16a085;
+                }
+
+            .sidebar .active {
+                background-color: #16a085;
+                border-left: 4px solid #1abc9c;
+            }
+
+        .content {
+            margin-left: 270px;
+            padding: 30px;
+            color: #ecf0f1;
+        }
+
+        .card {
+            margin-bottom: 30px;
+            border: none;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ecf0f1;
+            transition: transform 0.3s ease-in-out, background-color 0.3s, box-shadow 0.3s;
+        }
+
+            .card:hover {
+                transform: scale(1.05);
+                background-color: rgba(255, 255, 255, 0.2);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            }
+
+        .card-title {
+            font-size: 1.8em;
+        }
+
+        .card-text {
+            font-size: 1.2em;
+        }
+
+        .btn {
+            font-size: 1.2em;
+            padding: 0.75em 1.5em;
+        }
+
+        .welcome-box {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+            .welcome-box h3 {
+                font-size: 2em;
+                margin-bottom: 10px;
+            }
+
+            .welcome-box p {
+                font-size: 1.2em;
+            }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="@Url.Action("EmployeeDashboard", "Employee")" class="active">Dashboard</a>
+        <a href="@Url.Action("ApplyLeave", "Employee")">Apply for Leave</a>
+        <a href="@Url.Action("SubmitAttendance", "Employee")">Submit Attendance</a>
+        <a href="@Url.Action("ViewProjects", "Employee")">View Project Details</a>
+        <a href="@Url.Action("Logout", "Employee")">Logout</a>
+    </div>
+
+    <div class="content">
+        <div class="welcome-box">
+            <h3>Welcome to the Employee Dashboard</h3>
+            <p>Welcome, @Session["UserName"]</p>
+        </div>
+
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["Message"]
+            </div>
+        }
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Employee Details</h5>
+                <p class="card-text">Name: LeaveMaster</p>
+                <p class="card-text">Position: Software Engineer</p>
+                <p class="card-text">Department: HealthCare</p>
+                <p class="card-text">Email: leavemaster@gmail.com</p>
+                <p class="card-text">Phone: 9393939495</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Apply for Leave</h5>
+                <p class="card-text">Submit your leave requests here.</p>
+                <a href="@Url.Action("ApplyLeave", "Employee")" class="btn btn-primary">Apply Leave</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Submit Attendance</h5>
+                <p class="card-text">Record your attendance here.</p>
+                <a href="@Url.Action("SubmitAttendance", "Employee")" class="btn btn-primary">Submit Attendance</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">View Project Details</h5>
+                <p class="card-text">View details related to your current projects.</p>
+                <a href="@Url.Action("ViewProjects", "Employee")" class="btn btn-primary">View Projects</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+
+@{
+    Layout = null; // or set to your layout file if you have one
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Login</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+        .login-container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            transform: translateY(0);
+            opacity: 1;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+        }
+
+            .login-container.hidden {
+                transform: translateY(-50%);
+                opacity: 0;
+            }
+
+            .login-container h2 {
+                margin-bottom: 1rem;
+                font-family: 'Arial', sans-serif;
+                color: #333;
+            }
+
+        .form-control {
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            transition: border-color 0.3s;
+        }
+
+            .form-control:focus {
+                border-color: #2575fc;
+                box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
+            }
+
+        .btn-primary {
+            background: #2575fc;
+            border: none;
+            border-radius: 5px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.5rem;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+            .btn-primary:hover {
+                background: #1d64d1;
+            }
+
+            .btn-primary:active {
+                transform: scale(0.98);
+            }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Employee Login</h2>
+        @using (Html.BeginForm("EmployeeLogin", "Employee", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.Label("username")
+                @Html.TextBox("username", null, new { @class = "form-control", required = "required" })
+            </div>
+            <div class="form-group">
+                @Html.Label("password")
+                @Html.Password("password", null, new { @class = "form-control", required = "required" })
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        }
+    </div>
+</body>
+</html>
+
+
+
+@{
+    ViewData["Title"] = "Leave Details";
+}
+
+<div class="content">
+    <h3 class="page-header">Leave Details</h3>
+    <a href="/Employee/CreateLeave" class="btn btn-success mb-3">Create New Leave</a>
+
+    <table class="table table-bordered table-hover mt-3">
+        <thead class="thead-dark">
+            <tr>
+                <th>LeaveID</th>
+                <th>EmployeeID</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Leave Type</th>
+                <th>Reason</th>
+                <th>Approval Status</th>
+                <th>ManagerID</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>101</td>
+                <td>2024-08-01</td>
+                <td>2024-08-10</td>
+                <td>Vacation</td>
+                <td>Family trip</td>
+                <td>Approved</td>
+                <td>2</td>
+                <td>
+                    
+                    <form action="/Employee/DeleteLeave/1" method="post" style="display:inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this leave request?');">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            <!-- Add more rows as necessary with different hardcoded values -->
+        </tbody>
+    </table>
+</div>
+
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f8f9fa;
+        color: #343a40;
+        margin: 0;
+        padding: 0;
+    }
+
+    .content {
+        margin: 20px;
+    }
+
+    .page-header {
+        border-bottom: 2px solid #343a40;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        color: #343a40;
+    }
+
+    .table {
+        width: 100%;
+        margin-bottom: 1rem;
+        color: #343a40;
+        background-color: #ffffff;
+        border-collapse: collapse;
+    }
+
+        .table th,
+        .table td {
+            padding: 0.75rem;
+            vertical-align: middle;
+            border: 1px solid #dee2e6;
+        }
+
+    .thead-dark th {
+        background-color: #343a40;
+        color: #ffffff;
+        border-color: #454d55;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .btn {
+        display: inline-block;
+        font-weight: 400;
+        color: #fff;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        background-color: #007bff;
+        border: 1px solid transparent;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+    }
+
+    .btn-warning {
+        background-color: #f39c12;
+        border: none;
+    }
+
+        .btn-warning:hover {
+            background-color: #e67e22;
+        }
+
+    .btn-danger {
+        background-color: #e74c3c;
+        border: none;
+    }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+    .mb-3 {
+        margin-bottom: 1rem;
+    }
+
+    .mt-3 {
+        margin-top: 1rem;
+    }
+</style>
+
+
+
+
+@{
+    ViewBag.Title = "Submit Attendance";
+}
+
+<h2>Submit Attendance</h2>
+
+@using (Html.BeginForm("SubmitAttendance", "Employee", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.Label("Project")
+        @Html.DropDownList("ProjectID", new SelectList(ViewBag.Projects, "Value", "Text"), "Select Project", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Attendance Date")
+        @Html.TextBox("AttendanceDate", null, new { @class = "form-control", type = "date" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Status")
+        @Html.DropDownList("Status", new SelectList(new[] { "Present", "Absent" }), "Select Status", new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Attendance</button>
+}
+
+
+
+
+@{
+    ViewBag.Title = "View Projects";
+}
+
+<h2>Project Details</h2>
+<ul class="list-group">
+    @foreach (var project in ViewBag.Projects as List<string>)
+    {
+        <li class="list-group-item">@project</li>
+    }
+</ul>
