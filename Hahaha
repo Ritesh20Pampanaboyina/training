@@ -1,3 +1,25 @@
+Parser Error
+Description: An error occurred during the parsing of a resource required to service this request. Please review the following specific parse error details and modify your source file appropriately.
+
+Parser Error Message: Unexpected "if" keyword after "@" character.  Once inside code, you do not need to prefix constructs like "if" with "@".
+
+
+Source Error:
+
+
+Line 91:                 @Html.Password("password", null, new { @class = "form-control", required = "required" })
+Line 92:             </div>
+Line 93:             @if (ViewBag.ErrorMessage != null)
+Line 94:             {
+Line 95:                 <div class="error-message">
+
+Source File: /Views/Admin/AdminLogin.cshtml    Line: 93
+
+Version Information: Microsoft .NET Framework Version:4.0.30319; ASP.NET Version:4.8.4712.0
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
