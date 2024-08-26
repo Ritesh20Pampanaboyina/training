@@ -1,42 +1,79 @@
-ALMSystem2.Tests.Controllers.AdminControllerTests.AdminLogin_Get_WhenUserIsAuthenticated_RedirectsToAdminDashboard
-   Source: AdminControllerTests.cs line 10
-   Duration: 2 sec
+using Moq;
+using System.Web;
+using System.Web.Mvc;
+using Xunit;
+using ALMSystem2.Controllers;
 
-  Message: 
-System.NullReferenceException : Object reference not set to an instance of an object.
+namespace ALMSystem2.Tests.Controllers
+{
+    public class AdminControllerTests
+    {
+        private readonly AdminController _controller;
+        private readonly Mock<HttpSessionStateBase> _session;
 
-  Stack Trace: 
-AdminControllerTests.AdminLogin_Get_WhenUserIsAuthenticated_RedirectsToAdminDashboard() line 14
+        public AdminControllerTests()
+        {
+            _session = new Mock<HttpSessionStateBase>();
 
-ALMSystem2.Tests.Controllers.AdminControllerTests.AdminLogin_Get_WhenUserIsNotAuthenticated_ReturnsView
-   Source: AdminControllerTests.cs line 25
-   Duration: 1 ms
+            _controller = new AdminController
+            {
+                ControllerContext = new ControllerContext
+                {
+                    HttpContext = new Mock<HttpContextBase>().Object
+                }
+            };
 
-  Message: 
-System.NullReferenceException : Object reference not set to an instance of an object.
+            _controller.HttpContext.Session = _session.Object;
+        }
 
-  Stack Trace: 
-AdminControllerTests.AdminLogin_Get_WhenUserIsNotAuthenticated_ReturnsView() line 29
+        [Fact]
+        public void AdminLogin_Get_WhenUserIsAuthenticated_RedirectsToAdminDashboard()
+        {
+            // Arrange
+            _session.Setup(s => s["User"]).Returns("admin");
 
-ALMSystem2.Tests.Controllers.AdminControllerTests.AdminLogin_Post_InvalidCredentials_ReturnsViewWithError
-   Source: AdminControllerTests.cs line 57
-   Duration: 526 ms
+            // Act
+            var result = _controller.AdminLogin() as RedirectToRouteResult;
 
-  Message: 
-Assert.False() Failure
-Expected: False
-Actual:   True
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal("AdminDashboard", result.RouteValues["action"]);
+        }
 
-  Stack Trace: 
-AdminControllerTests.AdminLogin_Post_InvalidCredentials_ReturnsViewWithError() line 69
+        [Fact]
+        public void AdminLogin_Get_WhenUserIsNotAuthenticated_ReturnsView()
+        {
+            // Arrange
+            _session.Setup(s => s["User"]).Returns(null);
 
-ALMSystem2.Tests.Controllers.AdminControllerTests.AdminLogin_Post_ValidCredentials_RedirectsToAdminDashboard
-   Source: AdminControllerTests.cs line 40
-   Duration: 11 ms
+            // Act
+            var result = _controller.AdminLogin() as ViewResult;
 
-  Message: 
-System.NullReferenceException : Object reference not set to an instance of an object.
+            // Assert
+            Assert.NotNull(result);
+        }
 
-  Stack Trace: 
-AdminController.AdminLogin(String username, String password) line 26
-AdminControllerTests.AdminLogin_Post_ValidCredentials_RedirectsToAdminDashboard() line 48
+        [Fact]
+        public void AdminLogin_Post_InvalidCredentials_ReturnsViewWithError()
+        {
+            // Act
+            var result = _controller.AdminLogin("invalid", "credentials") as ViewResult;
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.False(_controller.ModelState.IsValid);
+            Assert.True(_controller.ModelState.Values.Any(v => v.Errors.Count > 0));
+        }
+
+        [Fact]
+        public void AdminLogin_Post_ValidCredentials_RedirectsToAdminDashboard()
+        {
+            // Act
+            var result = _controller.AdminLogin("admin", "password") as RedirectToRouteResult;
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal("AdminDashboard", result.RouteValues["action"]);
+        }
+    }
+}
