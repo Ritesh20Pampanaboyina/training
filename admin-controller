@@ -27,7 +27,7 @@ namespace ALMSystem2.Controllers
                 return RedirectToAction("AdminDashboard");
             }
 
-            ModelState.AddModelError("", "Invalid login attempt.");
+            ModelState.AddModelError("", "Invalid login Credentials.");
             return View();
         }
 
