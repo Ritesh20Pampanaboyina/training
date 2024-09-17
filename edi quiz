@@ -1,0 +1,103 @@
+In EDI 835, what does the "CAS" segment provide?
+(1 Point)
+
+ 
+
+Patient Demographic Information
+
+Claim Adjustment Information
+
+Payment Adjustment Information
+
+Claim Status Information
+2.In this segment BGN*00*1*20050315*110650****4~ , what does this data element '110650' indicates?
+(1 Point)
+
+Transaction Set Purpose Code
+
+Hierarchical Structure Code
+
+Date (YYMMDD format)
+
+Time (HHMM format)
+3.In this segment BGN*00*1*20050315*110650****4~ , what does this data element '20050315' indicates?
+(1 Point)
+
+Reference Identification
+
+Identification Code Qualifier
+
+Date Format Qualifier
+
+Date (YYYYMMDD format)
+4.Which segment in EDI 834 indicates the effective date of the coverage?
+
+(1 Point)
+
+DTP
+
+INS
+
+REF
+
+N1
+5.What is the purpose of the "REF" segment in EDI 835?
+(1 Point)
+
+To provide the reason for the adjustment
+
+To specify the payer's identification number
+
+To provide additional claim reference information
+
+To indicate the patient’s account number
+6.What does the 'CLM' segment in an EDI 837 transaction typically contain?
+(1 Point)
+
+Claim number and claim amount
+
+Patient demographics and insurance information
+
+Provider details and service dates
+
+Diagnosis and procedure codes
+7.Which segment in an EDI 835 transaction provides the information related to the reconciliation of previous payments or adjustments?
+(1 Point)
+
+A) PLB (Provider Adjustment)
+
+B) AMT (Monetary Amount)
+
+C) CAS (Claim Adjustment Segment)
+
+D) N1 (Name)
+8.In the EDI 834 transaction, which segment is used to identify the specific benefit plan type and its code?
+(1 Point)
+
+A) HD (Health Coverage)
+
+B) INS (Member Level Detail)
+
+C) BEG (Beginning Segment)
+
+D) N1 (Name)
+9.In an EDI 837, which segment contains information about the billed amount for services rendered?
+(1 Point)
+
+A) CLM (Claim Information)
+
+B) SV1 (Service Line Information)
+
+C) REF (Reference Identification)
+
+D) HI (Health Care Information Codes)
+10.In the EDI 837, how is the provider’s unique identification number conveyed?
+(1 Point)
+
+A) NM1 (Individual or Organizational Name)
+
+B) REF (Reference Identification)
+
+C) PRV (Provider Information)
+
+D) DTP (Date/Time Reference)
